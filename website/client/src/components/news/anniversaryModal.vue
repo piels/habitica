@@ -1,30 +1,23 @@
 <template>
   <b-modal
     id="anniversary-modal"
-    size="lg"
     :hide-header="true"
     :hide-footer="true"
     @shown="onShow()"
   >
-    <div class="modal-body">
-      <row>
-        <span class="limited-event">
-          {{ $t('limitedEvent') }}
-        </span>
-      </row>
-      <row>
-        <span class="dates">
-          {{ $t('limitedDates') }}
-        </span>
-      </row>
-      <row>
-        <div class="celebrate">
-          {{ $t('celebrateAnniversary') }}
-        </div>
-      </row>
+    <div class="modal-content">
+      <span class="limited-event">
+        {{ $t('limitedEvent') }}
+      </span>
+      <span class="dates">
+        {{ $t('limitedDates') }}
+      </span>
+      <div class="celebrate">
+        {{ $t('celebrateAnniversary') }}
+      </div>
     </div>
 
-    <div class="modal-footer">
+    <div class="modal-bottom">
       <div class="limitations d-flex justify-content-center">
         {{ $t('limitations') }}
       </div>
@@ -35,29 +28,46 @@
   </b-modal>
 </template>
 
+<style lang="scss">
+#anniversary-modal {
+  .modal-body {
+    padding: 0rem;
+  }
+  .modal-content {
+    border-radius: 25px;
+  }
+  .modal-footer {
+    border-radius: 25px;
+  }
+
+}
+</style>
+
 
 <style scoped lang="scss">
   @import '~@/assets/scss/colors.scss';
   @import '~@/assets/scss/mixins.scss';
 
 #anniversary-modal {
-  width: 566px;
-  padding: 0 0 0 0;
 
   .modal-content {
     width: 566px;
-  }
-  .modal-body {
     padding: 32px 24px 24px;
     background: linear-gradient(158deg, $purple-300 0%, $purple-200 100%);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
   }
-  .modal-footer {
+  .modal-bottom {
+    width: 566px;
     background-color: $purple-50;
     color: $purple-500;
     line-height: 1.33;
-    padding-left: 40px;
-    padding-right: 40px;
     border-top: 0px;
+    padding: 16px 40px 28px 40px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
   }
     .limitations {
       color: $white;
