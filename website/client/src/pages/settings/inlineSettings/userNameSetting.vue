@@ -1,0 +1,159 @@
+<template>
+  <fragment>
+    <tr
+      v-if="!modalVisible"
+    >
+      <td class="settings-label">
+        {{ $t("username") }}
+      </td>
+      <td class="settings-value">
+        {{ user?.auth?.local?.username }}
+      </td>
+      <td class="settings-button">
+        <a
+          class="edit-link"
+          @click.prevent="openModal()"
+        >
+          {{ $t(user?.auth?.local?.username ? 'edit' : 'add') }}
+        </a>
+      </td>
+    </tr>
+    <tr
+      v-if="modalVisible"
+      class="expanded"
+    >
+      <td colspan="3">
+        <div
+          v-once
+          class="dialog-title"
+        >
+          {{ $t("username") }}
+        </div>
+        <div
+          v-once
+          class="dialog-disclaimer"
+        >
+          {{ $t("changeUsernameDisclaimer") }}
+        </div>
+
+        <validated-text-input
+          v-model="inputValue"
+          settings-label="username"
+          :is-valid="usernameValid"
+          :invalid-issues="usernameIssues"
+          @update:value="valuesChanged()"
+          @blur="restoreEmptyUsername()"
+        />
+
+        <save-cancel-buttons
+          :disable-save="usernameCannotSubmit"
+          @saveClicked="changeUser('username', cleanedInputValue)"
+          @cancelClicked="closeModal()"
+        />
+      </td>
+    </tr>
+  </fragment>
+</template>
+
+<style lang="scss" scoped>
+@import '~@/assets/scss/colors.scss';
+
+</style>
+
+<script>
+import axios from 'axios';
+import debounce from 'lodash/debounce';
+import { mapState } from '@/libs/store';
+
+import { InlineSettingMixin } from '../components/inlineSettingMixin';
+import SaveCancelButtons from '../components/saveCancelButtons.vue';
+import ValidatedTextInput from '@/pages/settings/components/validatedTextInput.vue';
+
+// TODO extract usernameIssues/checks to a mixin to share between this and the authForm
+
+export default {
+  components: { ValidatedTextInput, SaveCancelButtons },
+  mixins: [InlineSettingMixin],
+  data () {
+    return {
+      inputValue: '',
+      inputChanged: false,
+      usernameIssues: [],
+    };
+  },
+  computed: {
+    ...mapState({
+      user: 'user.data',
+    }),
+    cleanedInputValue () {
+      // remove the @ from the value
+      return this.inputValue.replace('@', '');
+    },
+    usernameValid () {
+      if (this.cleanedInputValue.length <= 1) {
+        return false;
+      }
+      return this.usernameIssues.length === 0;
+    },
+
+    usernameCannotSubmit () {
+      if (this.cleanedInputValue.length <= 1) {
+        return true;
+      }
+      return !this.usernameValid || !this.inputChanged;
+    },
+  },
+  watch: {
+    inputValue () {
+      this.validateUsername(this.cleanedInputValue);
+    },
+  },
+  mounted () {
+    this.resetControls();
+  },
+  methods: {
+    /**
+     * is a callback from the {InlineSettingMixin}
+     * do not remove
+     */
+    resetControls () {
+      this.inputValue = `@${this.user.auth.local.username}`;
+    },
+    restoreEmptyUsername () {
+      if (this.inputValue.length < 1) {
+        this.resetControls();
+      }
+    },
+    async changeUser (attribute, newUsername) {
+      await axios.put(`/api/v4/user/auth/update-${attribute}`, {
+        username: newUsername,
+      });
+
+      this.user.auth.local.username = newUsername;
+      // this.localAuth.username = this.user.auth.local.username;
+      this.user.flags.verifiedUsername = true;
+    },
+    valuesChanged () {
+      this.inputChanged = true;
+
+      this.modalValuesChanged();
+    },
+    validateUsername: debounce(async function checkName (username) {
+      if (username.length <= 1 || username === this.user.auth.local.username) {
+        this.usernameIssues = [];
+        return;
+      }
+
+      const res = await this.$store.dispatch('auth:verifyUsername', {
+        username,
+      });
+
+      if (res.issues !== undefined) {
+        this.usernameIssues = res.issues;
+      } else {
+        this.usernameIssues = [];
+      }
+    }, 500),
+  },
+};
+</script>

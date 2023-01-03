@@ -2,54 +2,14 @@
   <div class="row">
     <secondary-menu class="col-12">
       <router-link
+        v-for="routePath in tabs"
+        :key="routePath"
         class="nav-link"
-        :to="{name: 'site'}"
+        :to="{name: routePath}"
         exact="exact"
-        :class="{'active': $route.name === 'site'}"
+        :class="{'active': $route.name === routePath}"
       >
-        {{ $t('site') }}
-      </router-link>
-      <router-link
-        class="nav-link"
-        :to="{name: 'api'}"
-        :class="{'active': $route.name === 'api'}"
-      >
-        {{ $t('API') }}
-      </router-link>
-      <router-link
-        class="nav-link"
-        :to="{name: 'dataExport'}"
-        :class="{'active': $route.name === 'dataExport'}"
-      >
-        {{ $t('dataExport') }}
-      </router-link>
-      <router-link
-        class="nav-link"
-        :to="{name: 'promoCode'}"
-        :class="{'active': $route.name === 'promoCode'}"
-      >
-        {{ $t('promoCode') }}
-      </router-link>
-      <router-link
-        class="nav-link"
-        :to="{name: 'subscription'}"
-        :class="{'active': $route.name === 'subscription'}"
-      >
-        {{ $t('subscription') }}
-      </router-link>
-      <router-link
-        class="nav-link"
-        :to="{name: 'transactions'}"
-        :class="{'active': $route.name === 'transactions'}"
-      >
-        {{ $t('transactions') }}
-      </router-link>
-      <router-link
-        class="nav-link"
-        :to="{name: 'notifications'}"
-        :class="{'active': $route.name === 'notifications'}"
-      >
-        {{ $t('notifications') }}
+        {{ $t(pathTranslateKey(routePath)) }}
       </router-link>
     </secondary-menu>
     <div
@@ -121,6 +81,67 @@
   .settings-content {
     flex: 0 0 684px;
     max-width: unset;
+
+    ::v-deep {
+      line-height: 1.71;
+
+      table td {
+        padding: 0.5rem;
+      }
+
+      table tr.expanded td {
+        padding-bottom: 1.5rem;
+      }
+
+      .settings-label {
+        font-weight: bold;
+        color: $gray-50;
+
+        width: 23%;
+      }
+
+      .input-area .settings-label {
+        width: unset;
+      }
+
+      .settings-value {
+        color: $gray-50;
+
+        width: auto;
+      }
+
+      .settings-button {
+        width: 30%;
+        text-align: end;
+      }
+
+      .dialog-title {
+        font-size: 14px;
+        font-weight: bold;
+        color: $purple-300;
+
+        &.danger {
+          color: $maroon-50;
+        }
+      }
+
+      .dialog-disclaimer {
+        color: $gray-50;
+      }
+
+      .input-area {
+        width: 320px;
+        margin: 1rem auto 0;
+      }
+
+      .edit-link {
+        color: $blue-10 !important;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 </style>
 
@@ -129,7 +150,7 @@ import find from 'lodash/find';
 import { mapState } from '@/libs/store';
 import SecondaryMenu from '@/components/secondaryMenu';
 import gifts from '@/assets/svg/gifts-vertical.svg';
-import { userStateMixin } from '../../mixins/userState';
+import { userStateMixin } from '@/mixins/userState';
 
 export default {
   components: {
@@ -141,6 +162,16 @@ export default {
       icons: Object.freeze({
         gifts,
       }),
+      tabs: [
+        'general',
+        'site',
+        'api',
+        'dataExport',
+        'promoCode',
+        'subscription',
+        'transactions',
+        'notifications',
+      ],
     };
   },
   computed: {
@@ -161,6 +192,12 @@ export default {
   methods: {
     showSelectUser () {
       this.$root.$emit('bv::show::modal', 'select-user-modal');
+    },
+    pathTranslateKey (path) {
+      if (path === 'api') {
+        return 'API';
+      }
+      return path;
     },
   },
 };
