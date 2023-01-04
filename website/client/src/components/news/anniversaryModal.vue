@@ -15,6 +15,50 @@
       <div class="celebrate">
         {{ $t('celebrateAnniversary') }}
       </div>
+      <div class="pet-text">
+        {{ $t('jubilantGryphatrice') }}
+      </div>
+      <div class="gryphatrice-grid">
+        <div>
+          tempGryphatrice
+        </div>
+        <div class="limited-edition">
+          {{ $t('limitedEdition') }}
+        </div>
+        <div class="gryphatrice-text">
+          {{ $t('anniversaryGryphatriceText') }}
+        </div>
+        <div class="gryphatrice-price">
+          {{ $t('anniversaryGryphatricePrice') }}
+        </div>
+      </div>
+      <button>
+        {{ $t('buyNowMoneyButton') }}
+      </button>
+      <button>
+        {{ $t('buyNowGemsButton') }}
+      </button>
+      <div>
+        {{ $t('plentyOfPotions') }}
+      </div>
+      <div>
+        {{ $t('plentyOfPotionsText') }}
+      </div>
+      <div>
+        <pre>potion images go here</pre>
+      </div>
+      <button>
+        {{ $t('visitTheMarketButton') }}
+      </button>
+      <div>
+        {{ $t('fourForFree') }}
+      </div>
+      <div>
+        {{ $t('fourForFreeText') }}
+      </div>
+      <div>
+        <pre>Robes, Gems, Bday Set, and Background go here</pre>
+      </div>
     </div>
 
     <div class="modal-bottom">
@@ -103,6 +147,55 @@
     justify-content: center;
     color: $yellow-50;
   }
+
+  .pet-text {
+    font-size: 1.25rem;
+    font-weight: bold;
+    font-stretch: condensed;
+    line-height: 1.4;
+    padding-top: 24px;
+    text-align: center;
+    justify-content: center;
+    color: $white;
+  }
+
+  .gryphatrice-grid {
+    display: grid;
+    column-gap: 24px;
+    grid-template-columns: 176px 274px;
+  }
+
+  .jubilant-gryphatrice {
+    grid-column: 1 / 2;
+    height: 204px;
+    width: 176px;
+    border-radius: 12px;
+    background-color: $purple-50;
+    padding-top: 16px;
+    color: $white;
+  }
+
+  .limited-edition {
+    grid-column: 2 /2;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height:1.33;
+    letter-spacing:2.4px;
+    padding-top: 36px;
+    color: $yellow-50;
+  }
+
+  .gryphatrice-text, .gryphatrice-price {
+    grid-column: 2 / 2;
+    font-size: 0.875rem;
+    line-height: 1.71;
+    color: $white;
+  }
+
+  .gryphatrice-price {
+    padding-top: 16px;
+  }
 }
 
 </style>
@@ -110,9 +203,19 @@
 
 <script>
 
+import tempGryphatrice from '@/assets/svg/anniversary_pet_still_cropped.png';
+import tenAnniversary from '@/assets/svg/10-birthday.png';
 
 export default {
   components: {
+  },
+  data () {
+    return {
+      icons: Object.freeze({
+        tenAnniversary,
+        tempGryphatrice,
+      }),
+    };
   },
   methods: {
   },
