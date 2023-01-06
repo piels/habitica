@@ -3,7 +3,6 @@
     id="anniversary-modal"
     :hide-header="true"
     :hide-footer="true"
-    @shown="onShow()"
   >
     <div class="modal-content">
       <span class="limited-event">
@@ -34,43 +33,52 @@
       </div>
       <!-- beginning of payments -->
       <!-- buy with money OR gems -->
-      <div>
-        <button>
-          {{ $t('buyNowMoneyButton') }}
-        </button>
-        <button>
-          {{ $t('buyNowGemsButton') }}
-        </button>
-      </div>
-      <!-- buy with money -->
-      <div>
-        <button>
-          Stripe
-        </button>
-        <button>
-          Paypal
-        </button>
-        <button>
-          Amazon
-        </button>
-        <div>
-          {{ $t('wantToPayWithGemsText') }}
+      <div
+        v-if="!ownGryphatrice"
+      >
+        <div
+          v-if="selectedPage != 'payment-buttons'"
+          id="initial-buttons"
+        >
+          <button
+            :class="{active: selectedPage === 'payment-buttons'}"
+            @click="selectPage('payment-buttons')"
+          >
+            {{ $t('buyNowMoneyButton') }}
+          </button>
+          <button>
+            {{ $t('buyNowGemsButton') }}
+          </button>
         </div>
-      <!-- buy with gems -->
-      </div>
-      <div>
-        <button>
-          {{ $t('buyNowGemsButton') }}
-        </button>
-        <div>
-          {{ $t('wantToPayWithMoneyText') }}
+        <!-- buy with money -->
+        <div
+          v-else-if="selectedPage === 'payment-buttons'"
+          id="payment-buttons"
+        >
+          <button>
+            Stripe
+          </button>
+          <button>
+            Paypal
+          </button>
+          <button>
+            Amazon
+          </button>
+          <div>
+            {{ $t('wantToPayWithGemsText') }}
+          </div>
         </div>
       </div>
       <!-- Own the gryphatrice -->
-      <button
-        v-html="$t('ownJubilantGryphatrice')"
+      <div
+        v-else
+        id="own-gryphatrice-buttons"
       >
-      </button>
+        <button
+          v-html="$t('ownJubilantGryphatrice')"
+        >
+        </button>
+      </div>
       <!-- end of payments -->
       <div>
         {{ $t('plentyOfPotions') }}
@@ -110,12 +118,13 @@
 #anniversary-modal {
   .modal-body {
     padding: 0rem;
+
   }
   .modal-content {
-    border-radius: 25px;
+    border-radius: 100px;
   }
   .modal-footer {
-    border-radius: 25px;
+    border-radius: 100px;
   }
 
 }
@@ -256,16 +265,22 @@ export default {
         tenAnniversary,
         tempGryphatrice,
       }),
-      isHidden: false,
+      selectedPage: 'initial-buttons',
     };
   },
   computed: {
     ...mapState({
-      userLoggedIn: 'user.data',
+      user: 'user.data',
     }),
+    ownGryphatrice () {
+      return Boolean(this.user.items.pets['Gryphatrice-Jubilant']);
+    },
   },
   methods: {
-
+    selectPage (page) {
+      if (page === this.selectedPage) return;
+      if (page === 'payment-buttons') this.selectedPage = 'payment-buttons';
+    },
   },
 };
 </script>
