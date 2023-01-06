@@ -5,11 +5,17 @@ import {
 import shared from '../../../common';
 import { getAnalyticsServiceByEnvironment } from '../analyticsService';
 import { getGemsBlock, buyGems } from './gems'; // eslint-disable-line import/no-cycle
-import { EVENTS } from '../../../common/script/content/constants/events';
 
 const analytics = getAnalyticsServiceByEnvironment();
 
 const RESPONSE_INVALID_ITEM = 'INVALID_ITEM_PURCHASED';
+
+const EVENTS = {
+  birthday10: {
+    start: '2023-01-01T08:00-05:00',
+    end: '2023-02-01T23:59-05:00',
+  },
+};
 
 function canBuyGryphatrice (user) {
   if (!moment().isBetween(EVENTS.birthday10.start, EVENTS.birthday10.end)) return false;
