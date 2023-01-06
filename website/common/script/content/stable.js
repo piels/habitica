@@ -204,15 +204,6 @@ const specialMounts = {
   'JackOLantern-RoyalPurple': 'royalPurpleJackolantern',
 };
 
-petInfo['Gryphatrice-Jubilant'] = {
-  canOwn () {
-    return moment().isBetween(EVENTS.birthday10.start, EVENTS.birthday10.end);
-  },
-  currency: 'gems',
-  event: 'birthday10',
-  value: 60,
-};
-
 each(specialPets, (translationString, key) => {
   petInfo[key] = {
     key,
@@ -220,6 +211,15 @@ each(specialPets, (translationString, key) => {
     text: t(translationString),
     canFind: canFindSpecial.pets[key],
   };
+});
+
+Object.assign(petInfo['Gryphatrice-Jubilant'], {
+  canBuy () {
+    return moment().isBetween(EVENTS.birthday10.start, EVENTS.birthday10.end);
+  },
+  currency: 'gems',
+  event: 'birthday10',
+  value: 60,
 });
 
 each(specialMounts, (translationString, key) => {

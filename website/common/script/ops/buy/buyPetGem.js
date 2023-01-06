@@ -41,9 +41,6 @@ export class BuyPetWithGemOperation extends AbstractGemItemOperation { // eslint
     if (item && user.items.pets[item.key]) {
       throw new BadRequest(this.i18n('petsAlreadyOwned'));
     }
-    if (item && item.canOwn && !item.canOwn(user)) {
-      throw new BadRequest(this.i18n('cannotBuyItem'));
-    }
 
     super.canUserPurchase(user, item);
   }
@@ -52,7 +49,7 @@ export class BuyPetWithGemOperation extends AbstractGemItemOperation { // eslint
     user.items.pets[item.key] = 5;
     if (user.markModified) user.markModified('items.pets');
 
-    await this.subtractCurrency(user, item, this.quantity);
+    await this.subtractCurrency(user, item);
 
     return [
       user.items.pets,
