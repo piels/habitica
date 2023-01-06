@@ -30,7 +30,7 @@ export class BuyPetWithGemOperation extends AbstractGemItemOperation { // eslint
     const { key } = this;
     if (!key) throw new BadRequest(errorMessage('missingKeyParam'));
 
-    const item = content.pets[key];
+    const item = content.petInfo[key];
 
     if (!item) throw new NotFound(errorMessage('petNotFound', { key }));
 
