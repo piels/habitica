@@ -535,6 +535,11 @@ const backgrounds = {
     inside_a_crystal: { },
     snowy_village: { },
   },
+  eventBackgrounds: {
+    habitversary_bash: {
+      price: 0,
+    },
+  },
   timeTravelBackgrounds: {
     airship: {
       price: 1,
@@ -578,7 +583,9 @@ forOwn(backgrounds, (backgroundsInSet, set) => {
   forOwn(backgroundsInSet, (background, bgKey) => {
     background.key = bgKey;
     background.set = set;
-    background.price = background.price || 7;
+    if (background.price !== 0) {
+      background.price = background.price || 7;
+    }
     background.text = background.text || t(`background${upperFirst(camelCase(bgKey))}Text`);
     background.notes = background.notes || t(`background${upperFirst(camelCase(bgKey))}Notes`);
 
