@@ -5,6 +5,9 @@
     :hide-footer="true"
   >
     <div class="modal-content">
+      <div class="ten-birthday">
+        <img src="~@/assets/images/10-birthday.png">
+      </div>
       <span class="limited-event">
         {{ $t('limitedEvent') }}
       </span>
@@ -19,7 +22,7 @@
       </div>
       <div class="gryphatrice-grid">
         <div>
-          tempGryphatrice
+          <img src="~@/assets/images/anniversary_pet_still_cropped.png">
         </div>
         <div class="limited-edition">
           {{ $t('limitedEdition') }}
@@ -34,10 +37,10 @@
       <!-- beginning of payments -->
       <!-- buy with money OR gems -->
       <div
-        v-if="!ownGryphatrice"
+        v-if="!ownGryphatrice()"
       >
         <div
-          v-if="selectedPage != 'payment-buttons'"
+          v-if="selectedPage !== 'payment-buttons'"
           id="initial-buttons"
         >
           <button
@@ -117,8 +120,8 @@
 <style lang="scss">
 #anniversary-modal {
   .modal-body {
-    padding: 0rem;
-
+    padding: 0px;
+    border: 0px;
   }
   .modal-content {
     border-radius: 100px;
@@ -140,8 +143,8 @@
   .modal-content {
     width: 566px;
     padding: 32px 24px 24px;
-    // background: linear-gradient(158deg, $purple-300 0%, $purple-200 100%);
-    background-color: $gray-300; //temp
+    background: linear-gradient(158deg, $purple-300 0%, $purple-200 100%);
+    // background-color: $gray-300; //temp
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;;
     border-bottom-left-radius: 0px;
@@ -161,7 +164,14 @@
       color: $white;
       font-weight: bold;
       line-height: 1.71;
+      text-align: center;
     }
+
+  .ten-birthday {
+    width: 268px;
+    height: 244px;
+    margin: 0 125px 16px;
+  }
 
   .limited-event {
     font-size: 0.75rem;
@@ -250,8 +260,8 @@
 import { mapState } from '@/libs/store';
 
 // import images
-import tempGryphatrice from '@/assets/svg/anniversary_pet_still_cropped.png';
-import tenAnniversary from '@/assets/svg/10-birthday.png';
+// import tempGryphatrice from '~@/assets/images/anniversary_pet_still_cropped.png';
+// import tenAnniversary from '~@/assets/images/10-birthday.png';
 
 // import paymentButtons from '@/components/payments/buttons/list';
 
@@ -261,25 +271,25 @@ export default {
   },
   data () {
     return {
-      icons: Object.freeze({
-        tenAnniversary,
-        tempGryphatrice,
-      }),
+      // icons: Object.freeze({
+      //   tenAnniversary,
+      //   tempGryphatrice,
+      // }),
       selectedPage: 'initial-buttons',
     };
   },
   computed: {
     ...mapState({
-      user: 'user.data',
+      userLoggedIn: 'user.data',
     }),
-    ownGryphatrice () {
-      return Boolean(this.user.items.pets['Gryphatrice-Jubilant']);
-    },
   },
   methods: {
     selectPage (page) {
       if (page === this.selectedPage) return;
       if (page === 'payment-buttons') this.selectedPage = 'payment-buttons';
+    },
+    ownGryphatrice () {
+      return Boolean(this.userLoggedIn.items.pets['Gryphatrice-Jubilant']);
     },
   },
 };
