@@ -10,10 +10,10 @@ import { BuyQuestWithGoldOperation } from './buyQuestGold';
 import { BuySpellOperation } from './buySpell';
 import purchaseOp from './purchase';
 import hourglassPurchase from './hourglassPurchase';
-import purchaseGryphatrice from './buyGryphatrice';
 import errorMessage from '../../libs/errorMessage';
 import { BuyGemOperation } from './buyGem';
 import { BuyQuestWithGemOperation } from './buyQuestGem';
+import { BuyPetWithGemOperation } from './buyPetGem';
 import { BuyHourglassMountOperation } from './buyMount';
 
 // @TODO: remove the req option style. Dependency on express structure is an anti-pattern
@@ -87,8 +87,9 @@ export default async function buy (
       break;
     }
     case 'pets':
-      if (key === 'Jubilant-Gryphatrice') {
-        buyRes = purchaseGryphatrice(user, req, analytics);
+      if (key === 'Gryphatrice-Jubilant') {
+        const buyOp = new BuyPetWithGemOperation(user, req, analytics);
+        buyRes = await buyOp.purchase();
       } else {
         buyRes = hourglassPurchase(user, req, analytics);
       }

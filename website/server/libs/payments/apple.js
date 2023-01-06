@@ -45,7 +45,6 @@ api.verifyPurchase = async function verifyPurchase (options) {
   if (purchaseDataList.length === 0) {
     throw new NotAuthorized(api.constants.RESPONSE_NO_ITEM_PURCHASED);
   }
-  const correctReceipt = false;
 
   // Purchasing one item at a time (processing of await(s) below is sequential not parallel)
   for (const purchaseData of purchaseDataList) {
@@ -72,8 +71,6 @@ api.verifyPurchase = async function verifyPurchase (options) {
       });
     }
   }
-
-  if (!correctReceipt) throw new NotAuthorized(api.constants.RESPONSE_INVALID_ITEM);
 
   return appleRes;
 };

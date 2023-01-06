@@ -21,7 +21,7 @@ describe('payments/skuItems', () => {
     });
 
     describe('#gryphatrice', () => {
-      const sku = 'com.habitrpg.android.habitica.iap.gryphatrice';
+      const sku = 'com.habitrpg.android.habitica.iap.pets.gryphatrice-jubilant';
       it('returns true during birthday week', () => {
         clock = sinon.useFakeTimers(new Date('2023-01-29'));
         expect(canBuySkuItem(sku, user)).to.be.true;
@@ -32,7 +32,7 @@ describe('payments/skuItems', () => {
       });
       it('returns false if user already owns it', () => {
         clock = sinon.useFakeTimers(new Date('2023-02-01'));
-        user.items.pets['Jubilant-Gryphatrice'] = 5;
+        user.items.pets['Gryphatrice-Jubilant'] = 5;
         expect(canBuySkuItem(sku, user)).to.be.false;
       });
     });
