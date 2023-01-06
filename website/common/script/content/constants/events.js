@@ -15,6 +15,10 @@ export const EVENTS = {
     season: 'normal',
     npcImageSuffix: '',
   },
+  birthday10: {
+    start: '2023-01-23T08:00-05:00',
+    end: '2023-02-01T23:59-05:00',
+  },
   winter2023: {
     start: '2022-12-20T08:00-05:00',
     end: '2023-01-31T23:59-05:00',

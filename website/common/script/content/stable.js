@@ -118,6 +118,9 @@ const canFindSpecial = {
     'Jackalope-RoyalPurple': true, // subscription
     'Wolf-Cerberus': false, // Pet once granted to backers
     'Gryphon-Gryphatrice': false, // Pet once granted to kickstarter
+
+    // Birthday Pet
+    'Jubilant-Gryphatrice': true,
   },
   mounts: {
     // Thanksgiving pet ladder
@@ -174,6 +177,7 @@ const specialPets = {
   'Fox-Veteran': 'veteranFox',
   'JackOLantern-Glow': 'glowJackolantern',
   'Gryphon-Gryphatrice': 'gryphatrice',
+  'Jubilant-Gryphatrice': 'jubilantGryphatrice',
   'JackOLantern-RoyalPurple': 'royalPurpleJackolantern',
 };
 

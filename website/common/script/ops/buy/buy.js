@@ -10,6 +10,7 @@ import { BuyQuestWithGoldOperation } from './buyQuestGold';
 import { BuySpellOperation } from './buySpell';
 import purchaseOp from './purchase';
 import hourglassPurchase from './hourglassPurchase';
+import purchaseGryphatrice from './buyGryphatrice';
 import errorMessage from '../../libs/errorMessage';
 import { BuyGemOperation } from './buyGem';
 import { BuyQuestWithGemOperation } from './buyQuestGem';
@@ -86,7 +87,11 @@ export default async function buy (
       break;
     }
     case 'pets':
-      buyRes = hourglassPurchase(user, req, analytics);
+      if (key === 'Jubilant-Gryphatrice') {
+        buyRes = purchaseGryphatrice(user, req, analytics);
+      } else {
+        buyRes = hourglassPurchase(user, req, analytics);
+      }
       break;
     case 'quest': {
       const buyOp = new BuyQuestWithGoldOperation(user, req, analytics);
