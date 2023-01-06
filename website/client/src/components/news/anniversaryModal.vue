@@ -32,12 +32,52 @@
           {{ $t('anniversaryGryphatricePrice') }}
         </div>
       </div>
-      <button>
-        {{ $t('buyNowMoneyButton') }}
+      <!-- beginning of payments -->
+      <!-- buy with money OR gems -->
+      <div
+        :click="isHidden=buyNowMoney || buyNowGems"
+      >
+        <button
+          name="buyNowMoney"
+        >
+          {{ $t('buyNowMoneyButton') }}
+        </button>
+        <button
+          name="buyNowGems"
+        >
+          {{ $t('buyNowGemsButton') }}
+        </button>
+      </div>
+      <!-- buy with money -->
+      <div>
+        <button>
+          Stripe
+        </button>
+        <button>
+          Paypal
+        </button>
+        <button>
+          Amazon
+        </button>
+        <div>
+          {{ $t('wantToPayWithGemsText') }}
+        </div>
+      <!-- buy with gems -->
+      </div>
+      <div>
+        <button>
+          {{ $t('buyNowGemsButton') }}
+        </button>
+        <div>
+          {{ $t('wantToPayWithMoneyText') }}
+        </div>
+      </div>
+      <!-- Own the gryphatrice -->
+      <button
+        v-html="$t('ownJubilantGryphatrice')"
+      >
       </button>
-      <button>
-        {{ $t('buyNowGemsButton') }}
-      </button>
+      <!-- end of payments -->
       <div>
         {{ $t('plentyOfPotions') }}
       </div>
@@ -97,7 +137,8 @@
   .modal-content {
     width: 566px;
     padding: 32px 24px 24px;
-    background: linear-gradient(158deg, $purple-300 0%, $purple-200 100%);
+    // background: linear-gradient(158deg, $purple-300 0%, $purple-200 100%);
+    background-color: $gray-300; //temp
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;;
     border-bottom-left-radius: 0px;
@@ -206,8 +247,11 @@
 import tempGryphatrice from '@/assets/svg/anniversary_pet_still_cropped.png';
 import tenAnniversary from '@/assets/svg/10-birthday.png';
 
+// import paymentButtons from '@/components/payments/buttons/list';
+
 export default {
   components: {
+    // paymentButtons,
   },
   data () {
     return {
@@ -215,9 +259,20 @@ export default {
         tenAnniversary,
         tempGryphatrice,
       }),
+      isHidden: false,
     };
   },
+  computed: {
+  },
   methods: {
+    // toggleOne () {
+    //   // eslint-disable-next-line no-unneeded-ternary
+    //   this.isActive = this.isActive ? false : true;
+    // },
+    // toggleTwo () {
+    //   // eslint-disable-next-line no-unneeded-ternary
+    //   this.isActive = this.isActive ? false : true;
+    // },
   },
 };
 </script>
