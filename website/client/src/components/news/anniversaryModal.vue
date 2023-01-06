@@ -34,17 +34,11 @@
       </div>
       <!-- beginning of payments -->
       <!-- buy with money OR gems -->
-      <div
-        :click="isHidden=buyNowMoney || buyNowGems"
-      >
-        <button
-          name="buyNowMoney"
-        >
+      <div>
+        <button>
           {{ $t('buyNowMoneyButton') }}
         </button>
-        <button
-          name="buyNowGems"
-        >
+        <button>
           {{ $t('buyNowGemsButton') }}
         </button>
       </div>
@@ -243,7 +237,10 @@
 
 
 <script>
+// to check if user owns JG or not
+import { mapState } from '@/libs/store';
 
+// import images
 import tempGryphatrice from '@/assets/svg/anniversary_pet_still_cropped.png';
 import tenAnniversary from '@/assets/svg/10-birthday.png';
 
@@ -263,16 +260,12 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      userLoggedIn: 'user.data',
+    }),
   },
   methods: {
-    // toggleOne () {
-    //   // eslint-disable-next-line no-unneeded-ternary
-    //   this.isActive = this.isActive ? false : true;
-    // },
-    // toggleTwo () {
-    //   // eslint-disable-next-line no-unneeded-ternary
-    //   this.isActive = this.isActive ? false : true;
-    // },
+
   },
 };
 </script>
