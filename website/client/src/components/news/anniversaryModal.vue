@@ -17,21 +17,26 @@
       <div class="celebrate">
         {{ $t('celebrateAnniversary') }}
       </div>
-      <div class="pet-text">
+      <div class="header">
         {{ $t('jubilantGryphatrice') }}
       </div>
-      <div class="gryphatrice-grid">
-        <div>
+      <!-- gryphatrice info -->
+      <div class="d-flex">
+        <div class="jubilant-gryphatrice d-flex mr-auto">
           <img src="~@/assets/images/anniversary_pet_still_cropped.png">
         </div>
-        <div class="limited-edition">
-          {{ $t('limitedEdition') }}
-        </div>
-        <div class="gryphatrice-text">
-          {{ $t('anniversaryGryphatriceText') }}
-        </div>
-        <div class="gryphatrice-price">
-          {{ $t('anniversaryGryphatricePrice') }}
+        <div class="align-items-center">
+          <div class="limited-edition">
+            {{ $t('limitedEdition') }}
+          </div>
+          <div class="gryphatrice-text">
+            {{ $t('anniversaryGryphatriceText') }}
+          </div>
+          <div
+            class="gryphatrice-price"
+            v-html="$t('anniversaryGryphatricePrice')"
+          >
+          </div>
         </div>
       </div>
       <!-- beginning of payments -->
@@ -44,12 +49,15 @@
           id="initial-buttons"
         >
           <button
+            class="btn btn-secondary buy-now-left"
             :class="{active: selectedPage === 'payment-buttons'}"
             @click="selectPage('payment-buttons')"
           >
             {{ $t('buyNowMoneyButton') }}
           </button>
-          <button>
+          <button
+            class="btn btn-secondary buy-now-right"
+          >
             {{ $t('buyNowGemsButton') }}
           </button>
         </div>
@@ -57,17 +65,24 @@
         <div
           v-else-if="selectedPage === 'payment-buttons'"
           id="payment-buttons"
+          class="d-flex flex-column"
         >
-          <button>
-            Stripe
-          </button>
-          <button>
-            Paypal
-          </button>
-          <button>
-            Amazon
-          </button>
           <div>
+            <button class="btn btn-secondary d-flex stripe">
+              Stripe
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-secondary d-flex paypal">
+              Paypal
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-secondary d-flex amazon">
+              Amazon
+            </button>
+          </div>
+          <div class="pay-with-gems">
             {{ $t('wantToPayWithGemsText') }}
           </div>
         </div>
@@ -83,22 +98,22 @@
         </button>
       </div>
       <!-- end of payments -->
-      <div>
+      <div class="header">
         {{ $t('plentyOfPotions') }}
       </div>
-      <div>
+      <div class="plenty-of-potions">
         {{ $t('plentyOfPotionsText') }}
       </div>
       <div>
         <pre>potion images go here</pre>
       </div>
-      <button>
+      <button class="btn btn-secondary visit-the-market">
         {{ $t('visitTheMarketButton') }}
       </button>
-      <div>
+      <div class="header">
         {{ $t('fourForFree') }}
       </div>
-      <div>
+      <div class="four-for-free">
         {{ $t('fourForFreeText') }}
       </div>
       <div>
@@ -180,6 +195,7 @@
     text-align: center;
     justify-content: center;
     letter-spacing: 2.4px;
+    margin-top: 16 px;
     color: $yellow-50;
   }
 
@@ -199,56 +215,129 @@
     line-height: 1.4;
     text-align: center;
     justify-content: center;
+    margin-top: 16px;
     color: $yellow-50;
   }
 
-  .pet-text {
+  .header {
     font-size: 1.25rem;
     font-weight: bold;
     font-stretch: condensed;
     line-height: 1.4;
-    padding-top: 24px;
+    margin-top: 24px;
     text-align: center;
     justify-content: center;
     color: $white;
   }
 
-  .gryphatrice-grid {
-    display: grid;
-    column-gap: 24px;
-    grid-template-columns: 176px 274px;
-  }
-
   .jubilant-gryphatrice {
-    grid-column: 1 / 2;
-    height: 204px;
-    width: 176px;
+    height: 176px;
+    width: 204px;
     border-radius: 12px;
     background-color: $purple-50;
-    padding-top: 16px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+    margin-right: 24px;
+    margin-left: 4px;
     color: $white;
   }
 
+  .limited-edition, .gryphatrice-text, .gryphatrice-price {
+    max-width: 274px;
+  }
+
   .limited-edition {
-    grid-column: 2 /2;
     font-size: 0.75rem;
     font-weight: bold;
     text-transform: uppercase;
     line-height:1.33;
     letter-spacing:2.4px;
     padding-top: 36px;
+    margin-left: 24px;
+    margin-bottom: 8px;
     color: $yellow-50;
+
   }
 
   .gryphatrice-text, .gryphatrice-price {
-    grid-column: 2 / 2;
     font-size: 0.875rem;
     line-height: 1.71;
+    margin-left: 24px;
+    margin-right: 4px;
     color: $white;
   }
 
   .gryphatrice-price {
     padding-top: 16px;
+    margin-left: 24px;
+  }
+
+  .buy-now-left {
+    width: 243px;
+    margin-top: 24px;
+    margin-right: 8px;
+    margin-left: 4px;
+  }
+
+  .buy-now-right {
+    width: 243px;
+    margin-top: 24px;
+    margin-right: 4px;
+    margin-left: 8px;
+  }
+
+  .stripe, .paypal, .amazon {
+    width: 506px;
+    margin-left: 4px;
+    margin-right: 4px;
+    border-radius: 4px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .stripe {
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+
+  .paypal {
+    margin-bottom: 8px;
+  }
+
+  .amazon {
+    margin-bottom: 16px;
+  }
+
+  .pay-with-gems {
+    color: $white;
+    text-align: center;
+  }
+
+  .plenty-of-potions {
+    font-size: 0.875rem;
+    line-height: 1.71;
+    margin: 16px 8px 24px;
+    text-align: center;
+    color: $white;
+  }
+
+  .visit-the-market {
+    width: 502px;
+    height: 32px;
+  }
+
+  .four-for-free {
+    font-size: 0.875rem;
+    line-height: 1.71;
+    margin: 16px 36px 24px;
+    text-align: center;
+    color: $white;
+  }
+
+  pre {
+    color: $orange-50;
   }
 }
 
