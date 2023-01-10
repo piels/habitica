@@ -35,6 +35,7 @@
       <sub-canceled-modal v-if="isUserLoaded" />
       <bug-report-modal v-if="isUserLoaded" />
       <bug-report-success-modal v-if="isUserLoaded" />
+      <anniversary-modal />
       <snackbars />
       <router-view v-if="!isUserLoggedIn || isStaticPage" />
       <template v-else>
@@ -153,6 +154,7 @@
 import axios from 'axios';
 import { loadProgressBar } from 'axios-progress-bar';
 
+import anniversaryModal from '@/components/news/anniversaryModal';
 import AppMenu from './components/header/menu';
 import AppHeader from './components/header/index';
 import DamagePausedBanner from './components/header/banners/damagePaused';
@@ -191,6 +193,7 @@ export default {
     AppMenu,
     AppHeader,
     AppFooter,
+    anniversaryModal,
     DamagePausedBanner,
     GemsPromoBanner,
     GiftPromoBanner,
