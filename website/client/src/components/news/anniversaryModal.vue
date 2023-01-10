@@ -42,7 +42,7 @@
       <!-- beginning of payments -->
       <!-- buy with money OR gems -->
       <div
-        v-if="!ownGryphatrice()"
+        v-if="!ownGryphatrice"
       >
         <div
           v-if="selectedPage !== 'payment-buttons'"
@@ -57,6 +57,7 @@
           </button>
           <button
             class="btn btn-secondary buy-now-right"
+            @click="buyGryphatriceGems()"
           >
             {{ $t('buyNowGemsButton') }}
           </button>
@@ -347,6 +348,7 @@
 <script>
 // to check if user owns JG or not
 import { mapState } from '@/libs/store';
+import content from '@/../../common/script/content/index';
 
 // import images
 // import tempGryphatrice from '~@/assets/images/anniversary_pet_still_cropped.png';
@@ -369,16 +371,19 @@ export default {
   },
   computed: {
     ...mapState({
-      userLoggedIn: 'user.data',
+      user: 'user.data',
     }),
+    ownGryphatrice () {
+      return Boolean(this.user && this.user.items.pets['Gryphatrice-Jubilant']);
+    },
   },
   methods: {
+    buyGryphatriceGems () {
+      this.$root.$emit('buyModal::showItem', content.petInfo['Gryphatrice-Jubilant']);
+    },
     selectPage (page) {
       if (page === this.selectedPage) return;
       if (page === 'payment-buttons') this.selectedPage = 'payment-buttons';
-    },
-    ownGryphatrice () {
-      return Boolean(this.userLoggedIn.items.pets['Gryphatrice-Jubilant']);
     },
   },
 };
