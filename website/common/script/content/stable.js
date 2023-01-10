@@ -220,6 +220,7 @@ Object.assign(petInfo['Gryphatrice-Jubilant'], {
   currency: 'gems',
   event: 'birthday10',
   value: 60,
+  purchaseType: 'pets',
 });
 
 each(specialMounts, (translationString, key) => {
