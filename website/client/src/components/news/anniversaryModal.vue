@@ -104,9 +104,36 @@
       <div class="plenty-of-potions">
         {{ $t('plentyOfPotionsText') }}
       </div>
-      <div>
-        <pre>potion images go here</pre>
-      </div>
+      <span class="potions">
+        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Porcelain.png">
+      </span>
+      <span class="potions">
+        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Vampire.png">
+      </span>
+      <span class="potions">
+        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Aquatic.png">
+      </span>
+      <span class="potions">
+        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_StainedGlass.png">
+      </span>
+      <span class="potions">
+        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Celestial.png">
+      </span>
+      <span class="potions">
+        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Glow.png">
+      </span>
+      <span class="potions">
+        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_AutumnLeaf.png">
+      </span>
+      <span class="potions">
+        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_SandSculpture.png">
+      </span>
+      <span class="potions">
+        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Peppermint.png">
+      </span>
+      <span class="potions">
+        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Shimmer.png">
+      </span>
       <button class="btn btn-secondary visit-the-market">
         {{ $t('visitTheMarketButton') }}
       </button>
@@ -321,6 +348,16 @@
     margin: 16px 8px 24px;
     text-align: center;
     color: $white;
+  }
+
+  .potions {
+    position: relative;
+    display: inline-block;
+    height: 68px;
+    width: 68px;
+    border-radius: 8px;
+    background-color: $purple-50;
+    margin: 0 22px 22px 0;
   }
 
   .visit-the-market {
