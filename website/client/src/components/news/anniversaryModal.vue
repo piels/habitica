@@ -104,36 +104,38 @@
       <div class="plenty-of-potions">
         {{ $t('plentyOfPotionsText') }}
       </div>
-      <span class="potions">
-        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Porcelain.png">
-      </span>
-      <span class="potions">
-        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Vampire.png">
-      </span>
-      <span class="potions">
-        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Aquatic.png">
-      </span>
-      <span class="potions">
-        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_StainedGlass.png">
-      </span>
-      <span class="potions">
-        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Celestial.png">
-      </span>
-      <span class="potions">
-        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Glow.png">
-      </span>
-      <span class="potions">
-        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_AutumnLeaf.png">
-      </span>
-      <span class="potions">
-        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_SandSculpture.png">
-      </span>
-      <span class="potions">
-        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Peppermint.png">
-      </span>
-      <span class="potions">
-        <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Shimmer.png">
-      </span>
+      <div class="potions">
+        <div class="pot-1">
+          <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Porcelain.png">
+        </div>
+        <div class="pot-2">
+          <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Vampire.png">
+        </div>
+        <div class="pot-3">
+          <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Aquatic.png">
+        </div>
+        <div class="pot-4">
+          <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_StainedGlass.png">
+        </div>
+        <div class="pot-5">
+          <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Celestial.png">
+        </div>
+        <div class="pot-6">
+          <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Glow.png">
+        </div>
+        <div class="pot-7">
+          <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_AutumnLeaf.png">
+        </div>
+        <div class="pot-8">
+          <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_SandSculpture.png">
+        </div>
+        <div class="pot-9">
+          <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Peppermint.png">
+        </div>
+        <div class="pot-10">
+          <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Shimmer.png">
+        </div>
+      </div>
       <button class="btn btn-secondary visit-the-market">
         {{ $t('visitTheMarketButton') }}
       </button>
@@ -143,8 +145,54 @@
       <div class="four-for-free">
         {{ $t('fourForFreeText') }}
       </div>
-      <div>
-        <pre>Robes, Gems, Bday Set, and Background go here</pre>
+      <div class="four-grid">
+        <div class="day-one-a">
+          <div class="day">
+            {{ $t('dayOne') }}
+          </div>
+          <div>
+            <!-- party robes -->
+          </div>
+          <div class="description">
+            {{ $t('partyRobes') }}
+          </div>
+        </div>
+        <div class="day-one-b">
+          <div class="day">
+            {{ $t('dayOne') }}
+          </div>
+          <div
+            class="item"
+          >
+            <img src="~@/assets/images/birthday-gems.png">
+          </div>
+          <div class="description">
+            {{ $t('twentyGems') }}
+          </div>
+        </div>
+        <div class="day-five">
+          <div class="day">
+            {{ $t('dayFive') }}
+          </div>
+          <div>
+            <!-- Birthday Suit -->
+          </div>
+          <div class="description">
+            {{ $t('birthdaySet') }}
+          </div>
+        </div>
+        <div class="day-ten">
+          <div class="day">
+            {{ $t('dayTen') }}
+          </div>
+          <div
+            class="item">
+            <img src="~@/assets/images/icon-background-habitversary.png">
+          </div>
+          <div class="description">
+            {{ $t('birthdayBackground') }}
+          </div>
+        </div>
       </div>
     </div>
 
@@ -152,7 +200,7 @@
       <div class="limitations d-flex justify-content-center">
         {{ $t('limitations') }}
       </div>
-      <div>
+      <div class="fine-print">
         {{ $t('anniversaryLimitations') }}
       </div>
     </div>
@@ -206,6 +254,14 @@
       color: $white;
       font-weight: bold;
       line-height: 1.71;
+      margin-top: 8px;
+      justify-content: center;
+    }
+    .fine-print {
+      font-size: 0.75rem;
+      color: $purple-500;
+      line-height: 1.33;
+      margin-top: 8px;
       text-align: center;
     }
 
@@ -351,18 +407,98 @@
   }
 
   .potions {
-    position: relative;
-    display: inline-block;
-    height: 68px;
-    width: 68px;
-    border-radius: 8px;
-    background-color: $purple-50;
-    margin: 0 22px 22px 0;
-  }
+    display: grid;
+    grid-template-columns: 5;
+    grid-template-rows: 2;
+    gap: 24px 24px;
+    justify-content: center;
 
+    .pot-1 {
+      grid-column: 1 / 1;
+      grid-row: 1 / 2;
+      height: 68px;
+      width: 68px;
+      border-radius: 8px;
+      background-color: $purple-50;
+    }
+    .pot-2 {
+      grid-column: 2 / 2;
+      grid-row: 1 / 2;
+      height: 68px;
+      width: 68px;
+      border-radius: 8px;
+      background-color: $purple-50;
+    }
+    .pot-3 {
+      grid-column: 3 / 3;
+      grid-row: 1 / 2;
+      height: 68px;
+      width: 68px;
+      border-radius: 8px;
+      background-color: $purple-50;
+    }
+    .pot-4 {
+      grid-column: 4 / 4;
+      grid-row: 1 / 2;
+      height: 68px;
+      width: 68px;
+      border-radius: 8px;
+      background-color: $purple-50;
+    }
+    .pot-5 {
+      grid-column: 5 / 5;
+      grid-row: 1 / 2;
+      height: 68px;
+      width: 68px;
+      border-radius: 8px;
+      background-color: $purple-50;
+    }
+    .pot-6 {
+      grid-column: 1 / 5;
+      grid-row: 2 / 2;
+      height: 68px;
+      width: 68px;
+      border-radius: 8px;
+      background-color: $purple-50;
+    }
+    .pot-7 {
+      grid-column: 2 / 5;
+      grid-row: 2 / 2;
+      height: 68px;
+      width: 68px;
+      border-radius: 8px;
+      background-color: $purple-50;
+    }
+    .pot-8 {
+      grid-column: 3 / 5;
+      grid-row: 2 / 2;
+      height: 68px;
+      width: 68px;
+      border-radius: 8px;
+      background-color: $purple-50;
+    }
+    .pot-9 {
+      grid-column: 4 / 5;
+      grid-row: 2 / 2;
+      height: 68px;
+      width: 68px;
+      border-radius: 8px;
+      background-color: $purple-50;
+    }
+    .pot-10 {
+      grid-column: 5 / 5;
+      grid-row: 2 / 2;
+      height: 68px;
+      width: 68px;
+      border-radius: 8px;
+      background-color: $purple-50;
+    }
+
+  }
   .visit-the-market {
     width: 502px;
     height: 32px;
+    margin-top: 24px;
   }
 
   .four-for-free {
@@ -373,9 +509,88 @@
     color: $white;
   }
 
-  pre {
-    color: $orange-50;
+  .four-grid {
+    display: grid;
+    grid-template-columns: 4;
+    grid-template-rows: 1;
+    gap: 24px;
+    justify-content: center;
   }
+
+  .day-one-a {
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
+    height: 140px;
+    width: 100px;
+    border-radius: 8px;
+    background-color: $purple-50;
+  }
+  .day-one-b {
+    grid-column: 2 / 2;
+    grid-row: 1 / 1;
+    height: 140px;
+    width: 100px;
+    border-radius: 4px;
+    background-color: $purple-50;
+    padding: 16px 13px;
+    margin: 4px 0 8px;
+  }
+  .day-five {
+    grid-column: 3 / 3;
+    grid-row: 1 / 1;
+    height: 140px;
+    width: 100px;
+    border-radius: 4px;
+    background-color: $purple-50;
+  }
+  .day-ten {
+    grid-column: 4 / 4;
+    grid-row: 1 / 1;
+    height: 140px;
+    width: 100px;
+    border-radius: 4px;
+    background-color: $purple-50;
+    padding: 6px 8px;
+  }
+
+  .day {
+    font-size: 0.75rem;
+    font-weight: bold;
+    line-height: 1.33;
+    letter-spacing: 2.4px;
+    text-align: center;
+    text-transform: uppercase;
+    color: $yellow-50;
+  }
+
+  .item {
+    background-color: $purple-100;
+  }
+
+  .description{
+    font-size: 0.75rem;
+    line-height: 1.33;
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    color: $white;
+  }
+
+  // SVG CSS
+  // .svg-gem {
+  //   height: 48px;
+  //   width: 58px;
+  //   flex-grow: 0;
+  //   object-fit: contain;
+  // }
+
+  // .svg-background {
+  //   height: 68px;
+  //   width: 68px;
+  //   flex-grow: 0;
+  //   object-fit: contain;
+  // }
+
 }
 
 </style>
@@ -386,8 +601,8 @@
 import { mapState } from '@/libs/store';
 
 // import images
-// import tempGryphatrice from '~@/assets/images/anniversary_pet_still_cropped.png';
-// import tenAnniversary from '~@/assets/images/10-birthday.png';
+// import birthdayGems from '@/assets/svg/birthday-gems.svg';
+// import habitversaryBackground from '@/assets/svg/icon-background-habitversary.svg';
 
 // import paymentButtons from '@/components/payments/buttons/list';
 
@@ -398,8 +613,8 @@ export default {
   data () {
     return {
       // icons: Object.freeze({
-      //   tenAnniversary,
-      //   tempGryphatrice,
+      //   birthdayGems,
+      //   habitversaryBackground,
       // }),
       selectedPage: 'initial-buttons',
     };
