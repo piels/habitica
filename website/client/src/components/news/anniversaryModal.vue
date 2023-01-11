@@ -600,24 +600,14 @@
 <script>
 // to check if user owns JG or not
 import { mapState } from '@/libs/store';
+import buy from '@/mixins/buy';
+import notifications from '@/mixins/notifications';
 import content from '@/../../common/script/content/index';
 
-// import images
-// import birthdayGems from '@/assets/svg/birthday-gems.svg';
-// import habitversaryBackground from '@/assets/svg/icon-background-habitversary.svg';
-
-// import paymentButtons from '@/components/payments/buttons/list';
-
 export default {
-  components: {
-    // paymentButtons,
-  },
+  mixins: [buy, notifications],
   data () {
     return {
-      // icons: Object.freeze({
-      //   birthdayGems,
-      //   habitversaryBackground,
-      // }),
       selectedPage: 'initial-buttons',
     };
   },
@@ -631,7 +621,12 @@ export default {
   },
   methods: {
     buyGryphatriceGems () {
-      this.$root.$emit('buyModal::showItem', content.petInfo['Gryphatrice-Jubilant']);
+      const gryphatrice = content.petInfo['Gryphatrice-Jubilant'];
+      if (!this.confirmPurchase(gryphatrice.currency, gryphatrice.value)) {
+        return;
+      }
+      this.makeGenericPurchase(gryphatrice);
+      this.purchased(gryphatrice.text());
     },
     selectPage (page) {
       if (page === this.selectedPage) return;
