@@ -237,7 +237,7 @@
   "noLongerAvailable": "This item is no longer available.",
   "gemSaleHow": "Between <%= eventStartMonth %> <%= eventStartOrdinal %> and <%= eventEndOrdinal %>, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!",
   "gemSaleLimitations": "This promotion only applies during the limited time event. This event starts on <%= eventStartMonth %> <%= eventStartOrdinal %> at 8:00 AM EDT (12:00 UTC) and will end <%= eventStartMonth %> <%= eventEndOrdinal %> at 8:00 PM EDT (00:00 UTC). The promo offer is only available when buying Gems for yourself.",
-  "anniversaryLimitations": "This is a limited time event that starts on January 23, 2023 at 8:00 AM ET (13:00 UTC) and will end February 1, 2023, at 8:00 PM ET (01:00 UTC). The Limited Edition Gryphatrice and ten Magic Hatching Potions will be available to buy during this time. The other gifts will be automatically delivered to all accounts active in the previous 30 days.",
+  "anniversaryLimitations": "This is a limited time event that starts on January 23, 2023 at 8:00 AM ET (13:00 UTC) and will end February 1, 2023, at 11:59 PM ET (04:59 UTC). The Limited Edition Gryphatrice and ten Magic Hatching Potions will be available to buy during this time. The other gifts will be automatically delivered to all accounts active in the previous 30 days.",
   "limitedEvent": "Limited Event",
   "limitedDates": "January 23rd to February 1st",
   "celebrateAnniversary": "Celebrate Habitica's 10th Birthday with gifts and exclusive items below!",
@@ -260,6 +260,5 @@
   "dayTen": "Day 10",
   "partyRobes": "Party Robes",
   "twentyGems": "20 Gems",
-  "birthdaySet": "Birthday Set",
-  "birthdayBackground": "Background"
+  "birthdaySet": "Birthday Set"
 }

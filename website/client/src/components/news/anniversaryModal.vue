@@ -73,17 +73,29 @@
               class="btn btn-secondary d-flex stripe"
               @click="redirectToStripe({ sku: 'price_0MPZekZCD0RifGXl0sfpFgs4' })"
             >
-              Stripe
+              <span
+                class="svg-stripe"
+                v-html="icons.stripe"
+              >
+              </span>
             </button>
           </div>
           <div>
             <button class="btn btn-secondary d-flex paypal">
-              Paypal
+              <span
+                class="svg-paypal"
+                v-html="icons.paypal"
+              >
+              </span>
             </button>
           </div>
           <div>
             <button class="btn btn-secondary d-flex amazon">
-              Amazon
+              <span
+                class="svg-amazon"
+                v-html="icons.amazon"
+              >
+              </span>
             </button>
           </div>
           <div class="pay-with-gems">
@@ -151,50 +163,63 @@
       </div>
       <div class="four-grid">
         <div class="day-one-a">
-          <div class="day">
+          <div class="day-text">
             {{ $t('dayOne') }}
           </div>
-          <div>
-            <!-- party robes -->
+          <div class="item d-flex justify-content-center align-items-middle">
+            <img
+              src="~@/assets/images/robes.webp"
+              class="m-auto"
+              width="40px"
+              height="66px"
+            >
           </div>
           <div class="description">
             {{ $t('partyRobes') }}
           </div>
         </div>
         <div class="day-one-b">
-          <div class="day">
+          <div class="day-text">
             {{ $t('dayOne') }}
           </div>
-          <div
-            class="item"
-          >
-            <img src="~@/assets/images/birthday-gems.png">
+          <div class="item d-flex justify-content-center align-items-middle">
+            <div
+              class="svg-gem svg-icon m-auto"
+              v-html="icons.birthdayGems"
+            >
+            </div>
           </div>
           <div class="description">
             {{ $t('twentyGems') }}
           </div>
         </div>
         <div class="day-five">
-          <div class="day">
+          <div class="day-text">
             {{ $t('dayFive') }}
           </div>
-          <div>
-            <!-- Birthday Suit -->
+          <div class="item d-flex justify-content-center align-items-middle">
+            <img
+              src="~@/assets/images/habitica-hero-goober.webp"
+              class="m-auto"
+            ><!-- Birthday Suit -->
           </div>
           <div class="description">
             {{ $t('birthdaySet') }}
           </div>
         </div>
         <div class="day-ten">
-          <div class="day">
+          <div class="day-text">
             {{ $t('dayTen') }}
           </div>
-          <div
-            class="item">
-            <img src="~@/assets/images/icon-background-habitversary.png">
+          <div class="item d-flex justify-content-center align-items-middle">
+            <div
+              class="svg-background svg-icon m-auto"
+              v-html="icons.habitversaryBackground"
+            >
+            </div>
           </div>
           <div class="description">
-            {{ $t('birthdayBackground') }}
+            {{ $t('background') }}
           </div>
         </div>
       </div>
@@ -344,7 +369,6 @@
     margin-left: 24px;
     margin-bottom: 8px;
     color: $yellow-50;
-
   }
 
   .gryphatrice-text, .gryphatrice-price {
@@ -374,8 +398,25 @@
     margin-left: 8px;
   }
 
+  .stripe {
+    margin-top: 24px;
+    margin-bottom: 8px;
+    padding-bottom: 10px;
+  }
+
+  .paypal {
+    margin-bottom: 8px;
+    padding-bottom: 10px;
+  }
+
+  .amazon {
+    margin-bottom: 16px;
+    padding-bottom: 15px;
+  }
+
   .stripe, .paypal, .amazon {
     width: 506px;
+    height: 32px;
     margin-left: 4px;
     margin-right: 4px;
     border-radius: 4px;
@@ -384,18 +425,6 @@
     align-items: center;
   }
 
-  .stripe {
-    margin-top: 24px;
-    margin-bottom: 8px;
-  }
-
-  .paypal {
-    margin-bottom: 8px;
-  }
-
-  .amazon {
-    margin-bottom: 16px;
-  }
 
   .pay-with-gems {
     color: $white;
@@ -518,82 +547,94 @@
     grid-template-columns: 4;
     grid-template-rows: 1;
     gap: 24px;
-    justify-content: center;
   }
 
-  .day-one-a {
-    grid-column: 1 / 1;
-    grid-row: 1 / 1;
-    height: 140px;
-    width: 100px;
-    border-radius: 8px;
-    background-color: $purple-50;
-  }
-  .day-one-b {
-    grid-column: 2 / 2;
-    grid-row: 1 / 1;
-    height: 140px;
-    width: 100px;
-    border-radius: 4px;
-    background-color: $purple-50;
-    padding: 16px 13px;
-    margin: 4px 0 8px;
-  }
-  .day-five {
-    grid-column: 3 / 3;
-    grid-row: 1 / 1;
-    height: 140px;
-    width: 100px;
-    border-radius: 4px;
-    background-color: $purple-50;
-  }
-  .day-ten {
-    grid-column: 4 / 4;
-    grid-row: 1 / 1;
-    height: 140px;
-    width: 100px;
-    border-radius: 4px;
-    background-color: $purple-50;
-    padding: 6px 8px;
-  }
+    .day-one-a {
+      grid-column: 1 / 1;
+      grid-row: 1 / 1;
+      height: 140px;
+      width: 100px;
+      border-radius: 8px;
+      background-color: $purple-50;
+    }
+    .day-one-b {
+      grid-column: 2 / 2;
+      grid-row: 1 / 1;
+      height: 140px;
+      width: 100px;
+      border-radius: 4px;
+      background-color: $purple-50;
+    }
+    .day-five {
+      grid-column: 3 / 3;
+      grid-row: 1 / 1;
+      height: 140px;
+      width: 100px;
+      border-radius: 4px;
+      background-color: $purple-50;
+    }
+    .day-ten {
+      grid-column: 4 / 4;
+      grid-row: 1 / 1;
+      height: 140px;
+      width: 100px;
+      border-radius: 4px;
+      background-color: $purple-50;
+    }
 
-  .day {
-    font-size: 0.75rem;
-    font-weight: bold;
-    line-height: 1.33;
-    letter-spacing: 2.4px;
-    text-align: center;
-    text-transform: uppercase;
-    color: $yellow-50;
-  }
+    .day-text {
+      font-size: 0.75rem;
+      font-weight: bold;
+      line-height: 1.33;
+      letter-spacing: 2.4px;
+      text-align: center;
+      text-transform: uppercase;
+      padding: 4px 0px;
+      color: $yellow-50;
+    }
 
-  .item {
-    background-color: $purple-100;
-  }
+    .item {
+      height: 80px;
+      width: 84px;
+      margin: 0 8px 32px;
+      background-color: $purple-100;
+    }
 
-  .description{
-    font-size: 0.75rem;
-    line-height: 1.33;
-    text-align: center;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    color: $white;
-  }
+    .description {
+      font-size: 0.75rem;
+      line-height: 1.33;
+      text-align: center;
+      padding: 8px 0px;
+      margin-top: -32px;
+      color: $white;
+    }
 
   // SVG CSS
-  // .svg-gem {
-  //   height: 48px;
-  //   width: 58px;
-  //   flex-grow: 0;
-  //   object-fit: contain;
-  // }
+  .svg-gem {
+    height: 48px;
+    width: 58px;
+  }
 
-  // .svg-background {
-  //   height: 68px;
-  //   width: 68px;
-  //   flex-grow: 0;
-  //   object-fit: contain;
-  // }
+  .svg-background {
+    height: 68px;
+    width: 68px;
+  }
+
+  .svg-stripe {
+    height: 20px;
+    width: 48px;
+  }
+
+  .svg-paypal {
+    height: 16px;
+    width: 60px;
+  }
+
+  .svg-amazon {
+    height: 16px;
+    width: 83.4px;
+  }
+
 
 }
 
@@ -603,15 +644,31 @@
 <script>
 // to check if user owns JG or not
 import { mapState } from '@/libs/store';
+
 import buy from '@/mixins/buy';
 import notifications from '@/mixins/notifications';
 import payments from '@/mixins/payments';
 import content from '@/../../common/script/content/index';
 
+// import images
+import birthdayGems from '@/assets/svg/birthday-gems.svg';
+import habitversaryBackground from '@/assets/svg/icon-background-habitversary.svg';
+import stripe from '@/assets/svg/stripe.svg';
+import paypal from '@/assets/svg/paypal-logo.svg';
+import amazon from '@/assets/svg/amazonpay.svg';
+
+
 export default {
   mixins: [buy, notifications, payments],
   data () {
     return {
+      icons: Object.freeze({
+        birthdayGems,
+        habitversaryBackground,
+        stripe,
+        paypal,
+        amazon,
+      }),
       selectedPage: 'initial-buttons',
       gryphBought: false,
     };
