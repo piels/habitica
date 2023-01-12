@@ -147,7 +147,7 @@
       </div>
       <div class="four-grid">
         <div class="day-one-a">
-          <div class="day">
+          <div class="day-text">
             {{ $t('dayOne') }}
           </div>
           <div class="item d-flex justify-content-center align-items-middle">
@@ -163,20 +163,22 @@
           </div>
         </div>
         <div class="day-one-b">
-          <div class="day">
+          <div class="day-text">
             {{ $t('dayOne') }}
           </div>
-          <div
-            class="item svg-gems svg-icon"
-            v-html="icons.birthdayGems"
-          >
+          <div class="item d-flex justify-content-center align-items-middle">
+            <div
+              class="svg-gem svg-icon m-auto"
+              v-html="icons.birthdayGems"
+            >
+            </div>
           </div>
           <div class="description">
             {{ $t('twentyGems') }}
           </div>
         </div>
         <div class="day-five">
-          <div class="day">
+          <div class="day-text">
             {{ $t('dayFive') }}
           </div>
           <div class="item">
@@ -187,13 +189,15 @@
           </div>
         </div>
         <div class="day-ten">
-          <div class="day">
+          <div class="day-text">
             {{ $t('dayTen') }}
           </div>
-          <div
-            class="item svg-background"
-            v-html="icons.habitversaryBackground"
-          >
+          <div class="item d-flex justify-content-center align-items-middle">
+            <div
+              class="svg-background svg-icon m-auto"
+              v-html="icons.habitversaryBackground"
+            >
+            </div>
           </div>
           <div class="description">
             {{ $t('birthdayBackground') }}
@@ -554,14 +558,14 @@
       background-color: $purple-50;
     }
 
-    .day {
+    .day-text {
       font-size: 0.75rem;
       font-weight: bold;
       line-height: 1.33;
       letter-spacing: 2.4px;
       text-align: center;
       text-transform: uppercase;
-      padding: 0 21px 4px;
+      padding: 4px 0px;
       color: $yellow-50;
     }
 
@@ -572,12 +576,12 @@
       background-color: $purple-100;
     }
 
-    .description{
+    .description {
       font-size: 0.75rem;
       line-height: 1.33;
       text-align: center;
-      margin-top: 8px;
-      margin-bottom: 8px;
+      padding: 8px 0px;
+      margin-top: -32px;
       color: $white;
     }
 
@@ -585,13 +589,11 @@
   .svg-gem {
     height: 48px;
     width: 58px;
-    padding: 16px 13px;
   }
 
   .svg-background {
     height: 68px;
     width: 68px;
-    padding: 6px 8px;
   }
 
 }
