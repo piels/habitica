@@ -68,18 +68,32 @@
           class="d-flex flex-column"
         >
           <div>
-            <button class="btn btn-secondary d-flex stripe">
-              Stripe
+            <button
+              class="btn btn-secondary d-flex stripe"
+            >
+              <span
+                class="svg-stripe"
+                v-html="icons.stripe"
+              >
+              </span>
             </button>
           </div>
           <div>
             <button class="btn btn-secondary d-flex paypal">
-              Paypal
+              <span
+                class="svg-paypal"
+                v-html="icons.paypal"
+              >
+              </span>
             </button>
           </div>
           <div>
             <button class="btn btn-secondary d-flex amazon">
-              Amazon
+              <span
+                class="svg-amazon"
+                v-html="icons.amazon"
+              >
+              </span>
             </button>
           </div>
           <div class="pay-with-gems">
@@ -181,8 +195,11 @@
           <div class="day-text">
             {{ $t('dayFive') }}
           </div>
-          <div class="item">
-            <!-- Birthday Suit -->
+          <div class="item d-flex justify-content-center align-items-middle">
+            <img
+              src="~@/assets/images/habitica-hero-goober.webp"
+              class="m-auto"
+            ><!-- Birthday Suit -->
           </div>
           <div class="description">
             {{ $t('birthdaySet') }}
@@ -200,7 +217,7 @@
             </div>
           </div>
           <div class="description">
-            {{ $t('birthdayBackground') }}
+            {{ $t('background') }}
           </div>
         </div>
       </div>
@@ -379,8 +396,25 @@
     margin-left: 8px;
   }
 
+  .stripe {
+    margin-top: 24px;
+    margin-bottom: 8px;
+    padding-bottom: 10px;
+  }
+
+  .paypal {
+    margin-bottom: 8px;
+    padding-bottom: 10px;
+  }
+
+  .amazon {
+    margin-bottom: 16px;
+    padding-bottom: 15px;
+  }
+
   .stripe, .paypal, .amazon {
     width: 506px;
+    height: 32px;
     margin-left: 4px;
     margin-right: 4px;
     border-radius: 4px;
@@ -389,18 +423,6 @@
     align-items: center;
   }
 
-  .stripe {
-    margin-top: 24px;
-    margin-bottom: 8px;
-  }
-
-  .paypal {
-    margin-bottom: 8px;
-  }
-
-  .amazon {
-    margin-bottom: 16px;
-  }
 
   .pay-with-gems {
     color: $white;
@@ -596,6 +618,22 @@
     width: 68px;
   }
 
+  .svg-stripe {
+    height: 20px;
+    width: 48px;
+  }
+
+  .svg-paypal {
+    height: 16px;
+    width: 60px;
+  }
+
+  .svg-amazon {
+    height: 16px;
+    width: 83.4px;
+  }
+
+
 }
 
 </style>
@@ -608,6 +646,10 @@ import { mapState } from '@/libs/store';
 // import images
 import birthdayGems from '@/assets/svg/birthday-gems.svg';
 import habitversaryBackground from '@/assets/svg/icon-background-habitversary.svg';
+import stripe from '@/assets/svg/stripe.svg';
+import paypal from '@/assets/svg/paypal-logo.svg';
+import amazon from '@/assets/svg/amazonpay.svg';
+
 
 // import paymentButtons from '@/components/payments/buttons/list';
 
@@ -620,6 +662,9 @@ export default {
       icons: Object.freeze({
         birthdayGems,
         habitversaryBackground,
+        stripe,
+        paypal,
+        amazon,
       }),
       selectedPage: 'initial-buttons',
     };
