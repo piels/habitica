@@ -69,7 +69,10 @@
           class="d-flex flex-column"
         >
           <div>
-            <button class="btn btn-secondary d-flex stripe">
+            <button
+              class="btn btn-secondary d-flex stripe"
+              @click="redirectToStripe({ sku: 'price_0MPZekZCD0RifGXl0sfpFgs4' })"
+            >
               Stripe
             </button>
           </div>
@@ -602,10 +605,11 @@
 import { mapState } from '@/libs/store';
 import buy from '@/mixins/buy';
 import notifications from '@/mixins/notifications';
+import payments from '@/mixins/payments';
 import content from '@/../../common/script/content/index';
 
 export default {
-  mixins: [buy, notifications],
+  mixins: [buy, notifications, payments],
   data () {
     return {
       selectedPage: 'initial-buttons',

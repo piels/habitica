@@ -1,6 +1,6 @@
 import moment from 'moment';
 import {
-  NotAuthorized,
+  BadRequest,
 } from '../errors';
 import shared from '../../../common';
 import { getAnalyticsServiceByEnvironment } from '../analyticsService';
@@ -25,7 +25,7 @@ function canBuyGryphatrice (user) {
 
 async function buyGryphatrice (data) {
   // Double check it's available
-  if (!canBuyGryphatrice(data.user)) throw new NotAuthorized();
+  if (!canBuyGryphatrice(data.user)) throw new BadRequest();
   const key = 'Gryphatrice-Jubilant';
   data.user.items.pets[key] = 5;
   data.user.purchased.txnCount += 1;
@@ -47,8 +47,8 @@ async function buyGryphatrice (data) {
 
 export function canBuySkuItem (sku, user) {
   switch (sku) {
-    case 'com.habitrpg.android.habitica.iap.pets.Gryphatrice-Jubilant':
-    case 'com.habitrpg.ios.Habitica.pets.Gryphatrice-Jubilant':
+    case 'com.habitrpg.android.habitica.iap.pets.gryphatrice_jubilant':
+    case 'com.habitrpg.ios.Habitica.pets.gryphatrice_jubilant':
       return canBuyGryphatrice(user);
     default:
       return true;
@@ -77,8 +77,9 @@ export async function buySkuItem (data) {
     case 'com.habitrpg.ios.Habitica.84gems':
       gemsBlockKey = '84gems';
       break;
-    case 'com.habitrpg.android.habitica.iap.pets.Gryphatrice-Jubilant':
-    case 'com.habitrpg.ios.Habitica.pets.Gryphatrice-Jubilant':
+    case 'com.habitrpg.android.habitica.iap.pets.gryphatrice_jubilant':
+    case 'com.habitrpg.ios.Habitica.pets.gryphatrice_jubilant':
+    case 'price_0MPZekZCD0RifGXl0sfpFgs4':
       buyGryphatrice(data);
       return;
   }
@@ -101,5 +102,5 @@ export async function buySkuItem (data) {
     });
     return;
   }
-  throw new NotAuthorized(RESPONSE_INVALID_ITEM);
+  throw new BadRequest(RESPONSE_INVALID_ITEM);
 }
