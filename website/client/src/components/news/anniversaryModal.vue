@@ -42,7 +42,7 @@
       <!-- beginning of payments -->
       <!-- buy with money OR gems -->
       <div
-        v-if="!ownGryphatrice"
+        v-if="!ownGryphatrice && !gryphBought"
       >
         <div
           v-if="selectedPage !== 'payment-buttons'"
@@ -609,6 +609,7 @@ export default {
   data () {
     return {
       selectedPage: 'initial-buttons',
+      gryphBought: false,
     };
   },
   computed: {
@@ -620,13 +621,21 @@ export default {
     },
   },
   methods: {
+    hide () {
+      this.$root.$emit('bv::hide::modal', 'anniversary-modal');
+    },
     buyGryphatriceGems () {
       const gryphatrice = content.petInfo['Gryphatrice-Jubilant'];
+      if (this.user.balance * 4 < gryphatrice.value) {
+        this.$root.$emit('bv::show::modal', 'buy-gems');
+        return this.hide();
+      }
       if (!this.confirmPurchase(gryphatrice.currency, gryphatrice.value)) {
-        return;
+        return null;
       }
       this.makeGenericPurchase(gryphatrice);
-      this.purchased(gryphatrice.text());
+      this.gryphBought = true;
+      return this.purchased(gryphatrice.text());
     },
     selectPage (page) {
       if (page === this.selectedPage) return;
