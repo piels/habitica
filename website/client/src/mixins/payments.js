@@ -129,6 +129,7 @@ export default {
       if (data.group || data.groupToCreate) paymentType = 'groupPlan';
       if (data.gift && data.gift.type === 'gems') paymentType = 'gift-gems';
       if (data.gift && data.gift.type === 'subscription') paymentType = 'gift-subscription';
+      if (data.sku) paymentType = 'sku';
 
       let url = '/stripe/checkout-session';
       const postData = {};
@@ -148,6 +149,7 @@ export default {
       if (data.coupon) postData.coupon = data.coupon;
       if (data.groupId) postData.groupId = data.groupId;
       if (data.demographics) postData.demographics = data.demographics;
+      if (data.sku) postData.sku = data.sku;
 
       const response = await axios.post(url, postData);
 
