@@ -5,20 +5,48 @@
     :hide-footer="true"
   >
     <div class="modal-content">
-      <div class="ten-birthday">
-        <img src="~@/assets/images/10-birthday.png">
+      <div
+        class="svg-confetti svg-icon"
+        v-html="icons.confetti"
+      >
       </div>
-      <span class="limited-event">
-        {{ $t('limitedEvent') }}
-      </span>
-      <span class="dates">
-        {{ $t('limitedDates') }}
-      </span>
+      <div>
+        <img
+          src="~@/assets/images/10-birthday.png"
+          class="ten-birthday"
+        >
+      </div>
+      <div class="limited-wrapper">
+        <div
+          class="svg-gifts svg-icon"
+          v-html="icons.gifts"
+        >
+        </div>
+        <div class="limited-event">
+          {{ $t('limitedEvent') }}
+        </div>
+        <div class="dates">
+          {{ $t('limitedDates') }}
+        </div>
+        <div
+          class="svg-gifts-flip svg-icon"
+          v-html="icons.gifts"
+        >
+        </div>
+      </div>
       <div class="celebrate">
         {{ $t('celebrateAnniversary') }}
       </div>
       <div class="header">
+        <span
+          class="svg-divider svg-icons"
+          v-html="icons.divider"
+        ></span>
         {{ $t('jubilantGryphatrice') }}
+        <span
+          class="svg-divider-flip svg-icons"
+          v-html="icons.divider"
+        ></span>
       </div>
       <!-- gryphatrice info -->
       <div class="d-flex">
@@ -115,7 +143,15 @@
       </div>
       <!-- end of payments -->
       <div class="header">
+        <span
+          class="svg-divider svg-icons"
+          v-html="icons.divider"
+        ></span>
         {{ $t('plentyOfPotions') }}
+        <span
+          class="svg-divider-flip svg-icons"
+          v-html="icons.divider"
+        ></span>
       </div>
       <div class="plenty-of-potions">
         {{ $t('plentyOfPotionsText') }}
@@ -159,7 +195,15 @@
         {{ $t('visitTheMarketButton') }}
       </button>
       <div class="header">
+        <span
+          class="svg-divider svg-icons"
+          v-html="icons.divider"
+        ></span>
         {{ $t('fourForFree') }}
+        <span
+          class="svg-divider-flip svg-icons"
+          v-html="icons.divider"
+        ></span>
       </div>
       <div class="four-for-free">
         {{ $t('fourForFreeText') }}
@@ -246,10 +290,12 @@
     border: 0px;
   }
   .modal-content {
-    border-radius: 100px;
+    border-radius: 14px;
+    border: 0px;
   }
   .modal-footer {
-    border-radius: 100px;
+    border-radius: 14px;
+    border: 0px;
   }
 
 }
@@ -268,7 +314,7 @@
     background: linear-gradient(158deg, $purple-300 0%, $purple-200 100%);
     // background-color: $gray-300; //temp
     border-top-left-radius: 12px;
-    border-top-right-radius: 12px;;
+    border-top-right-radius: 12px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
   }
@@ -298,6 +344,7 @@
     }
 
   .ten-birthday {
+    position: relative;
     width: 268px;
     height: 244px;
     margin: 0 125px 16px;
@@ -356,6 +403,11 @@
     margin-right: 24px;
     margin-left: 4px;
     color: $white;
+  }
+
+  .limited-wrapper {
+    margin-top: -36px;
+    margin-bottom: -36px;
   }
 
   .limited-edition, .gryphatrice-text, .gryphatrice-price {
@@ -584,6 +636,49 @@
     }
 
   // SVG CSS
+  .svg-confetti {
+    position: absolute;
+    height: 152px;
+    width: 518px;
+  }
+
+  .svg-gifts, .svg-gifts-flip {
+    position: relative;
+    height: 32px;
+    width: 85px;
+  }
+
+  .svg-gifts {
+    margin-left: 70px;
+    top: 36px;
+  }
+
+  .svg-gifts-flip {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    left: 366px;
+    bottom: 36px;
+  }
+
+  .svg-divider, .svg-divider-flip {
+    display: inline-block;
+    position: relative;
+    height: 12px;
+    width: 138px;
+    max-width: 100%;
+  }
+
+  .svg-divider {
+    margin-left: 16px;
+    margin-right: 8px;
+  }
+
+  .svg-divider-flip {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    margin-left: 8px;
+  }
+
   .svg-gem {
     height: 48px;
     width: 58px;
@@ -609,7 +704,6 @@
     width: 83.4px;
   }
 
-
 }
 
 </style>
@@ -620,12 +714,14 @@
 import { mapState } from '@/libs/store';
 
 // import images
-import birthdayGems from '@/assets/svg/birthday-gems.svg';
-import habitversaryBackground from '@/assets/svg/icon-background-habitversary.svg';
+import confetti from '@/assets/svg/confetti.svg';
+import gifts from '@/assets/svg/gifts-birthday.svg';
+import divider from '@/assets/svg/divider.svg';
 import stripe from '@/assets/svg/stripe.svg';
 import paypal from '@/assets/svg/paypal-logo.svg';
 import amazon from '@/assets/svg/amazonpay.svg';
-
+import birthdayGems from '@/assets/svg/birthday-gems.svg';
+import habitversaryBackground from '@/assets/svg/icon-background-habitversary.svg';
 
 // import paymentButtons from '@/components/payments/buttons/list';
 
@@ -636,11 +732,14 @@ export default {
   data () {
     return {
       icons: Object.freeze({
-        birthdayGems,
-        habitversaryBackground,
+        confetti,
+        gifts,
+        divider,
         stripe,
         paypal,
         amazon,
+        birthdayGems,
+        habitversaryBackground,
       }),
       selectedPage: 'initial-buttons',
     };
