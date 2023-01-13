@@ -5,20 +5,48 @@
     :hide-footer="true"
   >
     <div class="modal-content">
-      <div class="ten-birthday">
-        <img src="~@/assets/images/10-birthday.png">
+      <div
+        class="svg-confetti svg-icon"
+        v-html="icons.confetti"
+      >
       </div>
-      <span class="limited-event">
-        {{ $t('limitedEvent') }}
-      </span>
-      <span class="dates">
-        {{ $t('limitedDates') }}
-      </span>
+      <div>
+        <img
+          src="~@/assets/images/10-birthday.png"
+          class="ten-birthday"
+        >
+      </div>
+      <div class="limited-wrapper">
+        <div
+          class="svg-gifts svg-icon"
+          v-html="icons.gifts"
+        >
+        </div>
+        <div class="limited-event">
+          {{ $t('limitedEvent') }}
+        </div>
+        <div class="dates">
+          {{ $t('limitedDates') }}
+        </div>
+        <div
+          class="svg-gifts-flip svg-icon"
+          v-html="icons.gifts"
+        >
+        </div>
+      </div>
       <div class="celebrate">
         {{ $t('celebrateAnniversary') }}
       </div>
       <div class="header">
+        <span
+          class="svg-divider svg-icons"
+          v-html="icons.divider"
+        ></span>
         {{ $t('jubilantGryphatrice') }}
+        <span
+          class="svg-divider-flip svg-icons"
+          v-html="icons.divider"
+        ></span>
       </div>
       <!-- gryphatrice info -->
       <div class="d-flex">
@@ -106,16 +134,26 @@
       <!-- Own the gryphatrice -->
       <div
         v-else
-        id="own-gryphatrice-buttons"
+        class="d-flex"
       >
         <button
+          class="own-gryphatrice-button"
+          @click="$router.push('/inventory/stable')"
           v-html="$t('ownJubilantGryphatrice')"
         >
         </button>
       </div>
       <!-- end of payments -->
       <div class="header">
+        <span
+          class="svg-divider svg-icons"
+          v-html="icons.divider"
+        ></span>
         {{ $t('plentyOfPotions') }}
+        <span
+          class="svg-divider-flip svg-icons"
+          v-html="icons.divider"
+        ></span>
       </div>
       <div class="plenty-of-potions">
         {{ $t('plentyOfPotionsText') }}
@@ -152,11 +190,22 @@
           <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Shimmer.png">
         </div>
       </div>
-      <button class="btn btn-secondary visit-the-market">
+      <button
+        class="btn btn-secondary visit-the-market"
+        @click="$router.push('/shops/market')"
+      >
         {{ $t('visitTheMarketButton') }}
       </button>
       <div class="header">
+        <span
+          class="svg-divider svg-icons"
+          v-html="icons.divider"
+        ></span>
         {{ $t('fourForFree') }}
+        <span
+          class="svg-divider-flip svg-icons"
+          v-html="icons.divider"
+        ></span>
       </div>
       <div class="four-for-free">
         {{ $t('fourForFreeText') }}
@@ -243,10 +292,12 @@
     border: 0px;
   }
   .modal-content {
-    border-radius: 100px;
+    border-radius: 14px;
+    border: 0px;
   }
   .modal-footer {
-    border-radius: 100px;
+    border-radius: 14px;
+    border: 0px;
   }
 
 }
@@ -265,7 +316,7 @@
     background: linear-gradient(158deg, $purple-300 0%, $purple-200 100%);
     // background-color: $gray-300; //temp
     border-top-left-radius: 12px;
-    border-top-right-radius: 12px;;
+    border-top-right-radius: 12px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
   }
@@ -295,6 +346,7 @@
     }
 
   .ten-birthday {
+    position: relative;
     width: 268px;
     height: 244px;
     margin: 0 125px 16px;
@@ -353,6 +405,11 @@
     margin-right: 24px;
     margin-left: 4px;
     color: $white;
+  }
+
+  .limited-wrapper {
+    margin-top: -36px;
+    margin-bottom: -36px;
   }
 
   .limited-edition, .gryphatrice-text, .gryphatrice-price {
@@ -425,10 +482,23 @@
     align-items: center;
   }
 
-
   .pay-with-gems {
     color: $white;
     text-align: center;
+  }
+
+  .own-gryphatrice-button {
+    width: 506px;
+    height: 32px;
+    margin-top: 24px;
+    margin-left: 4px;
+    margin-right: 4px;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px $green-100;
+    background-color: $green-50;
+    color: $green-1;
   }
 
   .plenty-of-potions {
@@ -446,85 +516,53 @@
     gap: 24px 24px;
     justify-content: center;
 
-    .pot-1 {
-      grid-column: 1 / 1;
-      grid-row: 1 / 2;
+    .pot-1, .pot-2, .pot-3, .pot-4, .pot-5,
+    .pot-6, .pot-7, .pot-8, .pot-9, .pot-10 {
       height: 68px;
       width: 68px;
       border-radius: 8px;
       background-color: $purple-50;
+    }
+
+    .pot-1 {
+      grid-column: 1 / 1;
+      grid-row: 1 / 2;
     }
     .pot-2 {
       grid-column: 2 / 2;
       grid-row: 1 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-3 {
       grid-column: 3 / 3;
       grid-row: 1 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-4 {
       grid-column: 4 / 4;
       grid-row: 1 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-5 {
       grid-column: 5 / 5;
       grid-row: 1 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-6 {
       grid-column: 1 / 5;
       grid-row: 2 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-7 {
       grid-column: 2 / 5;
       grid-row: 2 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-8 {
       grid-column: 3 / 5;
       grid-row: 2 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-9 {
       grid-column: 4 / 5;
       grid-row: 2 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-10 {
       grid-column: 5 / 5;
       grid-row: 2 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
 
   }
@@ -548,38 +586,28 @@
     grid-template-rows: 1;
     gap: 24px;
   }
-
-    .day-one-a {
-      grid-column: 1 / 1;
-      grid-row: 1 / 1;
+    .day-one-a, .day-one-b, .day-five, .day-ten {
       height: 140px;
       width: 100px;
       border-radius: 8px;
       background-color: $purple-50;
     }
+
+    .day-one-a {
+      grid-column: 1 / 1;
+      grid-row: 1 / 1;
+    }
     .day-one-b {
       grid-column: 2 / 2;
       grid-row: 1 / 1;
-      height: 140px;
-      width: 100px;
-      border-radius: 4px;
-      background-color: $purple-50;
     }
     .day-five {
       grid-column: 3 / 3;
       grid-row: 1 / 1;
-      height: 140px;
-      width: 100px;
-      border-radius: 4px;
-      background-color: $purple-50;
     }
     .day-ten {
       grid-column: 4 / 4;
       grid-row: 1 / 1;
-      height: 140px;
-      width: 100px;
-      border-radius: 4px;
-      background-color: $purple-50;
     }
 
     .day-text {
@@ -610,6 +638,49 @@
     }
 
   // SVG CSS
+  .svg-confetti {
+    position: absolute;
+    height: 152px;
+    width: 518px;
+  }
+
+  .svg-gifts, .svg-gifts-flip {
+    position: relative;
+    height: 32px;
+    width: 85px;
+  }
+
+  .svg-gifts {
+    margin-left: 70px;
+    top: 36px;
+  }
+
+  .svg-gifts-flip {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    left: 366px;
+    bottom: 36px;
+  }
+
+  .svg-divider, .svg-divider-flip {
+    display: inline-block;
+    position: relative;
+    height: 12px;
+    width: 138px;
+    max-width: 100%;
+  }
+
+  .svg-divider {
+    margin-left: 16px;
+    margin-right: 8px;
+  }
+
+  .svg-divider-flip {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    margin-left: 8px;
+  }
+
   .svg-gem {
     height: 48px;
     width: 58px;
@@ -635,7 +706,6 @@
     width: 83.4px;
   }
 
-
 }
 
 </style>
@@ -651,23 +721,28 @@ import payments from '@/mixins/payments';
 import content from '@/../../common/script/content/index';
 
 // import images
-import birthdayGems from '@/assets/svg/birthday-gems.svg';
-import habitversaryBackground from '@/assets/svg/icon-background-habitversary.svg';
+import confetti from '@/assets/svg/confetti.svg';
+import gifts from '@/assets/svg/gifts-birthday.svg';
+import divider from '@/assets/svg/divider.svg';
 import stripe from '@/assets/svg/stripe.svg';
 import paypal from '@/assets/svg/paypal-logo.svg';
 import amazon from '@/assets/svg/amazonpay.svg';
-
+import birthdayGems from '@/assets/svg/birthday-gems.svg';
+import habitversaryBackground from '@/assets/svg/icon-background-habitversary.svg';
 
 export default {
   mixins: [buy, notifications, payments],
   data () {
     return {
       icons: Object.freeze({
-        birthdayGems,
-        habitversaryBackground,
+        confetti,
+        gifts,
+        divider,
         stripe,
         paypal,
         amazon,
+        birthdayGems,
+        habitversaryBackground,
       }),
       selectedPage: 'initial-buttons',
       gryphBought: false,
