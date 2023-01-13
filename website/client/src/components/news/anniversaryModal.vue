@@ -104,9 +104,11 @@
       <!-- Own the gryphatrice -->
       <div
         v-else
-        id="own-gryphatrice-buttons"
+        class="d-flex"
       >
         <button
+          class="own-gryphatrice-button"
+          @click="$router.push('/inventory/stable')"
           v-html="$t('ownJubilantGryphatrice')"
         >
         </button>
@@ -150,7 +152,10 @@
           <img src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet_HatchingPotion_Shimmer.png">
         </div>
       </div>
-      <button class="btn btn-secondary visit-the-market">
+      <button
+        class="btn btn-secondary visit-the-market"
+        @click="$router.push('/shops/market')"
+      >
         {{ $t('visitTheMarketButton') }}
       </button>
       <div class="header">
@@ -423,10 +428,23 @@
     align-items: center;
   }
 
-
   .pay-with-gems {
     color: $white;
     text-align: center;
+  }
+
+  .own-gryphatrice-button {
+    width: 506px;
+    height: 32px;
+    margin-top: 24px;
+    margin-left: 4px;
+    margin-right: 4px;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px $green-100;
+    background-color: $green-50;
+    color: $green-1;
   }
 
   .plenty-of-potions {
@@ -444,85 +462,53 @@
     gap: 24px 24px;
     justify-content: center;
 
-    .pot-1 {
-      grid-column: 1 / 1;
-      grid-row: 1 / 2;
+    .pot-1, .pot-2, .pot-3, .pot-4, .pot-5,
+    .pot-6, .pot-7, .pot-8, .pot-9, .pot-10 {
       height: 68px;
       width: 68px;
       border-radius: 8px;
       background-color: $purple-50;
+    }
+
+    .pot-1 {
+      grid-column: 1 / 1;
+      grid-row: 1 / 2;
     }
     .pot-2 {
       grid-column: 2 / 2;
       grid-row: 1 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-3 {
       grid-column: 3 / 3;
       grid-row: 1 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-4 {
       grid-column: 4 / 4;
       grid-row: 1 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-5 {
       grid-column: 5 / 5;
       grid-row: 1 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-6 {
       grid-column: 1 / 5;
       grid-row: 2 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-7 {
       grid-column: 2 / 5;
       grid-row: 2 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-8 {
       grid-column: 3 / 5;
       grid-row: 2 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-9 {
       grid-column: 4 / 5;
       grid-row: 2 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
     .pot-10 {
       grid-column: 5 / 5;
       grid-row: 2 / 2;
-      height: 68px;
-      width: 68px;
-      border-radius: 8px;
-      background-color: $purple-50;
     }
 
   }
@@ -546,38 +532,28 @@
     grid-template-rows: 1;
     gap: 24px;
   }
-
-    .day-one-a {
-      grid-column: 1 / 1;
-      grid-row: 1 / 1;
+    .day-one-a, .day-one-b, .day-five, .day-ten {
       height: 140px;
       width: 100px;
       border-radius: 8px;
       background-color: $purple-50;
     }
+
+    .day-one-a {
+      grid-column: 1 / 1;
+      grid-row: 1 / 1;
+    }
     .day-one-b {
       grid-column: 2 / 2;
       grid-row: 1 / 1;
-      height: 140px;
-      width: 100px;
-      border-radius: 4px;
-      background-color: $purple-50;
     }
     .day-five {
       grid-column: 3 / 3;
       grid-row: 1 / 1;
-      height: 140px;
-      width: 100px;
-      border-radius: 4px;
-      background-color: $purple-50;
     }
     .day-ten {
       grid-column: 4 / 4;
       grid-row: 1 / 1;
-      height: 140px;
-      width: 100px;
-      border-radius: 4px;
-      background-color: $purple-50;
     }
 
     .day-text {
