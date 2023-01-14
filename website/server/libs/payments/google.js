@@ -66,7 +66,7 @@ api.verifyPurchase = async function verifyPurchase (options) {
     user,
     gift,
     paymentMethod: api.constants.PAYMENT_METHOD_GOOGLE,
-    sku: receiptObj.productId,
+    sku: googleRes.productId,
     headers,
   });
 

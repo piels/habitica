@@ -42,6 +42,7 @@ async function buyGryphatrice (data) {
     headers: data.headers,
     firstPurchase: data.user.purchased.txnCount === 1,
   });
+  if (data.user.markModified) data.user.markModified('items.pets');
   await data.user.save();
 }
 
