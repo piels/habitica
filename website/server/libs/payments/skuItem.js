@@ -78,7 +78,7 @@ export async function buySkuItem (data) {
       gemsBlockKey = '84gems';
       break;
     case 'com.habitrpg.android.habitica.iap.pets.gryphatrice_jubilant':
-    case 'com.habitrpg.ios.Habitica.pets.gryphatrice_jubilant':
+    case 'com.habitrpg.ios.Habitica.pets.Gryphatrice_Jubilant':
     case 'price_0MPZekZCD0RifGXl0sfpFgs4':
       buyGryphatrice(data);
       return;
