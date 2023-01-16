@@ -42,6 +42,7 @@ async function buyGryphatrice (data) {
     headers: data.headers,
     firstPurchase: data.user.purchased.txnCount === 1,
   });
+  if (data.user.markModified) data.user.markModified('items.pets');
   await data.user.save();
 }
 
@@ -78,7 +79,7 @@ export async function buySkuItem (data) {
       gemsBlockKey = '84gems';
       break;
     case 'com.habitrpg.android.habitica.iap.pets.gryphatrice_jubilant':
-    case 'com.habitrpg.ios.Habitica.pets.gryphatrice_jubilant':
+    case 'com.habitrpg.ios.Habitica.pets.Gryphatrice_Jubilant':
     case 'price_0MPZekZCD0RifGXl0sfpFgs4':
       buyGryphatrice(data);
       return;
