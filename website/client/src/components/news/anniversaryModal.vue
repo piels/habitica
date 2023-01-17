@@ -75,6 +75,7 @@
         <div
           v-if="selectedPage !== 'payment-buttons'"
           id="initial-buttons"
+          class="d-flex justify-content-center"
         >
           <button
             class="btn btn-secondary buy-now-left"
@@ -153,7 +154,7 @@
           v-html="icons.divider"
         ></span>
       </div>
-      <div class="plenty-of-potions">
+      <div class="plenty-of-potions d-flex">
         {{ $t('plentyOfPotionsText') }}
       </div>
       <div class="potions">
@@ -189,12 +190,12 @@
         </div>
       </div>
       <button
-        class="btn btn-secondary visit-the-market"
+        class="btn btn-secondary d-flex justify-content-center visit-the-market"
         @click="$router.push('/shops/market')"
       >
         {{ $t('visitTheMarketButton') }}
       </button>
-      <div class="header">
+      <div class="header d-flex">
         <span
           class="svg-divider svg-icons"
           v-html="icons.divider"
@@ -208,7 +209,7 @@
       <div class="four-for-free">
         {{ $t('fourForFreeText') }}
       </div>
-      <div class="four-grid">
+      <div class="four-grid d-flex justify-content-center">
         <div class="day-one-a">
           <div class="day-text">
             {{ $t('dayOne') }}
@@ -382,11 +383,14 @@
   }
 
   .header {
+    height: 28px;
     font-size: 1.25rem;
     font-weight: bold;
     font-stretch: condensed;
     line-height: 1.4;
     margin-top: 24px;
+    margin-left: 8px;
+    margin-right: 20px;
     text-align: center;
     justify-content: center;
     color: $white;
@@ -443,14 +447,18 @@
     width: 243px;
     margin-top: 24px;
     margin-right: 8px;
-    margin-left: 4px;
+    margin-left: 0px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 rgba(26, 24, 29, 0.12), 0 1px 2px 0 rgba(26, 24, 29, 0.24);
   }
 
   .buy-now-right {
     width: 243px;
     margin-top: 24px;
-    margin-right: 4px;
+    margin-right: 0px;
     margin-left: 8px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 rgba(26, 24, 29, 0.12), 0 1px 2px 0 rgba(26, 24, 29, 0.24);
   }
 
   .stripe {
@@ -494,7 +502,7 @@
     border-radius: 4px;
     justify-content: center;
     align-items: center;
-    border: solid 2px $green-100;
+    border: solid 1px $green-1;
     background-color: $green-50;
     color: $green-1;
   }
@@ -565,9 +573,13 @@
 
   }
   .visit-the-market {
-    width: 502px;
+    // width: 502px;
     height: 32px;
     margin-top: 24px;
+    margin-left: 4px;
+    margin-right: 4px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 rgba(26, 24, 29, 0.12), 0 1px 2px 0 rgba(26, 24, 29, 0.24);
   }
 
   .four-for-free {
@@ -640,6 +652,7 @@
     position: absolute;
     height: 152px;
     width: 518px;
+    margin-top: 24px;
   }
 
   .svg-gifts, .svg-gifts-flip {
