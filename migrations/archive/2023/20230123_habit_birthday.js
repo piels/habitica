@@ -2,65 +2,53 @@
 import { v4 as uuid } from 'uuid';
 import { model as User } from '../../../website/server/models/user';
 
-const MIGRATION_NAME = '20230131_habit_birthday';
+const MIGRATION_NAME = '20230123_habit_birthday';
 const progressCount = 1000;
 let count = 0;
 
 async function updateUser (user) {
   count += 1;
 
-  const inc = {
-    'items.food.Cake_Skeleton': 1,
-    'items.food.Cake_Base': 1,
-    'items.food.Cake_CottonCandyBlue': 1,
-    'items.food.Cake_CottonCandyPink': 1,
-    'items.food.Cake_Shade': 1,
-    'items.food.Cake_White': 1,
-    'items.food.Cake_Golden': 1,
-    'items.food.Cake_Zombie': 1,
-    'items.food.Cake_Desert': 1,
-    'items.food.Cake_Red': 1,
-    'achievements.habitBirthdays': 1,
-    'balance': 5,
-  };
+  const inc = { 'balance': 5 };
   const set = {};
-  let push;
+  const push = {};
 
   set.migration = MIGRATION_NAME;
 
   if (typeof user.items.gear.owned.armor_special_birthday2022 !== 'undefined') {
     set['items.gear.owned.armor_special_birthday2023'] = false;
-    push = {pinnedItems: {type: 'marketGear', path: 'gear.flat.armor_special_birthday2023', _id: uuid()}};
   } else if (typeof user.items.gear.owned.armor_special_birthday2021 !== 'undefined') {
     set['items.gear.owned.armor_special_birthday2022'] = false;
-    push = {pinnedItems: {type: 'marketGear', path: 'gear.flat.armor_special_birthday2022', _id: uuid()}};
   } else if (typeof user.items.gear.owned.armor_special_birthday2020 !== 'undefined') {
     set['items.gear.owned.armor_special_birthday2021'] = false;
-    push = {pinnedItems: {type: 'marketGear', path: 'gear.flat.armor_special_birthday2021', _id: uuid()}};
   } else if (typeof user.items.gear.owned.armor_special_birthday2019 !== 'undefined') {
     set['items.gear.owned.armor_special_birthday2020'] = false;
-    push = {pinnedItems: {type: 'marketGear', path: 'gear.flat.armor_special_birthday2020', _id: uuid()}};
   } else if (typeof user.items.gear.owned.armor_special_birthday2018 !== 'undefined') {
     set['items.gear.owned.armor_special_birthday2019'] = false;
-    push = {pinnedItems: {type: 'marketGear', path: 'gear.flat.armor_special_birthday2019', _id: uuid()}};
   } else if (typeof user.items.gear.owned.armor_special_birthday2017 !== 'undefined') {
     set['items.gear.owned.armor_special_birthday2018'] = false;
-    push = {pinnedItems: {type: 'marketGear', path: 'gear.flat.armor_special_birthday2018', _id: uuid()}};
   } else if (typeof user.items.gear.owned.armor_special_birthday2016 !== 'undefined') {
     set['items.gear.owned.armor_special_birthday2017'] = false;
-    push = {pinnedItems: {type: 'marketGear', path: 'gear.flat.armor_special_birthday2017', _id: uuid()}};
   } else if (typeof user.items.gear.owned.armor_special_birthday2015 !== 'undefined') {
     set['items.gear.owned.armor_special_birthday2016'] = false;
-    push = {pinnedItems: {type: 'marketGear', path: 'gear.flat.armor_special_birthday2016', _id: uuid()}};
   } else if (typeof user.items.gear.owned.armor_special_birthday !== 'undefined') {
     set['items.gear.owned.armor_special_birthday2015'] = false;
-    push = {pinnedItems: {type: 'marketGear', path: 'gear.flat.armor_special_birthday2015', _id: uuid()}};
   } else {
     set['items.gear.owned.armor_special_birthday'] = false;
-    push = {pinnedItems: {type: 'marketGear', path: 'gear.flat.armor_special_birthday', _id: uuid()}};
   }
 
   if (count % progressCount === 0) console.warn(`${count} ${user._id}`);
+
+  push.notifications = {
+    type: 'ITEM_RECEIVED',
+    data: {
+      icon: 'notif_head_special_nye',
+      title: 'Birthday Bash Day 1!',
+      text: 'Enjoy your new Birthday Robe and 20 Gems on us!',
+      destination: 'equipment',
+    },
+    seen: false,
+  };
 
   return await User.update({_id: user._id}, {$inc: inc, $set: set, $push: push}).exec();
 }
@@ -68,7 +56,7 @@ async function updateUser (user) {
 export default async function processUsers () {
   let query = {
     migration: {$ne: MIGRATION_NAME},
-    'auth.timestamps.loggedin': {$gt: new Date('2023-01-01')},
+    'auth.timestamps.loggedin': {$gt: new Date('2022-12-23')},
   };
 
   const fields = {
