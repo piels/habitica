@@ -665,6 +665,11 @@
   width: 141px;
   height: 147px;
 }
+.background_birthday_bash {
+  background-image: url('https://habitica-assets.s3.amazonaws.com/mobileApp/images/background_birthday_bash.png');
+  width: 141px;
+  height: 147px;
+}
 .background_birthday_party {
   background-image: url('https://habitica-assets.s3.amazonaws.com/mobileApp/images/background_birthday_party.png');
   width: 141px;
@@ -1196,11 +1201,6 @@
 }
 .background_habit_city_streets {
   background-image: url('https://habitica-assets.s3.amazonaws.com/mobileApp/images/background_habit_city_streets.png');
-  width: 141px;
-  height: 147px;
-}
-.background_habitversary_bash {
-  background-image: url('https://habitica-assets.s3.amazonaws.com/mobileApp/images/background_habitversary_bash.png');
   width: 141px;
   height: 147px;
 }
@@ -2301,6 +2301,11 @@
   width: 68px;
   height: 68px;
 }
+.icon_background_birthday_bash {
+  background-image: url('https://habitica-assets.s3.amazonaws.com/mobileApp/images/icon_background_birthday_bash.png');
+  width: 68px;
+  height: 68px;
+}
 .icon_background_birthday_party {
   background-image: url('https://habitica-assets.s3.amazonaws.com/mobileApp/images/icon_background_birthday_party.png');
   width: 68px;
@@ -2837,11 +2842,6 @@
 }
 .icon_background_habit_city_streets {
   background-image: url('https://habitica-assets.s3.amazonaws.com/mobileApp/images/icon_background_habit_city_streets.png');
-  width: 68px;
-  height: 68px;
-}
-.icon_background_habitversary_bash {
-  background-image: url('https://habitica-assets.s3.amazonaws.com/mobileApp/images/icon_background_habitversary_bash.png');
   width: 68px;
   height: 68px;
 }
