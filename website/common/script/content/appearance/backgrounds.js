@@ -541,7 +541,7 @@ const backgrounds = {
     winter_lake_with_swans: { },
   },
   eventBackgrounds: {
-    habitversary_bash: {
+    birthday_bash: {
       price: 0,
     },
   },
