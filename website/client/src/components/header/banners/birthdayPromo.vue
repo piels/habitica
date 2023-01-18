@@ -106,7 +106,7 @@ export default {
     showBirthdayPromoBanner () {
       const currEvt = this.currentEvent;
       if (!currEvt) return false;
-      return currEvt && currEvt.promo === 'g1g1';
+      return currEvt && currEvt.promo === 'birthday';
     },
   },
   methods: {
