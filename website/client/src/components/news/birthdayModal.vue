@@ -38,7 +38,15 @@
         {{ $t('celebrateAnniversary') }}
       </div>
       <h2 class="d-flex justify-content-center">
+        <!-- <span
+          class="svg-divider"
+          v-html="icons.divider"
+        ></span> -->
         {{ $t('jubilantGryphatrice') }}
+        <!-- <span
+          class="svg-divider-flip"
+          v-html="icons.divider"
+        ></span> -->
       </h2>
       <!-- gryphatrice info -->
       <div class="d-flex">
@@ -136,7 +144,15 @@
       </div>
       <!-- end of payments -->
       <h2 class="d-flex justify-content-center">
+        <span
+          class="svg-divider"
+          v-html="icons.divider"
+        ></span>
         {{ $t('plentyOfPotions') }}
+        <span
+          class="svg-divider-flip"
+          v-html="icons.divider"
+        ></span>
       </h2>
       <div class="plenty-of-potions d-flex">
         {{ $t('plentyOfPotionsText') }}
@@ -180,7 +196,15 @@
         {{ $t('visitTheMarketButton') }}
       </button>
       <h2 class="d-flex justify-content-center">
+        <span
+          class="svg-divider"
+          v-html="icons.divider"
+        ></span>
         {{ $t('fourForFree') }}
+        <span
+          class="svg-divider-flip"
+          v-html="icons.divider"
+        ></span>
       </h2>
       <div class="four-for-free">
         {{ $t('fourForFreeText') }}
@@ -265,7 +289,6 @@
   .modal-body {
     padding: 0px;
     border: 0px;
-    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
   .modal-content {
     border-radius: 14px;
@@ -292,8 +315,8 @@
     color: $white;
   }
 
-  .modal-body {
-    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
+  .modal-body{
+    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
 
   .modal-content {
@@ -305,7 +328,6 @@
     border-top-right-radius: 12px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
 
   .modal-bottom {
@@ -317,7 +339,6 @@
     padding: 16px 40px 28px 40px;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
-    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
     .limitations {
       color: $white;
@@ -370,7 +391,6 @@
     color: $yellow-50;
   }
 
-
   .jubilant-gryphatrice {
     height: 176px;
     width: 204px;
@@ -378,7 +398,6 @@
     background-color: $purple-50;
     align-items: center;
     justify-content: center;
-    margin-top: 16px;
     margin-right: 24px;
     margin-left: 4px;
     color: $white;
@@ -457,12 +476,19 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
 
   .pay-with-gems {
     color: $white;
     text-align: center;
     margin-bottom: 24px;
+    cursor: pointer;
+  }
+
+  .pay-with-gems:hover {
+    text-decoration: underline;
+    cursor: pointer;
   }
 
   .own-gryphatrice-button {
@@ -475,6 +501,7 @@
     border: $green-100;
     background-color: $green-100;
     color: $green-1;
+    cursor: pointer;
   }
 
   .plenty-of-potions {
@@ -547,6 +574,7 @@
     margin: 24px 4px;
     border-radius: 4px;
     box-shadow: 0 1px 3px 0 rgba(26, 24, 29, 0.12), 0 1px 2px 0 rgba(26, 24, 29, 0.24);
+    cursor: pointer;
   }
 
   .four-for-free {
