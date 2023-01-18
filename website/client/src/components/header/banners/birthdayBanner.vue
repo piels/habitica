@@ -15,7 +15,7 @@
       <div
         v-once
         class="svg-icon svg-gifts left-gift"
-        v-html="icons.gifts"
+        v-html="icons.giftsBirthday"
       >
       </div>
       <div
@@ -33,7 +33,7 @@
       <div
         v-once
         class="svg-icon svg-gifts right-gift"
-        v-html="icons.gifts"
+        v-html="icons.giftsBirthday"
       >
       </div>
     </div>
@@ -51,9 +51,12 @@
     width: 100%;
     min-height: 48px;
     padding: 8px 401px;
-    background-image: url('~@/assets/images/birthday-background.webp');
-    background: linear-gradient(to left,
-      rgba(255, 190, 93, 0) 100%, $yellow-100 67%, $yellow-100 33%, rgba(255, 190, 93, 0) 0%);
+    background-image: linear-gradient(90deg,
+      rgba(255,190,93,0) 0%,
+      rgba(255,190,93,1) 25%,
+      rgba(255,190,93,1) 75%,
+      rgba(255,190,93,0) 100%),
+      url('~@/assets/images/glitter.png');
     cursor: pointer;
   }
 
@@ -83,7 +86,7 @@ import find from 'lodash/find';
 import { mapState } from '@/libs/store';
 import BaseBanner from './base';
 
-import gifts from '@/assets/svg/gifts.svg';
+import giftsBirthday from '@/assets/svg/gifts-birthday.svg';
 import tenBirthday from '@/assets/svg/10th-birthday-linear.svg';
 
 export default {
@@ -93,7 +96,7 @@ export default {
   data () {
     return {
       icons: Object.freeze({
-        gifts,
+        giftsBirthday,
         tenBirthday,
       }),
     };
