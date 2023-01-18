@@ -34,7 +34,7 @@
         >
         </div>
       </div>
-      <div class="celebrate">
+      <div class="celebrate d-flex justify-content-center">
         {{ $t('celebrateAnniversary') }}
       </div>
       <h2 class="d-flex justify-content-center">
@@ -299,7 +299,7 @@
   }
 
   .modal-body {
-    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
+    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
 
   .modal-content {
@@ -323,7 +323,7 @@
     padding: 16px 40px 28px 40px;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
-    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
+    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
     .limitations {
       color: $white;
@@ -368,19 +368,11 @@
   }
 
   .celebrate {
-    font-family: "Roboto Condensed";
-    width: 486px;
     font-size: 1.25rem;
     font-weight: bold;
-    font-stretch: condensed;
-    font-style: normal;
-    letter-spacing: normal;
     line-height: 1.4;
-    margin-top: 16px;
-    margin-bottom: 24px;
+    margin: 16px 16px 24px 16px;
     text-align: center;
-    justify-content: center;
-
     color: $yellow-50;
   }
 
@@ -486,15 +478,15 @@
     border-radius: 4px;
     justify-content: center;
     align-items: center;
-    border: $green-50;
-    background-color: $green-50;
+    border: $green-100;
+    background-color: $green-100;
     color: $green-1;
   }
 
   .plenty-of-potions {
     font-size: 0.875rem;
     line-height: 1.71;
-    margin: 16px 8px 24px;
+    margin: 0 8px 24px;
     text-align: center;
     color: $white;
   }
@@ -566,7 +558,7 @@
   .four-for-free {
     font-size: 0.875rem;
     line-height: 1.71;
-    margin: 16px 36px 24px;
+    margin: 0 36px 24px;
     text-align: center;
     color: $white;
   }
