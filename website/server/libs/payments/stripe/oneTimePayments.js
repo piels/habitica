@@ -31,8 +31,9 @@ export async function applySku (session) {
     await payments.buySkuItem({
       sku, user, paymentMethod: stripeConstants.PAYMENT_METHOD,
     });
+  } else {
+    throw new NotFound('SKU not found.');
   }
-  throw new NotFound('SKU not found.');
 }
 
 export async function getOneTimePaymentInfo (gemsBlockKey, gift, user) {
