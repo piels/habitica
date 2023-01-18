@@ -72,7 +72,7 @@
           <button
             class="btn btn-secondary buy-now-left"
             :class="{active: selectedPage === 'payment-buttons'}"
-            @click="selectPage('payment-buttons')"
+            @click="selectedPage = 'payment-buttons'"
           >
             {{ $t('buyNowMoneyButton') }}
           </button>
@@ -124,7 +124,10 @@
               </span>
             </button>
           </div>
-          <div class="pay-with-gems">
+          <div
+            class="pay-with-gems"
+            @click="selectedPage = 'initial-buttons'"
+          >
             {{ $t('wantToPayWithGemsText') }}
           </div>
         </div>
@@ -469,6 +472,7 @@
     color: $white;
     text-align: center;
     margin-bottom: 24px;
+    cursor: pointer;
   }
 
   .own-gryphatrice-button {
@@ -756,10 +760,6 @@ export default {
       this.makeGenericPurchase(gryphatrice);
       this.gryphBought = true;
       return this.purchased(gryphatrice.text());
-    },
-    selectPage (page) {
-      if (page === this.selectedPage) return;
-      if (page === 'payment-buttons') this.selectedPage = 'payment-buttons';
     },
     stableRedirect () {
       if (this.$router.history.current.name !== 'stable') {

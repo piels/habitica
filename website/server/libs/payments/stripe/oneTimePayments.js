@@ -28,7 +28,9 @@ export async function applySku (session) {
   const user = await User.findById(metadata.userId).exec();
   if (!user) throw new NotFound(shared.i18n.t('userWithIDNotFound', { userId }));
   if (sku === 'price_0MPZekZCD0RifGXl0sfpFgs4') {
-    await payments.buySkuItem({ sku, user });
+    await payments.buySkuItem({
+      sku, user, paymentMethod: stripeConstants.PAYMENT_METHOD,
+    });
   }
   throw new NotFound('SKU not found.');
 }
