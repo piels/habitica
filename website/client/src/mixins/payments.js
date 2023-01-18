@@ -70,6 +70,7 @@ export default {
         type,
         giftData,
         gemsBlock,
+        sku,
       } = data;
       let { url } = data;
 
@@ -91,6 +92,11 @@ export default {
       if (type === 'gems') {
         appState.gemsBlock = gemsBlock;
         url += `?gemsBlock=${gemsBlock.key}`;
+      }
+
+      if (type === 'sku') {
+        appState.sku = sku;
+        url += `?sku=${sku}`;
       }
 
       setLocalSetting(CONSTANTS.savedAppStateValues.SAVED_APP_STATE, JSON.stringify(appState));

@@ -122,7 +122,7 @@ const canFindSpecial = {
     'Gryphon-Gryphatrice': false, // Pet once granted to kickstarter
 
     // Birthday Pet
-    'Gryphatrice-Jubilant': true,
+    'Gryphatrice-Jubilant': false,
   },
   mounts: {
     // Thanksgiving pet ladder
