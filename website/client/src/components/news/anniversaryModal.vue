@@ -102,7 +102,12 @@
             </button>
           </div>
           <div>
-            <button class="btn btn-secondary d-flex paypal">
+            <button
+              class="btn btn-secondary d-flex paypal"
+              @click="openPaypal({
+                url: paypalCheckoutLink, type: 'sku', sku: 'Pet-Gryphatrice-Jubilant'
+              })"
+            >
               <span
                 class="svg-paypal"
                 v-html="icons.paypal"
@@ -131,7 +136,7 @@
       >
         <button
           class="own-gryphatrice-button"
-          @click="$router.push('/inventory/stable')"
+          @click="stableRedirect"
           v-html="$t('ownJubilantGryphatrice')"
         >
         </button>
@@ -763,6 +768,12 @@ export default {
     selectPage (page) {
       if (page === this.selectedPage) return;
       if (page === 'payment-buttons') this.selectedPage = 'payment-buttons';
+    },
+    stableRedirect () {
+      if (this.$router.history.current.name !== 'stable') {
+        this.$router.push('/inventory/stable');
+      }
+      this.hide();
     },
   },
 };
