@@ -360,8 +360,8 @@
             >Make Admin</a>
             <a
               class="btn btn-secondary"
-              @click="anniversaryModal()"
-            >Open Anniversary Modal</a>
+              @click="birthdayModal()"
+            >Open Birthday Modal</a>
           </div>
         </div>
       </div>
@@ -905,8 +905,8 @@ export default {
     donate () {
       this.$root.$emit('bv::show::modal', 'buy-gems', { alreadyTracked: true });
     },
-    anniversaryModal () {
-      this.$root.$emit('bv::show::modal', 'anniversary-modal');
+    birthdayModal () {
+      this.$root.$emit('bv::show::modal', 'birthday-modal');
     },
   },
 };

@@ -1,13 +1,13 @@
 <template>
   <base-banner
     banner-id="birthday-promo"
-    class="birthday-promo-banner"
-    :show="showBirthdayPromoBanner"
+    class="birthday-banner"
+    :show="showBirthdayBanner"
     height="3rem"
   >
     <div
       slot="content"
-      :aria-label="$t('subscription')"
+      :aria-label="$t('celebrateBirthday')"
       class="content d-flex justify-content-around align-items-center ml-auto mr-auto"
       @click="showBirthdayModal"
     >
@@ -50,7 +50,8 @@
     width: 100%;
     min-height: 48px;
     padding: 8px 401px;
-    background-image: linear-gradient(to left, rgba(255, 190, 93, 0) 100%, $yellow-100 67%, $yellow-100 33%, rgba(255, 190, 93, 0) 0%);
+    background-image: linear-gradient(to left, rgba(255, 190, 93, 0) 100%,
+      var(--yellow-100) 67%, var(--yellow-100) 33%, rgba(255, 190, 93, 0) 0%);
     cursor: pointer;
   }
 
@@ -75,8 +76,10 @@
 
 <script>
 import find from 'lodash/find';
+// import moment from 'moment';
 import { mapState } from '@/libs/store';
 import BaseBanner from './base';
+// import { EVENTS } from '@/libs/events';
 
 import gifts from '@/assets/svg/gifts.svg';
 import tenBirthday from '@/assets/svg/10th-birthday-linear.svg';
@@ -97,22 +100,16 @@ export default {
     ...mapState({
       currentEventList: 'worldState.data.currentEventList',
     }),
-    currentEvent () {
-      return find(this.currentEventList, event => Boolean(event.promo));
-    },
-    eventName () {
-      return this.currentEvent && this.currentEvent.event;
-    },
-    showBirthdayPromoBanner () {
-      const currEvt = this.currentEvent;
-      if (!currEvt) return false;
-      return currEvt && currEvt.promo === 'birthday10';
+    showBirthdayBanner () {
+      return find(this.currentEventList, event => Boolean(event.event === 'birthday10'));
     },
   },
   methods: {
     showBirthdayModal () {
-      this.$root.$emit('bv::show::modal', 'anniversary-modal');
+      this.$root.$emit('bv::show::modal', 'birthday-modal');
     },
   },
 };
+
+// moment().isBetween(EVENTS.birthday10.start, EVENTS.birthday10.end))
 </script>
