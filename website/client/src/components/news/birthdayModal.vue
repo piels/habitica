@@ -1,6 +1,6 @@
 <template>
   <b-modal
-    id="anniversary-modal"
+    id="birthday-modal"
     :hide-header="true"
     :hide-footer="true"
   >
@@ -34,7 +34,7 @@
         >
         </div>
       </div>
-      <div class="celebrate">
+      <div class="celebrate d-flex justify-content-center">
         {{ $t('celebrateAnniversary') }}
       </div>
       <h2 class="d-flex justify-content-center">
@@ -72,7 +72,7 @@
           <button
             class="btn btn-secondary buy-now-left"
             :class="{active: selectedPage === 'payment-buttons'}"
-            @click="selectPage('payment-buttons')"
+            @click="selectedPage = 'payment-buttons'"
           >
             {{ $t('buyNowMoneyButton') }}
           </button>
@@ -124,7 +124,10 @@
               </span>
             </button>
           </div>
-          <div class="pay-with-gems">
+          <div
+            class="pay-with-gems"
+            @click="selectedPage = 'initial-buttons'"
+          >
             {{ $t('wantToPayWithGemsText') }}
           </div>
         </div>
@@ -268,10 +271,11 @@
 </template>
 
 <style lang="scss">
-#anniversary-modal {
+#birthday-modal {
   .modal-body {
     padding: 0px;
     border: 0px;
+    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
   .modal-content {
     border-radius: 14px;
@@ -290,7 +294,7 @@
   @import '~@/assets/scss/colors.scss';
   @import '~@/assets/scss/mixins.scss';
 
-#anniversary-modal {
+#birthday-modal {
   h2 {
     font-size: 1.25rem;
     font-weight: bold;
@@ -299,7 +303,7 @@
   }
 
   .modal-body {
-    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
+    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
 
   .modal-content {
@@ -311,7 +315,7 @@
     border-top-right-radius: 12px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
+    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
 
   .modal-bottom {
@@ -323,7 +327,7 @@
     padding: 16px 40px 28px 40px;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
-    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
+    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
     .limitations {
       color: $white;
@@ -368,19 +372,11 @@
   }
 
   .celebrate {
-    font-family: "Roboto Condensed";
-    width: 486px;
     font-size: 1.25rem;
     font-weight: bold;
-    font-stretch: condensed;
-    font-style: normal;
-    letter-spacing: normal;
     line-height: 1.4;
-    margin-top: 16px;
-    margin-bottom: 24px;
+    margin: 16px 16px 24px 16px;
     text-align: center;
-    justify-content: center;
-
     color: $yellow-50;
   }
 
@@ -477,6 +473,7 @@
     color: $white;
     text-align: center;
     margin-bottom: 24px;
+    cursor: pointer;
   }
 
   .own-gryphatrice-button {
@@ -486,15 +483,15 @@
     border-radius: 4px;
     justify-content: center;
     align-items: center;
-    border: $green-50;
-    background-color: $green-50;
+    border: $green-100;
+    background-color: $green-100;
     color: $green-1;
   }
 
   .plenty-of-potions {
     font-size: 0.875rem;
     line-height: 1.71;
-    margin: 16px 8px 24px;
+    margin: 0 8px 24px;
     text-align: center;
     color: $white;
   }
@@ -566,7 +563,7 @@
   .four-for-free {
     font-size: 0.875rem;
     line-height: 1.71;
-    margin: 16px 36px 24px;
+    margin: 0 36px 24px;
     text-align: center;
     color: $white;
   }
@@ -764,10 +761,6 @@ export default {
       this.makeGenericPurchase(gryphatrice);
       this.gryphBought = true;
       return this.purchased(gryphatrice.text());
-    },
-    selectPage (page) {
-      if (page === this.selectedPage) return;
-      if (page === 'payment-buttons') this.selectedPage = 'payment-buttons';
     },
     stableRedirect () {
       if (this.$router.history.current.name !== 'stable') {
