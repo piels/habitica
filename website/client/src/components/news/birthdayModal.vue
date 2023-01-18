@@ -51,10 +51,15 @@
       <!-- gryphatrice info -->
       <div class="d-flex">
         <div class="jubilant-gryphatrice d-flex mr-auto">
-          <img src="~@/assets/images/anniversary_pet_still_cropped.png">
+          <img
+            src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet-Gryphatrice-Jubilant-Large.gif"
+            width="156px"
+            height="144px"
+            alt="a pink, purple, and green gryphatrice pet winks at you adorably"
+          >
         </div>
         <div class="align-items-center">
-          <div class="limited-edition">
+          <div class="limited-edition mr-auto">
             {{ $t('limitedEdition') }}
           </div>
           <div class="gryphatrice-text">
@@ -418,7 +423,7 @@
     text-transform: uppercase;
     line-height:1.33;
     letter-spacing:2.4px;
-    padding-top: 36px;
+    padding-top: 18px;
     margin-left: 24px;
     margin-bottom: 8px;
     color: $yellow-50;
