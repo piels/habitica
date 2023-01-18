@@ -1,6 +1,6 @@
 <template>
   <b-modal
-    id="anniversary-modal"
+    id="birthday-modal"
     :hide-header="true"
     :hide-footer="true"
   >
@@ -271,10 +271,11 @@
 </template>
 
 <style lang="scss">
-#anniversary-modal {
+#birthday-modal {
   .modal-body {
     padding: 0px;
     border: 0px;
+    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
   .modal-content {
     border-radius: 14px;
@@ -293,7 +294,7 @@
   @import '~@/assets/scss/colors.scss';
   @import '~@/assets/scss/mixins.scss';
 
-#anniversary-modal {
+#birthday-modal {
   h2 {
     font-size: 1.25rem;
     font-weight: bold;
@@ -314,7 +315,7 @@
     border-top-right-radius: 12px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
+    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
 
   .modal-bottom {
