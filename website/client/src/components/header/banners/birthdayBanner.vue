@@ -1,9 +1,10 @@
 <template>
   <base-banner
-    banner-id="birthday-promo"
+    banner-id="birthday-banner"
     class="birthday-banner"
     :show="showBirthdayBanner"
     height="3rem"
+    :canClose="false"
   >
     <div
       slot="content"
@@ -46,21 +47,22 @@
     color: $purple-50;
   }
 
-  .birthday-promo-banner {
+  .birthday-banner {
     width: 100%;
     min-height: 48px;
     padding: 8px 401px;
-    background-image: linear-gradient(to left, rgba(255, 190, 93, 0) 100%,
-      var(--yellow-100) 67%, var(--yellow-100) 33%, rgba(255, 190, 93, 0) 0%);
+    background-image: url('~@/assets/images/birthday-background.webp');
+    background: linear-gradient(to left,
+      rgba(255, 190, 93, 0) 100%, $yellow-100 67%, $yellow-100 33%, rgba(255, 190, 93, 0) 0%);
     cursor: pointer;
   }
 
   .left-gift {
-    margin: auto 1rem auto auto;
+    margin: auto;
   }
 
   .right-gift {
-    margin: auto auto auto 16px;
+    margin: auto auto auto 8px;
     filter: flipH;
     transform: scaleX(-1);
   }
@@ -71,15 +73,15 @@
 
   .svg-ten-birthday {
     width: 192.5px;
+    margin-left: 8px;
+    margin-right: 8.5px;
   }
 </style>
 
 <script>
 import find from 'lodash/find';
-// import moment from 'moment';
 import { mapState } from '@/libs/store';
 import BaseBanner from './base';
-// import { EVENTS } from '@/libs/events';
 
 import gifts from '@/assets/svg/gifts.svg';
 import tenBirthday from '@/assets/svg/10th-birthday-linear.svg';
@@ -111,5 +113,4 @@ export default {
   },
 };
 
-// moment().isBetween(EVENTS.birthday10.start, EVENTS.birthday10.end))
 </script>

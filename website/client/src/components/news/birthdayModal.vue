@@ -265,6 +265,7 @@
   .modal-body {
     padding: 0px;
     border: 0px;
+    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
   .modal-content {
     border-radius: 14px;
@@ -304,7 +305,7 @@
     border-top-right-radius: 12px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
+    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
 
   .modal-bottom {
