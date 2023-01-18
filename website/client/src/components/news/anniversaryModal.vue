@@ -37,17 +37,9 @@
       <div class="celebrate">
         {{ $t('celebrateAnniversary') }}
       </div>
-      <div class="header">
-        <span
-          class="svg-divider svg-icons"
-          v-html="icons.divider"
-        ></span>
+      <h2 class="d-flex justify-content-center">
         {{ $t('jubilantGryphatrice') }}
-        <span
-          class="svg-divider-flip svg-icons"
-          v-html="icons.divider"
-        ></span>
-      </div>
+      </h2>
       <!-- gryphatrice info -->
       <div class="d-flex">
         <div class="jubilant-gryphatrice d-flex mr-auto">
@@ -145,17 +137,9 @@
         </button>
       </div>
       <!-- end of payments -->
-      <div class="header">
-        <span
-          class="svg-divider svg-icons"
-          v-html="icons.divider"
-        ></span>
+      <h2 class="d-flex justify-content-center">
         {{ $t('plentyOfPotions') }}
-        <span
-          class="svg-divider-flip svg-icons"
-          v-html="icons.divider"
-        ></span>
-      </div>
+      </h2>
       <div class="plenty-of-potions d-flex">
         {{ $t('plentyOfPotionsText') }}
       </div>
@@ -197,17 +181,9 @@
       >
         {{ $t('visitTheMarketButton') }}
       </button>
-      <div class="header d-flex">
-        <span
-          class="svg-divider svg-icons"
-          v-html="icons.divider"
-        ></span>
+      <h2 class="d-flex justify-content-center">
         {{ $t('fourForFree') }}
-        <span
-          class="svg-divider-flip svg-icons"
-          v-html="icons.divider"
-        ></span>
-      </div>
+      </h2>
       <div class="four-for-free">
         {{ $t('fourForFreeText') }}
       </div>
@@ -216,7 +192,7 @@
           <div class="day-text">
             {{ $t('dayOne') }}
           </div>
-          <div class="item d-flex justify-content-center align-items-middle">
+          <div class="gift d-flex justify-content-center align-items-middle">
             <img
               src="~@/assets/images/robes.webp"
               class="m-auto"
@@ -232,7 +208,7 @@
           <div class="day-text">
             {{ $t('dayOne') }}
           </div>
-          <div class="item d-flex justify-content-center align-items-middle">
+          <div class="gift d-flex justify-content-center align-items-middle">
             <div
               class="svg-gem svg-icon m-auto"
               v-html="icons.birthdayGems"
@@ -247,7 +223,7 @@
           <div class="day-text">
             {{ $t('dayFive') }}
           </div>
-          <div class="item d-flex justify-content-center align-items-middle">
+          <div class="gift d-flex justify-content-center align-items-middle">
             <img
               src="~@/assets/images/habitica-hero-goober.webp"
               class="m-auto"
@@ -261,7 +237,7 @@
           <div class="day-text">
             {{ $t('dayTen') }}
           </div>
-          <div class="item d-flex justify-content-center align-items-middle">
+          <div class="gift d-flex justify-content-center align-items-middle">
             <div
               class="svg-background svg-icon m-auto"
               v-html="icons.habitversaryBackground"
@@ -310,6 +286,16 @@
   @import '~@/assets/scss/mixins.scss';
 
 #anniversary-modal {
+  h2 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    line-height: 1.4;
+    color: $white;
+  }
+
+  .modal-body {
+    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
+  }
 
   .modal-content {
     width: 566px;
@@ -320,7 +306,9 @@
     border-top-right-radius: 12px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
+    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
+
   .modal-bottom {
     width: 566px;
     background-color: $purple-50;
@@ -330,6 +318,7 @@
     padding: 16px 40px 28px 40px;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
+    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
     .limitations {
       color: $white;
@@ -360,7 +349,7 @@
     text-align: center;
     justify-content: center;
     letter-spacing: 2.4px;
-    margin-top: 16 px;
+    margin-top: -8px;
     color: $yellow-50;
   }
 
@@ -374,29 +363,22 @@
   }
 
   .celebrate {
+    font-family: "Roboto Condensed";
+    width: 486px;
     font-size: 1.25rem;
     font-weight: bold;
     font-stretch: condensed;
+    font-style: normal;
+    letter-spacing: normal;
     line-height: 1.4;
+    margin-top: 16px;
+    margin-bottom: 24px;
     text-align: center;
     justify-content: center;
-    margin-top: 16px;
+
     color: $yellow-50;
   }
 
-  .header {
-    height: 28px;
-    font-size: 1.25rem;
-    font-weight: bold;
-    font-stretch: condensed;
-    line-height: 1.4;
-    margin-top: 24px;
-    margin-left: 8px;
-    margin-right: 20px;
-    text-align: center;
-    justify-content: center;
-    color: $white;
-  }
 
   .jubilant-gryphatrice {
     height: 176px;
@@ -447,18 +429,14 @@
 
   .buy-now-left {
     width: 243px;
-    margin-top: 24px;
-    margin-right: 8px;
-    margin-left: 0px;
+    margin: 24px 8px 24px 0px;
     border-radius: 4px;
     box-shadow: 0 1px 3px 0 rgba(26, 24, 29, 0.12), 0 1px 2px 0 rgba(26, 24, 29, 0.24);
   }
 
   .buy-now-right {
     width: 243px;
-    margin-top: 24px;
-    margin-right: 0px;
-    margin-left: 8px;
+    margin: 24px 0px 24px 8px;
     border-radius: 4px;
     box-shadow: 0 1px 3px 0 rgba(26, 24, 29, 0.12), 0 1px 2px 0 rgba(26, 24, 29, 0.24);
   }
@@ -493,18 +471,17 @@
   .pay-with-gems {
     color: $white;
     text-align: center;
+    margin-bottom: 24px;
   }
 
   .own-gryphatrice-button {
     width: 506px;
     height: 32px;
-    margin-top: 24px;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin: 24px 4px;
     border-radius: 4px;
     justify-content: center;
     align-items: center;
-    border: solid 1px $green-1;
+    border: $green-50;
     background-color: $green-50;
     color: $green-1;
   }
@@ -575,11 +552,8 @@
 
   }
   .visit-the-market {
-    // width: 502px;
     height: 32px;
-    margin-top: 24px;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin: 24px 4px;
     border-radius: 4px;
     box-shadow: 0 1px 3px 0 rgba(26, 24, 29, 0.12), 0 1px 2px 0 rgba(26, 24, 29, 0.24);
   }
@@ -633,7 +607,7 @@
       color: $yellow-50;
     }
 
-    .item {
+    .gift {
       height: 80px;
       width: 84px;
       margin: 0 8px 32px;
@@ -665,14 +639,14 @@
 
   .svg-gifts {
     margin-left: 70px;
-    top: 36px;
+    top: 30px;
   }
 
   .svg-gifts-flip {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
     left: 366px;
-    bottom: 36px;
+    bottom: 34px;
   }
 
   .svg-divider, .svg-divider-flip {
