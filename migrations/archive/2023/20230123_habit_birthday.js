@@ -37,8 +37,6 @@ async function updateUser (user) {
     set['items.gear.owned.armor_special_birthday'] = true;
   }
 
-  if (count % progressCount === 0) console.warn(`${count} ${user._id}`);
-
   push.notifications = {
     type: 'ITEM_RECEIVED',
     data: {
@@ -49,6 +47,8 @@ async function updateUser (user) {
     },
     seen: false,
   };
+
+  if (count % progressCount === 0) console.warn(`${count} ${user._id}`);
 
   return await User.update({_id: user._id}, {$inc: inc, $set: set, $push: push}).exec();
 }

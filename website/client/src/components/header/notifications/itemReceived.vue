@@ -41,7 +41,17 @@ export default {
   },
   methods: {
     action () {
-      this.$router.push({ name: this.notification.data.destination || 'items' });
+      if (!this.notification || !this.notification.data) {
+        return;
+      }
+      if (this.notification.data.destination === 'backgrounds') {
+        this.$store.state.avatarEditorOptions.editingUser = true;
+        this.$store.state.avatarEditorOptions.startingPage = 'backgrounds';
+        this.$store.state.avatarEditorOptions.subpage = '2023';
+        this.$root.$emit('bv::show::modal', 'avatar-modal');
+      } else {
+        this.$router.push({ name: this.notification.data.destination || 'items' });
+      }
     },
   },
 };
