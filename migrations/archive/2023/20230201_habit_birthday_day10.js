@@ -2,36 +2,46 @@
 import { v4 as uuid } from 'uuid';
 import { model as User } from '../../../website/server/models/user';
 
-const MIGRATION_NAME = '20230127_habit_birthday_day5';
+const MIGRATION_NAME = '20230201_habit_birthday_day10';
 const progressCount = 1000;
 let count = 0;
 
 async function updateUser (user) {
   count += 1;
 
-  const set = {};
-  const push = {};
-
-  set.migration = MIGRATION_NAME;
-
-  set['items.gear.owned.back_special_anniversary'] = true;
-  set['items.gear.owned.body_special_anniversary'] = true;
-  set['items.gear.owned.eyewear_special_anniversary'] = true;
-
-  push.notifications = {
-    type: 'ITEM_RECEIVED',
-    data: {
-      icon: 'notif_head_special_nye',
-      title: 'Birthday Bash Day 5!',
-      text: 'Come celebrate by wearing your new Birthday Set!',
-      destination: 'equipment',
+  const set = { 
+    migration: MIGRATION_NAME,
+    'purchased.background.birthday_bash': true,
+  };
+  const push = {
+    notifications: {
+      type: 'ITEM_RECEIVED',
+      data: {
+        icon: 'notif_head_special_nye',
+        title: 'Birthday Bash Day 10!',
+        text: 'Join in for the end of our birthday celebrations with 10th Birthday background, Cake, and achievement!',
+        destination: 'backgrounds',
+      },
+      seen: false,
     },
-    seen: false,
+  };
+  const inc = {
+    'items.food.Cake_Skeleton': 1,
+    'items.food.Cake_Base': 1,
+    'items.food.Cake_CottonCandyBlue': 1,
+    'items.food.Cake_CottonCandyPink': 1,
+    'items.food.Cake_Shade': 1,
+    'items.food.Cake_White': 1,
+    'items.food.Cake_Golden': 1,
+    'items.food.Cake_Zombie': 1,
+    'items.food.Cake_Desert': 1,
+    'items.food.Cake_Red': 1,
+    'achievements.habitBirthdays': 1,
   };
 
   if (count % progressCount === 0) console.warn(`${count} ${user._id}`);
 
-  return await User.update({_id: user._id}, {$set: set, $push: push}).exec();
+  return await User.update({_id: user._id}, {$set: set, $push: push, $inc: inc }).exec();
 }
 
 export default async function processUsers () {
