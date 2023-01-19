@@ -50,7 +50,7 @@
   .birthday-banner {
     width: 100%;
     min-height: 48px;
-    padding: 8px 401px;
+    padding: 8px;
     background-image: linear-gradient(90deg,
       rgba(255,190,93,0) 0%,
       rgba(255,190,93,1) 25%,
