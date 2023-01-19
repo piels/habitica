@@ -480,7 +480,7 @@ export default {
     isNewGroup () {
       return this.paymentData.paymentType === 'groupPlan' && this.paymentData.newGroup;
     },
-    ownsJubilantaGryphatrice () {
+    ownsJubilantGryphatrice () {
       return Boolean(this.user && this.user.items.pets['Gryphatrice-Jubilant']);
     },
   },
