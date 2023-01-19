@@ -43,10 +43,15 @@
       <!-- gryphatrice info -->
       <div class="d-flex">
         <div class="jubilant-gryphatrice d-flex mr-auto">
-          <img src="~@/assets/images/anniversary_pet_still_cropped.png">
+          <img
+            src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet-Gryphatrice-Jubilant-Large.gif"
+            width="156px"
+            height="144px"
+            alt="a pink, purple, and green gryphatrice pet winks at you adorably"
+          >
         </div>
         <div class="align-items-center">
-          <div class="limited-edition">
+          <div class="limited-edition mr-auto">
             {{ $t('limitedEdition') }}
           </div>
           <div class="gryphatrice-text">
@@ -139,14 +144,22 @@
       >
         <button
           class="own-gryphatrice-button"
-          @click="stableRedirect"
+          @click="closeAndRedirect('/inventory/stable')"
           v-html="$t('ownJubilantGryphatrice')"
         >
         </button>
       </div>
       <!-- end of payments -->
       <h2 class="d-flex justify-content-center">
+        <span
+          class="svg-divider"
+          v-html="icons.divider"
+        ></span>
         {{ $t('plentyOfPotions') }}
+        <span
+          class="svg-divider-flip"
+          v-html="icons.divider"
+        ></span>
       </h2>
       <div class="plenty-of-potions d-flex">
         {{ $t('plentyOfPotionsText') }}
@@ -185,12 +198,20 @@
       </div>
       <button
         class="btn btn-secondary d-flex justify-content-center visit-the-market"
-        @click="$router.push('/shops/market')"
+        @click="closeAndRedirect('/shops/market')"
       >
         {{ $t('visitTheMarketButton') }}
       </button>
       <h2 class="d-flex justify-content-center">
+        <span
+          class="svg-divider"
+          v-html="icons.divider"
+        ></span>
         {{ $t('fourForFree') }}
+        <span
+          class="svg-divider-flip"
+          v-html="icons.divider"
+        ></span>
       </h2>
       <div class="four-for-free">
         {{ $t('fourForFreeText') }}
@@ -235,7 +256,7 @@
             <img
               src="~@/assets/images/habitica-hero-goober.webp"
               class="m-auto"
-            ><!-- Birthday Suit -->
+            ><!-- Birthday Set -->
           </div>
           <div class="description">
             {{ $t('birthdaySet') }}
@@ -248,7 +269,7 @@
           <div class="gift d-flex justify-content-center align-items-middle">
             <div
               class="svg-background svg-icon m-auto"
-              v-html="icons.habitversaryBackground"
+              v-html="icons.birthdayBackground"
             >
             </div>
           </div>
@@ -275,7 +296,6 @@
   .modal-body {
     padding: 0px;
     border: 0px;
-    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
   .modal-content {
     border-radius: 14px;
@@ -302,8 +322,8 @@
     color: $white;
   }
 
-  .modal-body {
-    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
+  .modal-body{
+    box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
 
   .modal-content {
@@ -315,7 +335,6 @@
     border-top-right-radius: 12px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
 
   .modal-bottom {
@@ -327,7 +346,6 @@
     padding: 16px 40px 28px 40px;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
-    // box-shadow: 0 14px 28px 0 rgba(26, 24, 29, 0.24), 0 10px 10px 0 rgba(26, 24, 29, 0.28);
   }
     .limitations {
       color: $white;
@@ -380,7 +398,6 @@
     color: $yellow-50;
   }
 
-
   .jubilant-gryphatrice {
     height: 176px;
     width: 204px;
@@ -388,7 +405,6 @@
     background-color: $purple-50;
     align-items: center;
     justify-content: center;
-    margin-top: 16px;
     margin-right: 24px;
     margin-left: 4px;
     color: $white;
@@ -409,7 +425,7 @@
     text-transform: uppercase;
     line-height:1.33;
     letter-spacing:2.4px;
-    padding-top: 36px;
+    padding-top: 18px;
     margin-left: 24px;
     margin-bottom: 8px;
     color: $yellow-50;
@@ -467,12 +483,18 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
 
   .pay-with-gems {
     color: $white;
     text-align: center;
     margin-bottom: 24px;
+    cursor: pointer;
+  }
+
+  .pay-with-gems:hover {
+    text-decoration: underline;
     cursor: pointer;
   }
 
@@ -486,6 +508,7 @@
     border: $green-100;
     background-color: $green-100;
     color: $green-1;
+    cursor: pointer;
   }
 
   .plenty-of-potions {
@@ -558,6 +581,7 @@
     margin: 24px 4px;
     border-radius: 4px;
     box-shadow: 0 1px 3px 0 rgba(26, 24, 29, 0.12), 0 1px 2px 0 rgba(26, 24, 29, 0.24);
+    cursor: pointer;
   }
 
   .four-for-free {
@@ -704,6 +728,7 @@
 // to check if user owns JG or not
 import { mapState } from '@/libs/store';
 
+// Purchase functionality
 import buy from '@/mixins/buy';
 import notifications from '@/mixins/notifications';
 import payments from '@/mixins/payments';
@@ -717,7 +742,7 @@ import stripe from '@/assets/svg/stripe.svg';
 import paypal from '@/assets/svg/paypal-logo.svg';
 import amazon from '@/assets/svg/amazonpay.svg';
 import birthdayGems from '@/assets/svg/birthday-gems.svg';
-import habitversaryBackground from '@/assets/svg/icon-background-habitversary.svg';
+import birthdayBackground from '@/assets/svg/icon-background-birthday.svg';
 
 export default {
   mixins: [buy, notifications, payments],
@@ -731,7 +756,7 @@ export default {
         paypal,
         amazon,
         birthdayGems,
-        habitversaryBackground,
+        birthdayBackground,
       }),
       selectedPage: 'initial-buttons',
       gryphBought: false,
@@ -747,7 +772,7 @@ export default {
   },
   methods: {
     hide () {
-      this.$root.$emit('bv::hide::modal', 'anniversary-modal');
+      this.$root.$emit('bv::hide::modal', 'birthday-modal');
     },
     buyGryphatriceGems () {
       const gryphatrice = content.petInfo['Gryphatrice-Jubilant'];
@@ -762,9 +787,10 @@ export default {
       this.gryphBought = true;
       return this.purchased(gryphatrice.text());
     },
-    stableRedirect () {
-      if (this.$router.history.current.name !== 'stable') {
-        this.$router.push('/inventory/stable');
+    closeAndRedirect (route) {
+      const routeTerminator = route.slice('/')[route.slice('/').length - 1];
+      if (this.$router.history.current.name !== routeTerminator) {
+        this.$router.push(route);
       }
       this.hide();
     },
