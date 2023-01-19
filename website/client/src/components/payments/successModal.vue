@@ -175,7 +175,7 @@
         </button>
         <!-- successful purchase of Jubilant Gryphatrice-->
         <div
-          v-if="ownJubilantGryphatrice"
+          v-if="ownsJubilantGryphatrice"
           class="d-flex"
         >
           <div class="words mr-auto">
@@ -200,7 +200,7 @@
             >
           </div>
           <button
-            v-if="ownGryphatrice"
+            v-if="ownsJubilantGryphatrice"
             class="btn btn-primary mx-auto"
             @click="submit()"
           >
@@ -481,7 +481,7 @@ export default {
       return this.paymentData.paymentType === 'groupPlan' && this.paymentData.newGroup;
     },
     ownsJubilantGryphatrice () {
-      return Boolean(this.user && this.user.items.pets['Gryphatrice-Jubilant']) === true;
+      return Boolean(this.user && this.user.items.pets['Gryphatrice-Jubilant']);
     },
   },
   mounted () {

@@ -6,6 +6,16 @@
   >
     <div class="modal-content">
       <div
+        class="modal-close"
+        @click="close()"
+      >
+        <div
+          class="svg-icon svg-close"
+          v-html="icons.close"
+        >
+        </div>
+      </div>
+      <div
         class="svg-confetti svg-icon"
         v-html="icons.confetti"
       >
@@ -38,15 +48,24 @@
         {{ $t('celebrateAnniversary') }}
       </div>
       <h2 class="d-flex justify-content-center">
-        <!-- <span
-          class="svg-divider"
+        <span
+          class="left-divider"
           v-html="icons.divider"
-        ></span> -->
+        ></span>
+        <span
+          class="svg-cross"
+          v-html="icons.cross"
+        >
+        </span>
         {{ $t('jubilantGryphatrice') }}
-        <!-- <span
-          class="svg-divider-flip"
-          v-html="icons.divider"
-        ></span> -->
+        <span
+          class="svg-cross"
+          v-html="icons.cross"
+        >
+        </span>
+        <span
+          class="right-divider"
+        ></span>
       </h2>
       <!-- gryphatrice info -->
       <div class="d-flex">
@@ -150,13 +169,22 @@
       <!-- end of payments -->
       <h2 class="d-flex justify-content-center">
         <span
-          class="svg-divider"
+          class="left-divider"
           v-html="icons.divider"
         ></span>
+        <span
+          class="svg-cross"
+          v-html="icons.cross"
+        >
+        </span>
         {{ $t('plentyOfPotions') }}
         <span
-          class="svg-divider-flip"
-          v-html="icons.divider"
+          class="svg-cross"
+          v-html="icons.cross"
+        >
+        </span>
+        <span
+          class="right-divider"
         ></span>
       </h2>
       <div class="plenty-of-potions d-flex">
@@ -202,13 +230,22 @@
       </button>
       <h2 class="d-flex justify-content-center">
         <span
-          class="svg-divider"
+          class="left-divider"
           v-html="icons.divider"
         ></span>
+        <span
+          class="svg-cross"
+          v-html="icons.cross"
+        >
+        </span>
         {{ $t('fourForFree') }}
         <span
-          class="svg-divider-flip"
-          v-html="icons.divider"
+          class="svg-cross"
+          v-html="icons.cross"
+        >
+        </span>
+        <span
+          class="right-divider"
         ></span>
       </h2>
       <div class="four-for-free">
@@ -318,6 +355,11 @@
     font-weight: bold;
     line-height: 1.4;
     color: $white;
+    column-gap: 0.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: center;
   }
 
   .modal-body{
@@ -327,7 +369,7 @@
   .modal-content {
     width: 566px;
     padding: 32px 24px 24px;
-    background: linear-gradient(158deg, $purple-300 0%, $purple-200 100%);
+    background: linear-gradient(158deg,#6133b4,#4f2a93);
     // background-color: $gray-300; //temp
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
@@ -648,6 +690,27 @@
     }
 
   // SVG CSS
+  .modal-close {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    cursor: pointer;
+
+    .svg-close {
+      width: 18px;
+      height: 18px;
+      vertical-align: middle;
+      color: $purple-50;
+
+        & svg path {
+        fill: $purple-50 !important;;
+        }
+        & :hover {
+        fill: $purple-50;
+      }
+    }
+  }
+
   .svg-confetti {
     position: absolute;
     height: 152px;
@@ -673,23 +736,29 @@
     bottom: 34px;
   }
 
-  .svg-divider, .svg-divider-flip {
-    display: inline-block;
-    position: relative;
-    height: 12px;
-    width: 138px;
-    max-width: 100%;
+  .left-divider, .right-divider {
+    background-image: url('~@/assets/images/fancy-divider.png');
+    background-position: right center;
+    background-repeat: no-repeat;
+    display: inline-flex;
+    flex-grow: 2;
+    min-height: 1.25rem;
   }
 
-  .svg-divider {
-    margin-left: 16px;
-    margin-right: 8px;
-  }
+  // .left-divider {
+  //   margin-left: 16px;
+  //   margin-right: 8px;
+  // }
 
-  .svg-divider-flip {
+  .right-divider {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
-    margin-left: 8px;
+  }
+
+  .svg-cross {
+    height: 12px;
+    width: 12px;
+    color: $yellow-50;
   }
 
   .svg-gem {
@@ -727,27 +796,26 @@
 import { mapState } from '@/libs/store';
 
 // import images
+import close from '@/assets/svg/close.svg';
 import confetti from '@/assets/svg/confetti.svg';
 import gifts from '@/assets/svg/gifts-birthday.svg';
-import divider from '@/assets/svg/divider.svg';
+import cross from '@/assets/svg/cross.svg';
 import stripe from '@/assets/svg/stripe.svg';
 import paypal from '@/assets/svg/paypal-logo.svg';
 import amazon from '@/assets/svg/amazonpay.svg';
 import birthdayGems from '@/assets/svg/birthday-gems.svg';
 import habitversaryBackground from '@/assets/svg/icon-background-habitversary.svg';
 
-// import paymentButtons from '@/components/payments/buttons/list';
-
 export default {
   components: {
-    // paymentButtons,
   },
   data () {
     return {
       icons: Object.freeze({
+        close,
         confetti,
         gifts,
-        divider,
+        cross,
         stripe,
         paypal,
         amazon,
@@ -769,6 +837,9 @@ export default {
     },
     ownGryphatrice () {
       return Boolean(this.userLoggedIn.items.pets['Gryphatrice-Jubilant']);
+    },
+    close () {
+      this.$root.$emit('bv::hide::modal', 'birthday-modal');
     },
   },
 };
