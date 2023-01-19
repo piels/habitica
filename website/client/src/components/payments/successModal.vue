@@ -20,7 +20,7 @@
       <div class="check-container d-flex align-items-center justify-content-center">
         <div
           v-once
-          class="svg-icon check"
+          class="svg-icon svg-check"
           v-html="icons.check"
         ></div>
       </div>
@@ -173,6 +173,40 @@
         >
           {{ $t('submit') }}
         </button>
+        <!-- successful purchase of Jubilant Gryphatrice-->
+        <div
+          v-else-if="ownJubilantGryphatrice"
+          class="d-flex"
+        >
+          <div class="words mr-auto">
+            <span
+              v-once
+              v-html="$t('jubilantSuccess')"
+            >
+            </span>
+            <br>
+            <span
+              v-once
+              v-html="$t('stableVisit')"
+            >
+            </span>
+          </div>
+          <div class="gryphatrice">
+            <img
+              src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet-Gryphatrice-Jubilant-Large.gif"
+              width="156px"
+              height="144px"
+              alt="a pink, purple, and green gryphatrice pet winks at you adorably"
+            >
+          </div>
+          <button
+            v-if="ownGryphatrice"
+            class="btn btn-primary mx-auto"
+            @click="submit()"
+          >
+            {{ $t('takeMeToStable') }}
+          </button>
+        </div>
       </div>
     </div>
   </b-modal>
@@ -232,9 +266,9 @@
       margin-bottom: 16px;
     }
 
-    .check {
-      width: 35.1px;
-      height: 28px;
+    .svg-check {
+      width: 45px;
+      height: 40px;
       color: $white;
     }
   }
@@ -292,6 +326,22 @@
 
     .group-billing-date {
       width: 269px;
+    }
+
+    .words {
+      margin-top: 16px 24px 0;
+      justify-content: center;
+      font-size: 0.875rem;
+      color: $gray-50;
+      line-height: 1.71;
+    }
+
+    .gryphatrice: {
+      width: 110px;
+      height: 104px;
+      margin: 16px 169px 16px;
+      border-radius: 4px;
+      background-color: $gray-700;
     }
   }
     .modal-footer {
@@ -429,6 +479,9 @@ export default {
     },
     isNewGroup () {
       return this.paymentData.paymentType === 'groupPlan' && this.paymentData.newGroup;
+    },
+    ownsJubilantaGryphatrice () {
+      return Boolean(this.user && this.user.items.pets['Gryphatrice-Jubilant']);
     },
   },
   mounted () {
