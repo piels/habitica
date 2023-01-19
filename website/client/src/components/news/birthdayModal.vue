@@ -121,41 +121,34 @@
           id="payment-buttons"
           class="d-flex flex-column"
         >
-          <div>
-            <button
-              class="btn btn-secondary d-flex stripe"
-              @click="redirectToStripe({ sku: 'price_0MPZekZCD0RifGXl0sfpFgs4' })"
+          <button
+            class="btn btn-secondary d-flex stripe"
+            @click="redirectToStripe({ sku: 'price_0MPZekZCD0RifGXl0sfpFgs4' })"
+          >
+            <span
+              class="svg-stripe"
+              v-html="icons.stripe"
             >
-              <span
-                class="svg-stripe"
-                v-html="icons.stripe"
-              >
-              </span>
-            </button>
-          </div>
-          <div>
-            <button
-              class="btn btn-secondary d-flex paypal"
-              @click="openPaypal({
-                url: paypalCheckoutLink, type: 'sku', sku: 'Pet-Gryphatrice-Jubilant'
-              })"
+            </span>
+          </button>
+          <button
+            class="btn btn-secondary d-flex paypal"
+            @click="openPaypal({
+              url: paypalCheckoutLink, type: 'sku', sku: 'Pet-Gryphatrice-Jubilant'
+            })"
+          >
+            <span
+              class="svg-paypal"
+              v-html="icons.paypal"
             >
-              <span
-                class="svg-paypal"
-                v-html="icons.paypal"
-              >
-              </span>
-            </button>
-          </div>
-          <div>
-            <button class="btn btn-secondary d-flex amazon">
-              <span
-                class="svg-amazon"
-                v-html="icons.amazon"
-              >
-              </span>
-            </button>
-          </div>
+            </span>
+          </button>
+          <amazon-button
+            :disabled="disabled"
+            :amazon-data="amazonData"
+            class="btn btn-secondary d-flex amazon"
+            v-html="icons.amazon"
+          />
           <div
             class="pay-with-gems"
             @click="selectedPage = 'initial-buttons'"
@@ -350,7 +343,19 @@
     border-radius: 14px;
     border: 0px;
   }
+  .amazon {
+    margin-bottom: 16px;
 
+    svg {
+      width: 84px;
+      position: absolute;
+    }
+
+    .amazonpay-button-inner-image {
+      opacity: 0;
+      width: 100%;
+    }
+  }
 }
 </style>
 
@@ -516,11 +521,6 @@
   .paypal {
     margin-bottom: 8px;
     padding-bottom: 10px;
-  }
-
-  .amazon {
-    margin-bottom: 16px;
-    padding-bottom: 15px;
   }
 
   .stripe, .paypal, .amazon {
@@ -784,12 +784,6 @@
     height: 16px;
     width: 60px;
   }
-
-  .svg-amazon {
-    height: 16px;
-    width: 83.4px;
-  }
-
 }
 
 </style>
@@ -804,6 +798,7 @@ import buy from '@/mixins/buy';
 import notifications from '@/mixins/notifications';
 import payments from '@/mixins/payments';
 import content from '@/../../common/script/content/index';
+import amazonButton from '@/components/payments/buttons/amazon';
 
 // import images
 import close from '@/assets/svg/close.svg';
@@ -817,9 +812,16 @@ import birthdayGems from '@/assets/svg/birthday-gems.svg';
 import birthdayBackground from '@/assets/svg/icon-background-birthday.svg';
 
 export default {
+  components: {
+    amazonButton,
+  },
   mixins: [buy, notifications, payments],
   data () {
     return {
+      amazonData: {
+        type: 'single',
+        sku: 'Pet-Gryphatrice-Jubilant',
+      },
       icons: Object.freeze({
         close,
         confetti,
