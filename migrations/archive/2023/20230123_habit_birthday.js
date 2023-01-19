@@ -16,25 +16,25 @@ async function updateUser (user) {
   set.migration = MIGRATION_NAME;
 
   if (typeof user.items.gear.owned.armor_special_birthday2022 !== 'undefined') {
-    set['items.gear.owned.armor_special_birthday2023'] = false;
+    set['items.gear.owned.armor_special_birthday2023'] = true;
   } else if (typeof user.items.gear.owned.armor_special_birthday2021 !== 'undefined') {
-    set['items.gear.owned.armor_special_birthday2022'] = false;
+    set['items.gear.owned.armor_special_birthday2022'] = true;
   } else if (typeof user.items.gear.owned.armor_special_birthday2020 !== 'undefined') {
-    set['items.gear.owned.armor_special_birthday2021'] = false;
+    set['items.gear.owned.armor_special_birthday2021'] = true;
   } else if (typeof user.items.gear.owned.armor_special_birthday2019 !== 'undefined') {
-    set['items.gear.owned.armor_special_birthday2020'] = false;
+    set['items.gear.owned.armor_special_birthday2020'] = true;
   } else if (typeof user.items.gear.owned.armor_special_birthday2018 !== 'undefined') {
-    set['items.gear.owned.armor_special_birthday2019'] = false;
+    set['items.gear.owned.armor_special_birthday2019'] = true;
   } else if (typeof user.items.gear.owned.armor_special_birthday2017 !== 'undefined') {
-    set['items.gear.owned.armor_special_birthday2018'] = false;
+    set['items.gear.owned.armor_special_birthday2018'] = true;
   } else if (typeof user.items.gear.owned.armor_special_birthday2016 !== 'undefined') {
-    set['items.gear.owned.armor_special_birthday2017'] = false;
+    set['items.gear.owned.armor_special_birthday2017'] = true;
   } else if (typeof user.items.gear.owned.armor_special_birthday2015 !== 'undefined') {
-    set['items.gear.owned.armor_special_birthday2016'] = false;
+    set['items.gear.owned.armor_special_birthday2016'] = true;
   } else if (typeof user.items.gear.owned.armor_special_birthday !== 'undefined') {
-    set['items.gear.owned.armor_special_birthday2015'] = false;
+    set['items.gear.owned.armor_special_birthday2015'] = true;
   } else {
-    set['items.gear.owned.armor_special_birthday'] = false;
+    set['items.gear.owned.armor_special_birthday'] = true;
   }
 
   if (count % progressCount === 0) console.warn(`${count} ${user._id}`);
