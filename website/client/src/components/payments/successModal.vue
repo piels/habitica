@@ -107,6 +107,32 @@
             class="small-text auto-renew"
           >{{ $t('paymentAutoRenew') }}</span>
         </template>
+        <!-- if you buy the Jubilant Gryphatrice during 10th birthday -->
+        <template
+          v-if="ownsJubilantGryphatrice"
+        >
+          <div class="words d-flex mr-auto">
+            <span
+              v-once
+              v-html="$t('jubilantSuccess')"
+            >
+            </span>
+            <br>
+            <span
+              v-once
+              v-html="$t('stableVisit')"
+            >
+            </span>
+          </div>
+          <div class="gryphatrice">
+            <img
+              src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet-Gryphatrice-Jubilant-Large.gif"
+              width="156px"
+              height="144px"
+              alt="a pink, purple, and green gryphatrice pet winks at you adorably"
+            >
+          </div>
+        </template>
         <!-- buttons for subscriptions / new Group / buy Gems for self -->
         <button
           v-if="isNewGroup || isGems || isSubscription"
@@ -115,6 +141,14 @@
           @click="submit()"
         >
           {{ $t('onwards') }}
+        </button>
+        <!-- buttons for Jubilant Gryphatrice purchase during 10th birthday -->
+        <button
+          v-if="ownsJubilantGryphatrice"
+          class="btn btn-primary mx-auto"
+          @click="submit()"
+        >
+          {{ $t('takeMeToStable') }}
         </button>
       </div>
     </div>
@@ -173,40 +207,6 @@
         >
           {{ $t('submit') }}
         </button>
-        <!-- successful purchase of Jubilant Gryphatrice-->
-        <div
-          v-else-if="ownJubilantGryphatrice"
-          class="d-flex"
-        >
-          <div class="words mr-auto">
-            <span
-              v-once
-              v-html="$t('jubilantSuccess')"
-            >
-            </span>
-            <br>
-            <span
-              v-once
-              v-html="$t('stableVisit')"
-            >
-            </span>
-          </div>
-          <div class="gryphatrice">
-            <img
-              src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet-Gryphatrice-Jubilant-Large.gif"
-              width="156px"
-              height="144px"
-              alt="a pink, purple, and green gryphatrice pet winks at you adorably"
-            >
-          </div>
-          <button
-            v-if="ownGryphatrice"
-            class="btn btn-primary mx-auto"
-            @click="submit()"
-          >
-            {{ $t('takeMeToStable') }}
-          </button>
-        </div>
       </div>
     </div>
   </b-modal>
@@ -480,8 +480,8 @@ export default {
     isNewGroup () {
       return this.paymentData.paymentType === 'groupPlan' && this.paymentData.newGroup;
     },
-    ownsJubilantaGryphatrice () {
-      return Boolean(this.user && this.user.items.pets['Gryphatrice-Jubilant']);
+    ownsJubilantGryphatrice () {
+      return this.paymentData.paymentType === 'sku'; // will need to be revised when there are other discrete skus in system
     },
   },
   mounted () {

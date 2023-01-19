@@ -9,7 +9,6 @@ import { CONSTANTS, setLocalSetting } from '@/libs/userlocalManager';
 
 const { STRIPE_PUB_KEY } = process.env;
 
-// const habiticaUrl = `${window.location.protocol}//${window.location.host}`;
 let stripeInstance = null;
 
 export default {
@@ -258,6 +257,7 @@ export default {
 
       if (data.type === 'single') {
         this.amazonPayments.gemsBlock = data.gemsBlock;
+        this.amazonPayments.sku = data.sku;
       }
 
       if (data.gift) {
