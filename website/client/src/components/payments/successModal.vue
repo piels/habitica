@@ -272,7 +272,6 @@
 
     .svg-check {
       width: 45px;
-      height: 40px;
       color: $white;
     }
   }
