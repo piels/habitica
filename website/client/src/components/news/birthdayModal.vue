@@ -709,7 +709,7 @@
       width: 18px;
       height: 18px;
       vertical-align: middle;
-      color: $purple-50;
+      fill: $purple-50;
 
         & svg path {
         fill: $purple-50 !important;;
@@ -801,7 +801,7 @@ import content from '@/../../common/script/content/index';
 import amazonButton from '@/components/payments/buttons/amazon';
 
 // import images
-import close from '@/assets/svg/close.svg';
+import close from '@/assets/svg/new-close.svg';
 import confetti from '@/assets/svg/confetti.svg';
 import gifts from '@/assets/svg/gifts-birthday.svg';
 import cross from '@/assets/svg/cross.svg';

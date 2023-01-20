@@ -362,6 +362,11 @@
               class="btn btn-secondary"
               @click="birthdayModal()"
             >Open Birthday Modal</a>
+            <a
+              class="btn btn-secondary"
+              @click="successModal()"
+            >
+              Open Success Modal</a>
           </div>
         </div>
       </div>
@@ -907,6 +912,9 @@ export default {
     },
     birthdayModal () {
       this.$root.$emit('bv::show::modal', 'birthday-modal');
+    },
+    successModal () {
+      this.$root.$emit('bv::show::modal', 'success-modal');
     },
   },
 };

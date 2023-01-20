@@ -112,23 +112,24 @@
           v-if="ownsJubilantGryphatrice"
         >
           <div class="words d-flex mr-auto">
-            <span
-              v-once
-              v-html="$t('jubilantSuccess')"
-            >
-            </span>
-            <br>
-            <span
-              v-once
-              v-html="$t('stableVisit')"
-            >
-            </span>
+            <p>
+              <span
+                v-once
+                v-html="$t('jubilantSuccess')"
+              >
+              </span>
+            </p>
+            <p>
+              <span
+                v-once
+                v-html="$t('stableVisit')"
+              >
+              </span>
+            </p>
           </div>
           <div class="gryphatrice">
             <img
               src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet-Gryphatrice-Jubilant-Large.gif"
-              width="156px"
-              height="144px"
               alt="a pink, purple, and green gryphatrice pet winks at you adorably"
             >
           </div>
@@ -337,8 +338,8 @@
     }
 
     .gryphatrice: {
-      width: 110px;
-      height: 104px;
+      width: 156px;
+      height: 144px;;
       margin: 16px 169px 16px;
       border-radius: 4px;
       background-color: $gray-700;
