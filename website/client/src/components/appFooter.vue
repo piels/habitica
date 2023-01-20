@@ -914,7 +914,7 @@ export default {
       this.$root.$emit('bv::show::modal', 'birthday-modal');
     },
     successModal () {
-      this.$root.$emit('bv::show::modal', 'success-modal');
+      this.$root.$emit('bv::show::modal', 'payments-success-modal');
     },
   },
 };

@@ -1,8 +1,8 @@
 <template>
   <b-modal
     id="payments-success-modal"
-    :hide-footer="isNewGroup || isGems || isSubscription"
-    :modal-class="isNewGroup || isGems || isSubscription
+    :hide-footer="isNewGroup || isGems || isSubscription || ownsJubilantGryphatrice"
+    :modal-class="isNewGroup || isGems || isSubscription || ownsJubilantGryphatrice
       ? ['modal-hidden-footer'] : []"
   >
     <!-- HEADER -->
@@ -111,15 +111,16 @@
         <template
           v-if="ownsJubilantGryphatrice"
         >
-          <div class="words d-flex mr-auto">
-            <p>
+         <!-- add  back into template tag -->
+          <div class="words">
+            <p class="jub-success">
               <span
                 v-once
                 v-html="$t('jubilantSuccess')"
               >
               </span>
             </p>
-            <p>
+            <p class="jub-success">
               <span
                 v-once
                 v-html="$t('stableVisit')"
@@ -127,10 +128,12 @@
               </span>
             </p>
           </div>
-          <div class="gryphatrice">
+          <div class="gryph-bg">
             <img
               src="https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet-Gryphatrice-Jubilant-Large.gif"
               alt="a pink, purple, and green gryphatrice pet winks at you adorably"
+              width="78px"
+              height="72px"
             >
           </div>
         </template>
@@ -146,7 +149,7 @@
         <!-- buttons for Jubilant Gryphatrice purchase during 10th birthday -->
         <button
           v-if="ownsJubilantGryphatrice"
-          class="btn btn-primary mx-auto"
+          class="btn btn-primary mx-auto btn-jub"
           @click="submit()"
         >
           {{ $t('takeMeToStable') }}
@@ -269,7 +272,6 @@
 
     .svg-check {
       width: 45px;
-      height: 40px;
       color: $white;
     }
   }
@@ -330,20 +332,32 @@
     }
 
     .words {
-      margin-top: 16px 24px 0;
+      margin-bottom: 16px;
       justify-content: center;
       font-size: 0.875rem;
       color: $gray-50;
       line-height: 1.71;
     }
 
-    .gryphatrice: {
-      width: 156px;
-      height: 144px;;
-      margin: 16px 169px 16px;
+    .jub-success {
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+
+    .gryph-bg {
+      width: 110px;
+      height: 104px;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
       border-radius: 4px;
       background-color: $gray-700;
     }
+    .btn-jub {
+      margin-bottom: 8px;
+      margin-top: 24px;
+    }
+
   }
     .modal-footer {
       background: $gray-700;
