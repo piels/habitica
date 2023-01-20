@@ -111,7 +111,6 @@
         <template
           v-if="ownsJubilantGryphatrice"
         >
-         <!-- add  back into template tag -->
           <div class="words">
             <p class="jub-success">
               <span
@@ -150,7 +149,7 @@
         <button
           v-if="ownsJubilantGryphatrice"
           class="btn btn-primary mx-auto btn-jub"
-          @click="submit()"
+          @click="closeAndRedirect()"
         >
           {{ $t('takeMeToStable') }}
         </button>
@@ -525,6 +524,12 @@ export default {
       this.gift.message = '';
       this.sendingInProgress = false;
       this.$root.$emit('bv::hide::modal', 'payments-success-modal');
+    },
+    closeAndRedirect () {
+      if (this.$router.history.current.name !== 'stable') {
+        this.$router.push('/inventory/stable');
+      }
+      this.close();
     },
     submit () {
       if (this.paymentData.group && !this.paymentData.newGroup) {
