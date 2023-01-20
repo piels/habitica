@@ -863,7 +863,7 @@ export default {
       return this.purchased(gryphatrice.text());
     },
     closeAndRedirect (route) {
-      const routeTerminator = route.slice('/')[route.slice('/').length - 1];
+      const routeTerminator = route.split('/')[route.split('/').length - 1];
       if (this.$router.history.current.name !== routeTerminator) {
         this.$router.push(route);
       }
