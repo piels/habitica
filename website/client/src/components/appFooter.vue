@@ -914,7 +914,10 @@ export default {
       this.$root.$emit('bv::show::modal', 'birthday-modal');
     },
     successModal () {
-      this.$root.$emit('bv::show::modal', 'success-modal');
+      // eslint-disable-next-line no-extra-boolean-cast
+      if (Boolean(this.user && this.user.items.pets['Gryphatrice-Jubilant'])) {
+        this.$root.$emit('bv::show::modal', 'payments-success-modal');
+      }
     },
   },
 };
