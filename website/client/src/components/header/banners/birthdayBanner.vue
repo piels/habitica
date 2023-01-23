@@ -4,7 +4,7 @@
     class="birthday-banner"
     :show="showBirthdayBanner"
     height="3rem"
-    :canClose="false"
+    :can-close="false"
   >
     <div
       slot="content"
@@ -106,7 +106,7 @@ export default {
       currentEventList: 'worldState.data.currentEventList',
     }),
     showBirthdayBanner () {
-      return find(this.currentEventList, event => Boolean(event.event === 'birthday10'));
+      return Boolean(find(this.currentEventList, event => Boolean(event.event === 'birthday10')));
     },
   },
   methods: {

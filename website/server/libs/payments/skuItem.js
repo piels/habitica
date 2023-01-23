@@ -12,7 +12,7 @@ const RESPONSE_INVALID_ITEM = 'INVALID_ITEM_PURCHASED';
 
 const EVENTS = {
   birthday10: {
-    start: '2023-01-01T08:00-05:00',
+    start: '2023-01-23T08:00-05:00',
     end: '2023-02-01T23:59-05:00',
   },
 };
@@ -49,7 +49,9 @@ async function buyGryphatrice (data) {
 export function canBuySkuItem (sku, user) {
   switch (sku) {
     case 'com.habitrpg.android.habitica.iap.pets.gryphatrice_jubilant':
-    case 'com.habitrpg.ios.Habitica.pets.gryphatrice_jubilant':
+    case 'com.habitrpg.ios.Habitica.pets.Gryphatrice_Jubilant':
+    case 'Pet-Gryphatrice-Jubilant':
+    case 'price_0MPZekZCD0RifGXl0sfpFgs4':
       return canBuyGryphatrice(user);
     default:
       return true;
