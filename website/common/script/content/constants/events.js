@@ -16,14 +16,14 @@ export const EVENTS = {
     npcImageSuffix: '',
   },
   birthday10: {
-    start: '2023-01-30T08:00-05:00',
+    start: '2023-01-23T08:00-05:00',
     end: '2023-02-08T23:59-05:00',
     season: 'birthday',
     npcImageSuffix: '_birthday',
   },
   winter2023: {
     start: '2022-12-20T08:00-05:00',
-    end: '2023-01-31T23:59-05:00',
+    end: '2023-01-25T13:00-05:00',
     npcImageSuffix: '_winter',
     season: 'winter',
     gear: true,
