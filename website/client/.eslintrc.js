@@ -16,7 +16,7 @@ module.exports = {
     'import/extensions': 'off',
     'vue/no-mutating-props': 'warn',
     'vue/component-tags-order': ['warn', {
-      order: [ 'template', 'style', 'script' ],
+      order: ['template', 'style', 'script'],
     }],
     'vue/no-v-html': 'off',
     'vue/html-self-closing': ['error', {
