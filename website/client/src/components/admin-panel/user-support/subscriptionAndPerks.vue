@@ -149,7 +149,7 @@ export default {
     nextHourglassDate () {
       const currentPlanContext = getPlanContext(this.hero, new Date());
 
-      return currentPlanContext.nextHourglassDate.format('MMMM');
+      return currentPlanContext.nextHourglassDate.format('MMMM YYYY');
     },
   },
   methods: {
