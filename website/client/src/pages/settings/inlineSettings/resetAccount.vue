@@ -59,7 +59,6 @@
         </div>
 
         <div class="input-area">
-          Todo Password Check for Reset (Missing in the API)
           <current-password-input
             :show-forget-password="true"
             @passwordValue="passwordValue = $event"
@@ -69,7 +68,7 @@
             primary-button-color="btn-danger"
             primary-button-label="resetAccount"
             @saveClicked="reset()"
-            @cancelClicked="closeModal()"
+            @cancelClicked="requestCloseModal()"
           />
         </div>
       </td>
@@ -80,6 +79,9 @@
 <style lang="scss" scoped>
 @import '~@/assets/scss/colors.scss';
 
+ul.row  li {
+  color: $gray-50;
+}
 </style>
 
 <script>
@@ -106,7 +108,9 @@ export default {
   },
   methods: {
     async reset () {
-      await axios.post('/api/v4/user/reset');
+      await axios.post('/api/v4/user/reset', {
+        password: this.passwordValue,
+      });
       this.$router.push('/');
       setTimeout(() => window.location.reload(true), 100);
     },

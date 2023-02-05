@@ -41,6 +41,7 @@
 
         <div
           v-once
+          class="feedback"
           v-html="$t('feedback')"
         >
         </div>
@@ -62,7 +63,7 @@
             primary-button-color="btn-danger"
             primary-button-label="deleteAccount"
             @saveClicked="deleteAccount()"
-            @cancelClicked="closeModal()"
+            @cancelClicked="requestCloseModal()"
           />
         </div>
       </td>
@@ -73,6 +74,9 @@
 <style lang="scss" scoped>
 @import '~@/assets/scss/colors.scss';
 
+.feedback {
+  color: $gray-50;
+}
 </style>
 
 <script>

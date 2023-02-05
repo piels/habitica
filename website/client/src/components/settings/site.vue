@@ -1,100 +1,9 @@
 <template>
   <div class="row standard-page">
-    <restore-modal />
-    <reset-modal />
-    <delete-modal />
     <h1 class="col-12">
       {{ $t('settings') }}
     </h1>
     <div class="col-sm-6">
-      <div class="form-horizontal">
-        <h5>{{ $t('language') }}</h5>
-        <select
-          class="form-control"
-          :value="user.preferences.language"
-          @change="changeLanguage($event)"
-        >
-          <option
-            v-for="lang in availableLanguages"
-            :key="lang.code"
-            :value="lang.code"
-          >
-            {{ lang.name }}
-          </option>
-        </select>
-        <small>
-          {{ $t('americanEnglishGovern') }}
-          <br>
-          <strong v-html="$t('helpWithTranslation')"></strong>
-        </small>
-      </div>
-      <hr>
-      <div class="form-horizontal">
-        <h5>{{ $t('dateFormat') }}</h5>
-        <select
-          v-model="user.preferences.dateFormat"
-          class="form-control"
-          @change="set('dateFormat')"
-        >
-          <option
-            v-for="dateFormat in availableFormats"
-            :key="dateFormat"
-            :value="dateFormat"
-          >
-            {{ dateFormat }}
-          </option>
-        </select>
-      </div>
-      <hr>
-      <div class="form-horizontal">
-        <div class="form-group">
-          <h5>{{ $t('audioTheme') }}</h5>
-          <select
-            v-model="user.preferences.sound"
-            class="form-control"
-            @change="changeAudioTheme"
-          >
-            <option
-              v-for="sound in availableAudioThemes"
-              :key="sound"
-              :value="sound"
-            >
-              {{ $t(`audioTheme_${sound}`) }}
-            </option>
-          </select>
-        </div>
-        <button
-          v-once
-          class="btn btn-primary btn-xs"
-          @click="playAudio"
-        >
-          {{ $t('demo') }}
-        </button>
-      </div>
-      <hr>
-      <div
-        v-if="hasClass"
-        class="form-horizontal"
-      >
-        <h5>{{ $t('characterBuild') }}</h5>
-        <h6 v-once>
-          {{ $t('class') + ': ' }}
-          <!-- @TODO: what is classText-->
-          <!-- span(v-if='classText') {{ classText }}&nbsp;-->
-          <button
-            v-once
-            class="btn btn-danger btn-xs"
-            @click="changeClassForUser(true)"
-          >
-            {{ $t('changeClass') }}
-          </button>
-          <small class="cost">
-            &nbsp; 3 {{ $t('gems') }}
-            <!-- @TODO add icon span.Pet_Currency_Gem1x.inline-gems-->
-          </small>
-        </h6>
-        <hr>
-      </div>
       <div>
         <div class="checkbox">
           <label>
@@ -147,28 +56,6 @@
             >{{ $t('displayInviteToPartyWhenPartyIs1') }}</span>
           </label>
         </div>
-
-        <button
-          class="btn btn-primary mr-2 mb-2"
-          popover-trigger="mouseenter"
-          popover-placement="right"
-          :popover="$t('fixValPop')"
-          @click="openRestoreModal()"
-        >
-          {{ $t('fixVal') }}
-        </button>
-        <button
-          v-if="user.preferences.disableClasses == true"
-          class="btn btn-primary mb-2"
-          popover-trigger="mouseenter"
-          popover-placement="right"
-          :popover="$t('enableClassPop')"
-          @click="changeClassForUser(false)"
-        >
-          {{ $t('enableClass') }}
-        </button>
-        <hr>
-        <day-start-adjustment />
       </div>
     </div>
     <div class="col-sm-6">
@@ -256,195 +143,6 @@
             </div>
           </div>
         </div>
-        <div class="usersettings">
-          <h5>{{ $t('changeDisplayName') }}</h5>
-          <div
-            class="form"
-            name="changeDisplayName"
-            novalidate="novalidate"
-          >
-            <div class="form-group">
-              <input
-                id="changeDisplayname"
-                v-model="temporaryDisplayName"
-                class="form-control"
-                type="text"
-                :placeholder="$t('newDisplayName')"
-                :class="{'is-invalid input-invalid': displayNameInvalid}"
-              >
-              <div
-                v-if="displayNameIssues.length > 0"
-                class="mb-3"
-              >
-                <div
-                  v-for="issue in displayNameIssues"
-                  :key="issue"
-                  class="input-error"
-                >
-                  {{ issue }}
-                </div>
-              </div>
-            </div>
-            <button
-              class="btn btn-primary"
-              type="submit"
-              :disabled="displayNameCannotSubmit"
-              @click="changeDisplayName(temporaryDisplayName)"
-            >
-              {{ $t('submit') }}
-            </button>
-          </div>
-          <h5>{{ $t('changeUsername') }}</h5>
-          <div
-            class="form"
-            name="changeUsername"
-            novalidate="novalidate"
-          >
-            <div
-              v-if="verifiedUsername"
-              class="iconalert iconalert-success"
-            >
-              {{ $t('usernameVerifiedConfirmation', {'username': user.auth.local.username}) }}
-            </div>
-            <div
-              v-else
-              class="iconalert iconalert-warning"
-            >
-              <div class="align-middle">
-                <span>{{ $t('usernameNotVerified') }}</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <input
-                id="changeUsername"
-                v-model="usernameUpdates.username"
-                class="form-control"
-                type="text"
-                :placeholder="$t('newUsername')"
-                :class="{'is-invalid input-invalid': usernameInvalid}"
-                @blur="restoreEmptyUsername()"
-              >
-              <div
-                v-for="issue in usernameIssues"
-                :key="issue"
-                class="input-error"
-              >
-                {{ issue }}
-              </div>
-              <small class="form-text text-muted">{{ $t('changeUsernameDisclaimer') }}</small>
-            </div>
-            <button
-              class="btn btn-primary"
-              type="submit"
-              :disabled="usernameCannotSubmit"
-              @click="changeUser('username', usernameUpdates)"
-            >
-              {{ $t('saveAndConfirm') }}
-            </button>
-          </div>
-          <h5 v-if="user.auth.local.has_password">
-            {{ $t('changeEmail') }}
-          </h5>
-          <div
-            v-if="user.auth.local.email"
-            class="form"
-            name="changeEmail"
-            novalidate="novalidate"
-          >
-            <div class="form-group">
-              <input
-                id="changeEmail"
-                v-model="emailUpdates.newEmail"
-                class="form-control"
-                type="text"
-                :placeholder="$t('newEmail')"
-              >
-            </div>
-            <div
-              v-if="user.auth.local.has_password"
-              class="form-group"
-            >
-              <input
-                v-model="emailUpdates.password"
-                class="form-control"
-                type="password"
-                :placeholder="$t('password')"
-              >
-            </div>
-            <button
-              class="btn btn-primary"
-              type="submit"
-              @click="changeUser('email', emailUpdates)"
-            >
-              {{ $t('submit') }}
-            </button>
-          </div>
-          <h5 v-if="user.auth.local.has_password">
-            {{ $t('changePass') }}
-          </h5>
-          <div
-            v-if="user.auth.local.has_password"
-            class="form"
-            name="changePassword"
-            novalidate="novalidate"
-          >
-            <div class="form-group">
-              <input
-                id="changePassword"
-                v-model="passwordUpdates.password"
-                class="form-control"
-                type="password"
-                :placeholder="$t('oldPass')"
-              >
-            </div>
-            <div class="form-group">
-              <input
-                v-model="passwordUpdates.newPassword"
-                class="form-control"
-                type="password"
-                :placeholder="$t('newPass')"
-              >
-            </div>
-            <div class="form-group">
-              <input
-                v-model="passwordUpdates.confirmPassword"
-                class="form-control"
-                type="password"
-                :placeholder="$t('confirmPass')"
-              >
-            </div>
-            <button
-              class="btn btn-primary"
-              type="submit"
-              @click="changeUser('password', passwordUpdates)"
-            >
-              {{ $t('submit') }}
-            </button>
-          </div>
-          <hr>
-        </div>
-        <div>
-          <h5>{{ $t('dangerZone') }}</h5>
-          <div>
-            <button
-              v-b-popover.hover.auto="$t('resetAccPop')"
-              class="btn btn-danger mr-2 mb-2"
-              popover-trigger="mouseenter"
-              popover-placement="right"
-              @click="openResetModal()"
-            >
-              {{ $t('resetAccount') }}
-            </button>
-            <button
-              v-b-popover.hover.auto="$t('deleteAccPop')"
-              class="btn btn-danger mb-2"
-              popover-trigger="mouseenter"
-              @click="openDeleteModal()"
-            >
-              {{ $t('deleteAccount') }}
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -477,27 +175,13 @@
 <script>
 import hello from 'hellojs';
 import axios from 'axios';
-import debounce from 'lodash/debounce';
 import { mapState } from '@/libs/store';
-import restoreModal from './restoreModal';
-import resetModal from './resetModal';
-import deleteModal from './deleteModal';
-import dayStartAdjustment from './dayStartAdjustment';
 import { SUPPORTED_SOCIAL_NETWORKS } from '@/../../common/script/constants';
-import changeClass from '@/../../common/script/ops/changeClass';
 import notificationsMixin from '../../mixins/notifications';
-import sounds from '../../libs/sounds';
 import { buildAppleAuthUrl } from '../../libs/auth';
-
-// @TODO: this needs our window.env fix
-// import { availableLanguages } from '../../../server/libs/i18n';
 
 export default {
   components: {
-    restoreModal,
-    resetModal,
-    deleteModal,
-    dayStartAdjustment,
   },
   mixins: [notificationsMixin],
   data () {
@@ -506,18 +190,11 @@ export default {
       party: {},
       // Made available by the server as a script
       availableFormats: ['MM/dd/yyyy', 'dd/MM/yyyy', 'yyyy/MM/dd'],
-      temporaryDisplayName: '',
-      usernameUpdates: { username: '' },
-      emailUpdates: {},
       passwordUpdates: {},
       localAuth: {
-        username: '',
-        email: '',
         password: '',
         confirmPassword: '',
       },
-      displayNameIssues: [],
-      usernameIssues: [],
     };
   },
   computed: {
@@ -532,56 +209,11 @@ export default {
     hasClass () {
       return this.$store.getters['members:hasClass'](this.user);
     },
-    verifiedUsername () {
-      return this.user.flags.verifiedUsername;
-    },
-    displayNameInvalid () {
-      if (this.temporaryDisplayName.length <= 1) return false;
-      return !this.displayNameValid;
-    },
-    displayNameValid () {
-      if (this.temporaryDisplayName.length <= 1) return false;
-      return this.displayNameIssues.length === 0;
-    },
-    displayNameCannotSubmit () {
-      if (this.temporaryDisplayName.length <= 1) return true;
-      return !this.displayNameValid;
-    },
-    usernameValid () {
-      if (this.usernameUpdates.username.length <= 1) return false;
-      return this.usernameIssues.length === 0;
-    },
-    usernameInvalid () {
-      if (this.usernameUpdates.username.length <= 1) return false;
-      return !this.usernameValid;
-    },
-    usernameCannotSubmit () {
-      if (this.usernameUpdates.username.length <= 1) return true;
-      return !this.usernameValid;
-    },
-  },
-  watch: {
-    usernameUpdates: {
-      handler () {
-        this.validateUsername(this.usernameUpdates.username);
-      },
-      deep: true,
-    },
-    temporaryDisplayName: {
-      handler () {
-        this.validateDisplayName(this.temporaryDisplayName);
-      },
-      deep: true,
-    },
   },
   mounted () {
     this.SOCIAL_AUTH_NETWORKS = SUPPORTED_SOCIAL_NETWORKS;
     // @TODO: We may need to request the party here
     this.party = this.$store.state.party;
-    this.usernameUpdates.username = this.user.auth.local.username || null;
-    this.temporaryDisplayName = this.user.profile.name;
-    this.emailUpdates.newEmail = this.user.auth.local.email || null;
-    this.localAuth.username = this.user.auth.local.username || null;
     this.soundIndex = 0;
 
     this.$store.dispatch('common:setTitle', {
@@ -606,36 +238,6 @@ export default {
     }
   },
   methods: {
-    validateDisplayName: debounce(function checkName (displayName) {
-      if (displayName.length <= 1 || displayName === this.user.profile.name) {
-        this.displayNameIssues = [];
-        return;
-      }
-      this.$store.dispatch('auth:verifyDisplayName', {
-        displayName,
-      }).then(res => {
-        if (res.issues !== undefined) {
-          this.displayNameIssues = res.issues;
-        } else {
-          this.displayNameIssues = [];
-        }
-      });
-    }, 500),
-    validateUsername: debounce(function checkName (username) {
-      if (username.length <= 1 || username === this.user.auth.local.username) {
-        this.usernameIssues = [];
-        return;
-      }
-      this.$store.dispatch('auth:verifyUsername', {
-        username,
-      }).then(res => {
-        if (res.issues !== undefined) {
-          this.usernameIssues = res.issues;
-        } else {
-          this.usernameIssues = [];
-        }
-      });
-    }, 500),
     set (preferenceType, subtype) {
       const settings = {};
       if (!subtype) {
@@ -674,22 +276,9 @@ export default {
         return false;
       });
     },
-    async changeLanguage (e) {
-      const newLang = e.target.value;
-      this.user.preferences.language = newLang;
-      await this.set('language');
-      setTimeout(() => window.location.reload(true));
-    },
     async changeUser (attribute, updates) {
       await axios.put(`/api/v4/user/auth/update-${attribute}`, updates);
-      if (attribute === 'username') {
-        this.user.auth.local.username = updates[attribute];
-        this.localAuth.username = this.user.auth.local.username;
-        this.user.flags.verifiedUsername = true;
-      } else if (attribute === 'email') {
-        this.user.auth.local.email = updates.newEmail;
-        window.alert(this.$t('emailSuccess')); // eslint-disable-line no-alert
-      } else if (attribute === 'password') {
+      if (attribute === 'password') {
         this.passwordUpdates = {};
         this.$store.dispatch('snackbars:add', {
           title: 'Habitica',
@@ -698,21 +287,6 @@ export default {
           timeout: true,
         });
       }
-    },
-    async changeDisplayName (newName) {
-      await axios.put('/api/v4/user/', { 'profile.name': newName });
-      window.alert(this.$t('displayNameSuccess')); // eslint-disable-line no-alert
-      this.user.profile.name = newName;
-      this.temporaryDisplayName = newName;
-    },
-    openRestoreModal () {
-      this.$root.$emit('bv::show::modal', 'restore');
-    },
-    openResetModal () {
-      this.$root.$emit('bv::show::modal', 'reset');
-    },
-    openDeleteModal () {
-      this.$root.$emit('bv::show::modal', 'delete');
     },
     async deleteSocialAuth (network) {
       await axios.delete(`/api/v4/user/auth/social/${network.key}`);
@@ -730,34 +304,12 @@ export default {
         window.location.href = '/';
       }
     },
-    async changeClassForUser (confirmationNeeded) {
-      if (confirmationNeeded && !window.confirm(this.$t('changeClassConfirmCost'))) return; // eslint-disable-line no-alert
-      try {
-        changeClass(this.user);
-        await axios.post('/api/v4/user/change-class');
-      } catch (e) {
-        window.alert(e.message); // eslint-disable-line no-alert
-      }
-    },
     async addLocalAuth () {
       if (this.localAuth.email === '') {
         this.localAuth.email = this.user.auth.local.email;
       }
       await axios.post('/api/v4/user/auth/local/register', this.localAuth);
       window.location.href = '/user/settings/site';
-    },
-    restoreEmptyUsername () {
-      if (this.usernameUpdates.username.length < 1) {
-        this.usernameUpdates.username = this.user.auth.local.username;
-      }
-    },
-    changeAudioTheme () {
-      this.soundIndex = 0;
-      this.set('sound');
-    },
-    playAudio () {
-      this.$root.$emit('playSound', sounds[this.soundIndex]);
-      this.soundIndex = (this.soundIndex + 1) % sounds.length;
     },
   },
 };

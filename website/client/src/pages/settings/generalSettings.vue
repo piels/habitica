@@ -35,6 +35,10 @@
             TODO
           </td>
         </tr>
+        <tr>
+          <td colspan="3">
+          </td>
+        </tr>
       </table>
 
       <h2 v-once>
@@ -46,6 +50,10 @@
         <date-format-setting />
         <day-start-adjustment-setting />
         <audio-theme-setting />
+        <tr>
+          <td colspan="3">
+          </td>
+        </tr>
       </table>
 
 
@@ -54,14 +62,10 @@
       </h2>
 
       <table class="table">
+        <fix-values-setting />
+        <class-setting />
         <tr>
           <td colspan="3">
-            Fix Values TODO
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            Change Class TODO
           </td>
         </tr>
       </table>
@@ -111,9 +115,13 @@ import LanguageSetting from './inlineSettings/languageSetting';
 import DateFormatSetting from './inlineSettings/dateFormatSetting';
 import DayStartAdjustmentSetting from './inlineSettings/dayStartAdjustmentSetting.vue';
 import AudioThemeSetting from '@/pages/settings/inlineSettings/audioThemeSetting.vue';
+import ClassSetting from '@/pages/settings/inlineSettings/classSetting.vue';
+import FixValuesSetting from '@/pages/settings/inlineSettings/fixValuesSetting.vue';
 
 export default {
   components: {
+    FixValuesSetting,
+    ClassSetting,
     AudioThemeSetting,
     DayStartAdjustmentSetting,
     DateFormatSetting,

@@ -73,7 +73,7 @@
           <save-cancel-buttons
             :disable-save="displayNameCannotSubmit"
             @saveClicked="changeDisplayName(temporaryDisplayName)"
-            @cancelClicked="closeModal()"
+            @cancelClicked="requestCloseModal()"
           />
         </div>
       </td>
@@ -201,6 +201,8 @@ export default {
       window.alert(this.$t('displayNameSuccess')); // eslint-disable-line no-alert
       this.user.profile.name = newName;
       this.temporaryDisplayName = newName;
+
+      this.closeModal();
     },
     validateDisplayName: debounce(async function checkName (displayName) {
       if (displayName.length <= 1 || displayName === this.user.profile.name) {
