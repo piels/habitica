@@ -108,6 +108,7 @@
             v-if="user"
           >
             <a
+              href=""
               target="_blank"
               @click.prevent="openBugReportModal()"
             >
@@ -488,10 +489,6 @@ footer {
     color: $purple-300;
     text-decoration: underline;
   }
-  a:not([href]):not([class]):hover { // needed to make "report a bug"'s hover state correct
-    color: $purple-300;
-    text-decoration: underline;
-  }
 
   column-gap: 1.5rem;
   display: grid;
@@ -691,11 +688,6 @@ h3 {
 
   footer {
     padding: 24px 16px;
-    a:not([href]):not([class]):hover { // needed to make "report a bug"'s hover state correct
-      color: $purple-300;
-      text-decoration: underline;
-    }
-
     column-gap: 1.5rem;
     display: grid;
     grid-template-areas:
@@ -735,10 +727,6 @@ h3 {
 @media (max-width: 1024px) and (min-width: 768px) {
   footer {
     padding: 24px 24px;
-    a:not([href]):not([class]):hover { // needed to make "report a bug"'s hover state correct
-      color: $purple-300;
-      text-decoration: underline;
-    }
   }
 
   .desktop {
