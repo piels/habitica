@@ -174,7 +174,6 @@
 @import '~@/assets/scss/colors.scss';
 
 a:not([href]) {
-  color: $blue-10;
   font-size: 0.875rem;
   line-height: 1.71;
 }
