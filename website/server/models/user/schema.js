@@ -500,7 +500,7 @@ export const UserSchema = new Schema({
       // invite is accepted or rejected, quest starts, or quest is cancelled
       RSVPNeeded: { $type: Boolean, default: false },
     },
-    seeking: Boolean,
+    seeking: Date,
   },
   preferences: {
     dayStart: {

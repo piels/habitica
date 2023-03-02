@@ -243,7 +243,7 @@ export default {
     ...mapState({ user: 'user.data' }),
   },
   mounted () {
-    this.seeking = this.user.party.seeking;
+    this.seeking = Boolean(this.user.party.seeking);
   },
   methods: {
     async createParty () {
@@ -278,7 +278,7 @@ export default {
     },
     seekParty () {
       this.$store.dispatch('user:set', {
-        'party.seeking': !this.user.party.seeking,
+        'party.seeking': !this.user.party.seeking ? new Date() : null,
       });
       this.seeking = !this.seeking;
     },
