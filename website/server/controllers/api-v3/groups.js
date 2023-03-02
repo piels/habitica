@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import nconf from 'nconf';
+import moment from 'moment';
 import { authWithHeaders } from '../../middlewares/auth';
 import {
   model as Group,
@@ -1355,6 +1356,78 @@ api.getGroupPlans = {
     const groupPlans = groups.filter(group => group.hasActiveGroupPlan());
 
     res.respond(200, groupPlans);
+  },
+};
+
+/**
+ * @api {get} /api/v3/party-seekers Get users in search of parties
+ * @apiName GetPartySeekers
+ * @apiGroup Group
+ *
+ * @apiParam (Query) {Number} [page] Page number, defaults to 0
+ *
+ * @apiSuccess {Object[]} data An array of users looking for a party
+ *
+ * @apiError (400) {BadRequest} notPartyLeader You are not the leader of a Party.
+ */
+api.getPartySeekers = {
+  method: 'GET',
+  url: '/party-seekers',
+  middlewares: [authWithHeaders()],
+  async handler (req, res) {
+    const USERS_PER_PAGE = 30;
+    const { user } = res.locals;
+
+    req.checkQuery('page').optional().isInt({ min: 0 }, apiError('queryPageInteger'));
+    const PAGE = req.query.page || 0;
+    const PAGE_START = USERS_PER_PAGE * PAGE;
+
+    const partyLed = await Group
+      .findOne({
+        type: 'party',
+        leader: user._id,
+      })
+      .select('_id')
+      .exec();
+
+    if (!partyLed) {
+      throw new BadRequest(apiError('notPartyLeader'));
+    }
+
+    const seekers = await User
+      .find({
+        'party.seeking': true,
+        'auth.timestamps.loggedin': {
+          $gt: moment().subtract(7, 'days').toDate(),
+        },
+      })
+      // eslint-disable-next-line no-multi-str
+      .select('_id auth.blocked auth.timestamps contributor.level inbox.blocks \
+        invitations.party items.gear.costume items.gear.equipped party._id \
+        preferences.costume preferences.language profile.name stats.class')
+      .sort('-auth.timestamps.loggedin')
+      .exec();
+
+    const filteredSeekers = seekers.filter(seeker => {
+      if (seeker.party._id) return false;
+      if (seeker.invitations.party.id) return false;
+      if (seeker.auth.blocked) return false;
+      if (seeker.inbox.blocks.indexOf(user._id) !== -1) return false;
+      if (user.inbox.blocks.indexOf(seeker._id) !== -1) return false;
+      return true;
+    }).slice(PAGE_START, PAGE_START + USERS_PER_PAGE);
+
+    const cleanedSeekers = filteredSeekers.map(seeker => ({
+      _id: seeker._id,
+      auth: { timestamps: seeker.auth.timestamps },
+      contributor: seeker.contributor,
+      items: seeker.items,
+      preferences: seeker.preferences,
+      profile: seeker.profile,
+      stats: seeker.stats,
+    }));
+
+    res.respond(200, cleanedSeekers);
   },
 };
 

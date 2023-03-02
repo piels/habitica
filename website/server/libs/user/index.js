@@ -51,6 +51,7 @@ const updatablePaths = [
   'party.orderAscending',
   'party.quest.completed',
   'party.quest.RSVPNeeded',
+  'party.seeking',
 
   'preferences',
   'profile',
