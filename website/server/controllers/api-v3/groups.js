@@ -591,6 +591,7 @@ api.joinGroup = {
         // Clear all invitations of new user
         user.invitations.parties = [];
         user.invitations.party = {};
+        user.party.seeking = null;
 
         // invite new user to pending quest
         if (group.quest.key && !group.quest.active) {
@@ -1403,8 +1404,8 @@ api.getPartySeekers = {
       })
       // eslint-disable-next-line no-multi-str
       .select('_id auth.blocked auth.timestamps contributor.level inbox.blocks \
-        invitations.party items.gear.costume items.gear.equipped party._id \
-        preferences.costume preferences.language profile.name stats.class')
+        invitations.party items.gear.costume items.gear.equipped loginIncentives \
+        party._id preferences.costume preferences.language profile.name stats.class')
       .sort('-auth.timestamps.loggedin')
       .exec();
 
@@ -1422,6 +1423,7 @@ api.getPartySeekers = {
       auth: { timestamps: seeker.auth.timestamps },
       contributor: seeker.contributor,
       items: seeker.items,
+      loginIncentives: seeker.loginIncentives,
       preferences: seeker.preferences,
       profile: seeker.profile,
       stats: seeker.stats,
