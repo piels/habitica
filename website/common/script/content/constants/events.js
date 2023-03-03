@@ -9,9 +9,14 @@ const gemsPromo = {
 };
 
 export const EVENTS = {
+  aprilFools2023: {
+    start: '2023-03-03T08:00-05:00',
+    end: '2023-04-02T08:00-05:00',
+    aprilFools: 'teaShop',
+  },
   noEvent: {
     start: '2023-02-28T23:59-05:00',
-    end: '2023-03-21T08:00-05:00',
+    end: '2023-03-03T08:00-05:00',
     season: 'normal',
     npcImageSuffix: '',
   },
