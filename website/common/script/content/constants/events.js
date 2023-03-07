@@ -21,6 +21,7 @@ export const EVENTS = {
     npcImageSuffix: '_spring',
     season: 'spring',
     gear: true,
+    aprilFools: 'teaShop',
   },
   bundle202303: {
     start: '2023-03-07T08:00-05:00',
