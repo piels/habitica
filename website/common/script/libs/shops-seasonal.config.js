@@ -35,13 +35,13 @@ export default {
       healer: 'spring2023LilyHealerSet',
     }
     : {},
-  availableSpells: CURRENT_EVENT && moment().isBetween('2023-04-18T08:00-05:00', CURRENT_EVENT.end)
+  availableSpells: CURRENT_EVENT && moment().isBetween('2023-03-07T08:00-05:00', CURRENT_EVENT.end)
     ? [
       'shinySeed',
     ]
     : [],
 
-  availableQuests: CURRENT_EVENT && moment().isBetween('2023-03-28T08:00-05:00', CURRENT_EVENT.end)
+  availableQuests: CURRENT_EVENT && moment().isBetween('2023-03-07T08:00-05:00', CURRENT_EVENT.end)
     ? [
       'egg',
     ]
