@@ -905,7 +905,6 @@ export default {
     },
     externalLinkModal () {
       this.$root.$emit('bv::show::modal', 'external-link-modal');
-      console.log('Hi!');
     },
   },
 };
