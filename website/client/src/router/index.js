@@ -41,13 +41,14 @@ const ItemsPage = () => import(/* webpackChunkName: "inventory" */'@/components/
 const EquipmentPage = () => import(/* webpackChunkName: "inventory" */'@/components/inventory/equipment/index');
 const StablePage = () => import(/* webpackChunkName: "inventory" */'@/components/inventory/stable/index');
 
-// Guilds
+// Guilds & Parties
 const GuildIndex = () => import(/* webpackChunkName: "guilds" */ '@/components/groups/index');
 const TavernPage = () => import(/* webpackChunkName: "guilds" */ '@/components/groups/tavern');
 const MyGuilds = () => import(/* webpackChunkName: "guilds" */ '@/components/groups/myGuilds');
 const GuildsDiscoveryPage = () => import(/* webpackChunkName: "guilds" */ '@/components/groups/discovery');
 const GroupPage = () => import(/* webpackChunkName: "guilds" */ '@/components/groups/group');
 const GroupPlansAppPage = () => import(/* webpackChunkName: "guilds" */ '@/components/groups/groupPlan');
+const PartySeeking = () => import(/* webpackChunkName: "guilds" */ '@/components/groups/partySeeking');
 
 // Group Plans
 const GroupPlanIndex = () => import(/* webpackChunkName: "group-plans" */ '@/components/group-plans/index');
@@ -126,6 +127,7 @@ const router = new VueRouter({
       ],
     },
     { name: 'party', path: '/party', component: GroupPage },
+    { name: 'partySeeking', path: '/party-seeking', component: PartySeeking },
     { name: 'groupPlan', path: '/group-plans', component: GroupPlansAppPage },
     {
       name: 'groupPlanDetail',

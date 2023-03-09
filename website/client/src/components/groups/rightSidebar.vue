@@ -17,6 +17,13 @@
           >
             <span v-once>{{ $t(isParty ? 'inviteToParty' : 'inviteToGuild') }}</span>
           </button>
+          <button
+            v-if="isParty && isLeader"
+            class="btn btn-primary inline"
+            @click="seekParty"
+          >
+            Find Party Seekers
+          </button>
           <b-dropdown
             right="right"
             toggle-class="with-icon"
@@ -175,6 +182,11 @@ export default {
   computed: {
     isGroup () {
       return Boolean(this.group.purchased?.plan?.customerId);
+    },
+  },
+  methods: {
+    seekParty () {
+      this.$router.push('/party-seeking');
     },
   },
 };
