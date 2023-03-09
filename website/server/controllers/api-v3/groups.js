@@ -1401,14 +1401,14 @@ api.getPartySeekers = {
 
     const seekers = await User
       .find({
-        'party.seeking': true,
+        'party.seeking': { $exists: true },
         'auth.timestamps.loggedin': {
           $gt: moment().subtract(7, 'days').toDate(),
         },
       })
       // eslint-disable-next-line no-multi-str
-      .select('_id auth.blocked auth.timestamps contributor.level inbox.blocks \
-        invitations.party items.gear.costume items.gear.equipped loginIncentives \
+      .select('_id auth.blocked auth.local.username auth.timestamps contributor.level \
+        inbox.blocks invitations.party items.gear.costume items.gear.equipped loginIncentives \
         party._id preferences.costume preferences.language profile.name stats.class')
       .sort('-auth.timestamps.loggedin')
       .exec();
@@ -1424,8 +1424,14 @@ api.getPartySeekers = {
 
     const cleanedSeekers = filteredSeekers.map(seeker => ({
       _id: seeker._id,
-      auth: { timestamps: seeker.auth.timestamps },
+      auth: {
+        local: {
+          username: seeker.auth.local.username,
+        },
+        timestamps: seeker.auth.timestamps,
+      },
       contributor: seeker.contributor,
+      invited: false,
       items: seeker.items,
       loginIncentives: seeker.loginIncentives,
       preferences: seeker.preferences,
