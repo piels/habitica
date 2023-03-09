@@ -367,14 +367,11 @@
               @click="makeAdmin()"
             >Make Admin</a>
             <a
-              class="btn btn-secondary"
-              @click="birthdayModal()"
-            >Open Birthday Modal</a>
-            <a
-              class="btn btn-secondary"
-              @click="successModal()"
+              class="btn btn-danger"
+              @click="externalLinkModal()"
             >
-              Open Success Modal</a>
+              External Link Modal
+            </a>
           </div>
         </div>
       </div>
@@ -906,11 +903,9 @@ export default {
     donate () {
       this.$root.$emit('bv::show::modal', 'buy-gems', { alreadyTracked: true });
     },
-    birthdayModal () {
-      this.$root.$emit('bv::show::modal', 'birthday-modal');
-    },
-    successModal () {
-      this.$root.$emit('bv::show::modal', 'payments-success-modal');
+    externalLinkModal () {
+      this.$root.$emit('bv::show::modal', 'external-link-modal');
+      console.log('Hi!');
     },
   },
 };
