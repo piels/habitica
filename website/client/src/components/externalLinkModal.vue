@@ -147,7 +147,6 @@ export default {
   methods: {
     close () {
       this.$root.$emit('bv::hide::modal', 'external-link-modal');
-      console.log('Bye!');
     },
   },
 };
