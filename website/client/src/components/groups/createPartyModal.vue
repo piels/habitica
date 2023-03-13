@@ -79,6 +79,10 @@
   #create-party-modal {
     overflow-y: hidden;
 
+    @media (max-height: 770px) {
+      overflow-y: auto;
+    }
+
     .modal-body {
       padding: 0rem 0.75rem;
     }
