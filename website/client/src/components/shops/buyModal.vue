@@ -106,6 +106,7 @@
               >{{ item.value }}</span>
             </span>
           </div>
+
           <div
             v-if="showAmountToBuy(item)"
             class="how-many-to-buy"
@@ -314,7 +315,7 @@
 
     .attributes-group {
       margin: 24px;
-      border-radius: 4px;;
+      border-radius: 4px;
     }
 
     .content {
@@ -404,7 +405,7 @@
       vertical-align: middle;
 
       &.gems {
-        color: $gems-color;
+        color: $green-10;
         border-radius: 20px;
         padding: 8px 20px 8px 20px;
         margin-top: 16px;
@@ -413,7 +414,7 @@
       }
 
       &.gold {
-        color: $gold-color;
+        color: $yellow-5;
         border-radius: 20px;
         padding: 8px 20px 8px 20px;
         margin-top: 16px;
