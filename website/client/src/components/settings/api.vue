@@ -3,55 +3,6 @@
     <div class="col-6">
       <h2>{{ $t('API') }}</h2>
       <p>{{ $t('APIText') }}</p>
-      <div class="section">
-        <h6>{{ $t('userId') }}</h6>
-        <pre class="prettyprint">{{ user.id }}</pre>
-        <h6>{{ $t('APIToken') }}</h6>
-        <div class="d-flex align-items-center mb-3">
-          <button
-            class="btn btn-secondary"
-            @click="showApiToken = !showApiToken"
-          >
-            {{ $t(`${showApiToken ? 'hide' : 'show'}APIToken`) }}
-          </button>
-          <pre
-            v-if="showApiToken"
-            class="prettyprint ml-4 mb-0"
-          >{{ apiToken }}</pre>
-        </div>
-        <p v-html="$t('APITokenWarning', { hrefTechAssistanceEmail })"></p>
-      </div>
-      <div class="section">
-        <h3>{{ $t('thirdPartyApps') }}</h3>
-        <ul>
-          <li>
-            <a
-              target="_blank"
-              href="https://www.beeminder.com/habitica"
-            >{{ $t('beeminder') }}</a>
-            <br>
-            {{ $t('beeminderDesc') }}
-          </li>
-          <li>
-            <div v-html="$t('chatExtension')">
-            </div>
-            <span>{{ $t('chatExtensionDesc') }}</span>
-          </li>
-          <li>
-            <a
-              target="_blank"
-              :href="`https://oldgods.net/habitica/habitrpg_user_data_display.html?uuid=` + user._id"
-            >{{ $t('dataDisplayTool') }}</a>
-            <br>
-            {{ $t('dataToolDesc') }}
-          </li>
-          <li>
-            <div v-html="$t('otherExtensions')"></div>
-            <span>{{ $t('otherDesc') }}</span>
-          </li>
-        </ul>
-        <hr>
-      </div>
     </div>
     <div class="col-6">
       <h2>{{ $t('webhooks') }}</h2>

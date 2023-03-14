@@ -46,6 +46,7 @@
         <date-format-setting />
         <day-start-adjustment-setting />
         <audio-theme-setting />
+        <sleep-mode />
         <tr>
           <td colspan="3">
           </td>
@@ -65,6 +66,40 @@
           </td>
         </tr>
       </table>
+
+      <h2 v-once>
+        {{ $t('taskSettings') }}
+      </h2>
+
+      <table class="table">
+        <task-settings />
+        <tr>
+          <td colspan="3">
+          </td>
+        </tr>
+      </table>
+
+      <br>
+      <br>
+      <div>
+        TODO: this was only visible when party.memberCount is 1
+        <div
+          class="checkbox"
+        >
+          <label>
+            <input
+              v-model="user.preferences.displayInviteToPartyWhenPartyIs1"
+              type="checkbox"
+              class="mr-2"
+              @change="setUserPreference('displayInviteToPartyWhenPartyIs1')"
+            >
+            <span
+              v-b-popover.hover.right="$t('displayInviteToPartyWhenPartyIs1')"
+              class="hint"
+            >{{ $t('displayInviteToPartyWhenPartyIs1') }}</span>
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -84,23 +119,29 @@
 
 <script>
 import notificationsMixin from '../../mixins/notifications';
-import UserNameSetting from './inlineSettings/userNameSetting';
-import UserEmailSetting from './inlineSettings/userEmailSetting';
-import DisplayNameSetting from './inlineSettings/displayNameSetting';
-import PasswordSetting from './inlineSettings/passwordSetting';
-import ResetAccount from './inlineSettings/resetAccount';
-import DeleteAccount from './inlineSettings/deleteAccount';
+import UserNameSetting from './settingRows/userNameSetting';
+import UserEmailSetting from './settingRows/userEmailSetting';
+import DisplayNameSetting from './settingRows/displayNameSetting';
+import PasswordSetting from './settingRows/passwordSetting';
+import ResetAccount from './settingRows/resetAccount';
+import DeleteAccount from './settingRows/deleteAccount';
 import { sharedInlineSettingStore } from './components/inlineSettingMixin';
-import LanguageSetting from './inlineSettings/languageSetting';
-import DateFormatSetting from './inlineSettings/dateFormatSetting';
-import DayStartAdjustmentSetting from './inlineSettings/dayStartAdjustmentSetting.vue';
-import AudioThemeSetting from '@/pages/settings/inlineSettings/audioThemeSetting.vue';
-import ClassSetting from '@/pages/settings/inlineSettings/classSetting.vue';
-import FixValuesSetting from '@/pages/settings/inlineSettings/fixValuesSetting.vue';
-import LoginMethods from '@/pages/settings/inlineSettings/loginMethods.vue';
+import LanguageSetting from './settingRows/languageSetting';
+import DateFormatSetting from './settingRows/dateFormatSetting';
+import DayStartAdjustmentSetting from './settingRows/dayStartAdjustmentSetting.vue';
+import AudioThemeSetting from '@/pages/settings/settingRows/audioThemeSetting.vue';
+import ClassSetting from '@/pages/settings/settingRows/classSetting.vue';
+import FixValuesSetting from '@/pages/settings/settingRows/fixValuesSetting.vue';
+import LoginMethods from '@/pages/settings/settingRows/loginMethods.vue';
+import TaskSettings from '@/pages/settings/settingRows/taskSettings.vue';
+import { GenericUserPreferencesMixin } from '@/pages/settings/components/genericUserPreferencesMixin';
+import { mapState } from '@/libs/store';
+import SleepMode from '@/pages/settings/settingRows/sleepMode.vue';
 
 export default {
   components: {
+    SleepMode,
+    TaskSettings,
     LoginMethods,
     FixValuesSetting,
     ClassSetting,
@@ -115,10 +156,21 @@ export default {
     UserEmailSetting,
     UserNameSetting,
   },
-  mixins: [notificationsMixin],
+  mixins: [notificationsMixin, GenericUserPreferencesMixin],
+  computed: {
+    ...mapState({
+      user: 'user.data',
+    }),
+  },
   beforeRouteLeave (_, __, next) {
     sharedInlineSettingStore.markAsClosed();
     next();
+  },
+  mounted () {
+    this.$store.dispatch('common:setTitle', {
+      section: this.$t('settings'),
+      subSection: this.$t('generalSettings'),
+    });
   },
 };
 </script>

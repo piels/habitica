@@ -11,14 +11,13 @@ export const ProfilePage = () => import(/* webpackChunkName: "user" */'@/compone
 const Settings = () => import(/* webpackChunkName: "settings" */'@/pages/settings-overview');
 const GeneralSettings = () => import(/* webpackChunkName: "settings" */'@/pages/settings/generalSettings');
 const Notifications = () => import(/* webpackChunkName: "settings" */'@/pages/settings/notificationSettings');
+const Transactions = () => import(/* webpackChunkName: "settings" */'@/pages/settings/purchaseHistory.vue');
+
+const SiteData = () => import(/* webpackChunkName: "settings" */'@/pages/settings/siteData.vue');
 
 // not converted yet
-const API = () => import(/* webpackChunkName: "settings" */'@/components/settings/api');
-const DataExport = () => import(/* webpackChunkName: "settings" */'@/components/settings/dataExport');
 const PromoCode = () => import(/* webpackChunkName: "settings" */'@/components/settings/promoCode');
-const Site = () => import(/* webpackChunkName: "settings" */'@/components/settings/site');
 const Subscription = () => import(/* webpackChunkName: "settings" */'@/components/settings/subscription');
-const Transactions = () => import(/* webpackChunkName: "settings" */'@/components/settings/purchaseHistory');
 
 
 export const USER_ROUTES = {
@@ -39,20 +38,11 @@ export const USER_ROUTES = {
           component: GeneralSettings,
         },
         {
-          name: 'site',
-          path: 'site',
-          component: Site,
+          name: 'siteData',
+          path: 'siteData',
+          component: SiteData,
         },
-        {
-          name: 'api',
-          path: 'api',
-          component: API,
-        },
-        {
-          name: 'dataExport',
-          path: 'data-export',
-          component: DataExport,
-        },
+        { path: 'api', redirect: { name: 'siteData' } },
         {
           name: 'promoCode',
           path: 'promo-code',
