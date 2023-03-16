@@ -293,6 +293,11 @@
   width: 48px;
   height: 52px;
 }
+.achievement-plantParent2x {
+  background-image: url('https://habitica-assets.s3.amazonaws.com/mobileApp/images/achievement-plantParent2x.png');
+  width: 64px;
+  height: 68px;
+}
 .achievement-polarPro2x {
   background-image: url('https://habitica-assets.s3.amazonaws.com/mobileApp/images/achievement-polarPro2x.png');
   width: 68px;
