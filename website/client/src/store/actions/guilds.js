@@ -41,9 +41,9 @@ export async function getMyGuilds (store) {
 export async function getPartySeekers (store, payload) {
   let response;
   if (payload && payload.page) {
-    response = await axios.get(`api/v4/party-seekers?page=${payload.page}`);
+    response = await axios.get(`api/v4/looking-for-party?page=${payload.page}`);
   } else {
-    response = await axios.get('api/v4/party-seekers');
+    response = await axios.get('api/v4/looking-for-party');
   }
 
   return response.data.data;

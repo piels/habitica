@@ -79,7 +79,7 @@ const MyGuilds = () => import(/* webpackChunkName: "guilds" */ '@/components/gro
 const GuildsDiscoveryPage = () => import(/* webpackChunkName: "guilds" */ '@/components/groups/discovery');
 const GroupPage = () => import(/* webpackChunkName: "guilds" */ '@/components/groups/group');
 const GroupPlansAppPage = () => import(/* webpackChunkName: "guilds" */ '@/components/groups/groupPlan');
-const PartySeeking = () => import(/* webpackChunkName: "guilds" */ '@/components/groups/partySeeking');
+const LookingForParty = () => import(/* webpackChunkName: "guilds" */ '@/components/groups/lookingForParty');
 
 // Group Plans
 const GroupPlanIndex = () => import(/* webpackChunkName: "group-plans" */ '@/components/group-plans/index');
@@ -158,7 +158,7 @@ const router = new VueRouter({
       ],
     },
     { name: 'party', path: '/party', component: GroupPage },
-    { name: 'partySeeking', path: '/party-seeking', component: PartySeeking },
+    { name: 'lookingForParty', path: '/looking-for-party', component: LookingForParty },
     { name: 'groupPlan', path: '/group-plans', component: GroupPlansAppPage },
     {
       name: 'groupPlanDetail',

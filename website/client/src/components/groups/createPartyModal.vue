@@ -77,6 +77,7 @@
 
 <style lang="scss">
   #create-party-modal {
+    display: flex !important;
     overflow-y: hidden;
 
     @media (max-height: 770px) {
@@ -93,8 +94,7 @@
 
     .modal-dialog {
       width: 566px;
-      margin-top: 50vh;
-      transform: translateY(-50%);
+      margin: auto;
     }
 
     .modal-header {
