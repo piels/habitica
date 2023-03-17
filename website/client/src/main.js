@@ -41,3 +41,7 @@ export default new Vue({
   store,
   render: h => h(AppComponent),
 });
+
+window.externalLink = url => {
+  vueInstance.$root.$emit('habitica:external-link', url);
+};
