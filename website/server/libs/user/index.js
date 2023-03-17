@@ -123,6 +123,11 @@ export async function update (req, res, { isV3 = false }) {
 
   let promisesForTagsRemoval = [];
 
+  if (req.body['party.seeking'] !== undefined && req.body['party.seeking'] !== null) {
+    user.invitations.party = {};
+    user.invitations.parties = [];
+  }
+
   if (req.body['profile.name'] !== undefined) {
     const newName = req.body['profile.name'];
     if (newName === null) throw new BadRequest(res.t('invalidReqParams'));

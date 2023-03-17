@@ -1365,8 +1365,8 @@ api.getGroupPlans = {
 };
 
 /**
- * @api {get} /api/v3/party-seekers Get users in search of parties
- * @apiName GetPartySeekers
+ * @api {get} /api/v3/looking-for-party Get users in search of parties
+ * @apiName GetLookingForParty
  * @apiGroup Group
  *
  * @apiParam (Query) {Number} [page] Page number, defaults to 0
@@ -1377,7 +1377,7 @@ api.getGroupPlans = {
  */
 api.getPartySeekers = {
   method: 'GET',
-  url: '/party-seekers',
+  url: '/looking-for-party',
   middlewares: [authWithHeaders()],
   async handler (req, res) {
     const USERS_PER_PAGE = 30;
@@ -1409,7 +1409,9 @@ api.getPartySeekers = {
       // eslint-disable-next-line no-multi-str
       .select('_id auth.blocked auth.local.username auth.timestamps contributor.level \
         inbox.blocks invitations.party items.gear.costume items.gear.equipped loginIncentives \
-        party._id preferences.costume preferences.language profile.name stats.class')
+        party._id preferences.background preferences.chair preferences.costume preferences.hair \
+        preferences.shirt preferences.size preferences.skin preferences.language \
+        profile.name stats.class stats.lvl')
       .sort('-auth.timestamps.loggedin')
       .exec();
 

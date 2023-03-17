@@ -186,7 +186,7 @@ export default {
   },
   methods: {
     seekParty () {
-      this.$router.push('/party-seeking');
+      this.$router.push('/looking-for-party');
     },
   },
 };
