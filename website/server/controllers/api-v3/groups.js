@@ -1375,7 +1375,7 @@ api.getGroupPlans = {
  *
  * @apiError (400) {BadRequest} notPartyLeader You are not the leader of a Party.
  */
-api.getPartySeekers = {
+api.getLookingForParty = {
   method: 'GET',
   url: '/looking-for-party',
   middlewares: [authWithHeaders()],
@@ -1411,7 +1411,7 @@ api.getPartySeekers = {
         inbox.blocks invitations.party items.gear.costume items.gear.equipped loginIncentives \
         party._id preferences.background preferences.chair preferences.costume preferences.hair \
         preferences.shirt preferences.size preferences.skin preferences.language \
-        profile.name stats.class stats.lvl')
+        profile.name stats.buffs stats.class stats.lvl')
       .sort('-auth.timestamps.loggedin')
       .exec();
 

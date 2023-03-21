@@ -408,5 +408,10 @@
   "newGroupsBullet10b": "<strong>Assign a task to one member</strong> so only they can complete it",
   "newGroupsBullet10c": "<strong>Assign a task to multiple members</strong> if they all need to complete it",
   "newGroupsVisitFAQ": "Visit the <a href='/static/faq#group-plans' target='_blank'>FAQ</a> from the Help dropdown for more guidance.",
-  "newGroupsEnjoy": "We hope you enjoy the new Group Plans experience!"
+  "newGroupsEnjoy": "We hope you enjoy the new Group Plans experience!",
+  "checkinsLabel": "Check-ins:",
+  "classLabel": "Class:",
+  "languageLabel": "Language:",
+  "invitedToYourParty": "Invited to Your Party!",
+  "lookingForPartyTitle": "Looking for Party"
 }
