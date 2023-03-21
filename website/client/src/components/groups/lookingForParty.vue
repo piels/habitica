@@ -1,34 +1,51 @@
 <template>
   <div>
-    <div
-      v-for="(seeker, index) in seekers"
-      :key="seeker._id"
-      class="seeker"
-    >
-      <strong
-        @click="showMemberModal(seeker._id)"
+    <h1 class="mt-4 mb-0"> {{ $t('lookingForPartyTitle') }}</h1>
+    <div class="d-flex flex-wrap">
+      <div
+        v-for="(seeker, index) in seekers"
+        :key="seeker._id"
+        class="seeker"
       >
-        Username: @{{ seeker.auth.local.username }}
-      </strong>
-      <div>Profile name: {{ seeker.profile.name }}</div>
-      <div>UUID: {{ seeker._id }}</div>
-      <div>Last logged in: {{ seeker.auth.timestamps.loggedin }}</div>
-      <div>Check-ins: {{ seeker.loginIncentives }}</div>
-      <div>Tier: {{ seeker.contributor.level }}</div>
-      <div>Language: {{ seeker.preferences.language }}</div>
-      <div>Class: {{ seeker.stats.class }}</div>
-      <strong
-        v-if="!seeker.invited"
-        @click="inviteUser(seeker._id, index)"
-      >
-        Invite User
-      </strong>
-      <strong
-        v-else
-        @click="rescindInvite(seeker._id, index)"
-      >
-        Invitation Pending. Click to Rescind Invite
-      </strong>
+        <div class="d-flex">
+          <avatar
+              :member="seeker"
+              @click.native="showMemberModal(seeker._id)"
+              class="mr-3 mb-2"
+          />
+          <div class="card-data">
+            <div>
+              <strong>{{ seeker.profile.name }}</strong>
+            </div>
+            <div class="small-with-border pb-2 mb-2">
+              @{{ seeker.auth.local.username }} • {{ $t('level') }} {{ seeker.stats.lvl }}
+            </div>
+            <div>
+              <strong> {{ $t('classLabel') }} </strong> {{ seeker.stats.class }}
+            </div>
+            <div>
+              <strong> {{ $t('checkinsLabel') }} </strong> {{ seeker.loginIncentives }}
+            </div>
+            <div>
+              <strong> {{ $t('languageLabel') }} </strong> {{ seeker.preferences.language }}
+            </div>
+          </div>
+        </div>
+        <strong
+          v-if="!seeker.invited"
+          @click="inviteUser(seeker._id, index)"
+          class="btn btn-primary w-100"
+        >
+          {{ $t('inviteToParty') }}
+        </strong>
+        <strong
+          v-else
+          @click="rescindInvite(seeker._id, index)"
+          class="btn btn-success w-100"
+        >
+          {{ $t('invitedToYourParty') }}
+        </strong>
+      </div>
     </div>
     <strong
       v-if="seekers.length % 30 === 0"
@@ -40,18 +57,48 @@
 </template>
 
 <style lang="scss" scoped>
-  strong {
-    cursor: pointer;
+  @import '~@/assets/scss/colors.scss';
+
+  h1 {
+    color: $purple-300;
   }
-  .seeker:not(:last-of-type) {
-    margin-bottom: 1rem;
+
+  strong {
+    line-height: 1.71;
+  }
+
+  .btn-success {
+    box-shadow: none;
+    color: $green-1;
+  }
+  .card-data {
+    width: 267px;
+  }
+
+  .seeker {
+    width: 448px;
+    margin: 24px 24px 24px 0;
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 rgba(26, 24, 29, 0.12), 0 1px 2px 0 rgba(26, 24, 29, 0.24);
+  }
+  .small-with-border {
+    border-bottom: 1px solid $gray-500;
+    color: $gray-100;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1.33;
   }
 </style>
 
 <script>
 import { mapState } from '@/libs/store';
+import Avatar from '../avatar';
 
 export default {
+  components: {
+    Avatar,
+  },
   data () {
     return {
       page: 0,
