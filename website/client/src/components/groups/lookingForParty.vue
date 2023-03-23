@@ -9,25 +9,42 @@
       >
         <div class="d-flex">
           <avatar
-              :member="seeker"
-              @click.native="showMemberModal(seeker._id)"
-              class="mr-3 mb-2"
+            :member="seeker"
+            :hideClassBadge="true"
+            @click.native="showMemberModal(seeker._id)"
+            class="mr-3 mb-2"
           />
           <div class="card-data">
-            <div>
-              <strong>{{ seeker.profile.name }}</strong>
-            </div>
+            <user-link
+              :user-id="seeker._id"
+              :name="seeker.profile.name"
+              :backer="seeker.backer"
+              :contributor="seeker.contributor"
+            />
             <div class="small-with-border pb-2 mb-2">
               @{{ seeker.auth.local.username }} • {{ $t('level') }} {{ seeker.stats.lvl }}
             </div>
-            <div>
-              <strong> {{ $t('classLabel') }} </strong> {{ seeker.stats.class }}
+            <div
+              class="d-flex"
+            >
+              <strong> {{ $t('classLabel') }} </strong>
+              <span
+                class="svg-icon d-inline-block icon-16 my-auto mx-2"
+                v-html="icons[seeker.stats.class]"
+              >
+              </span>
+              <strong
+                :class="`${seeker.stats.class}-color`"
+              >
+                {{ $t(seeker.stats.class) }}
+              </strong>
             </div>
             <div>
-              <strong> {{ $t('checkinsLabel') }} </strong> {{ seeker.loginIncentives }}
+              <strong class="mr-2"> {{ $t('checkinsLabel') }} </strong> {{ seeker.loginIncentives }}
             </div>
             <div>
-              <strong> {{ $t('languageLabel') }} </strong> {{ seeker.preferences.language }}
+              <strong class="mr-2"> {{ $t('languageLabel') }} </strong>
+              {{ displayLanguage(seeker.preferences.language) }}
             </div>
           </div>
         </div>
@@ -46,13 +63,20 @@
           {{ $t('invitedToYourParty') }}
         </strong>
       </div>
+      <mugen-scroll
+        v-show="loading"
+        :handler="infiniteScrollTrigger"
+        :should-handle="!loading && canLoadMore"
+        :threshold="1"
+      >
+        <h2
+          v-once
+          class="col-12 loading"
+        >
+          {{ $t('loading') }}
+        </h2>
+      </mugen-scroll>
     </div>
-    <strong
-      v-if="seekers.length % 30 === 0"
-      @click="loadMore()"
-    >
-      Load More
-    </strong>
   </div>
 </template>
 
@@ -66,13 +90,22 @@
   strong {
     line-height: 1.71;
   }
+  .avatar {
+    background-color: $gray-600;
+  }
 
   .btn-success {
     box-shadow: none;
     color: $green-1;
   }
+
   .card-data {
     width: 267px;
+  }
+
+  .loading {
+    text-align: center;
+    color: $purple-300;
   }
 
   .seeker {
@@ -89,25 +122,60 @@
     font-weight: normal;
     line-height: 1.33;
   }
+
+  .healer-color {
+    color: $yellow-10;
+  }
+
+  .rogue-color {
+    color: $purple-200;
+  }
+
+  .warrior-color {
+    color: $red-50;
+  }
+
+  .wizard-color {
+    color: $blue-10;
+  }
 </style>
 
 <script>
-import { mapState } from '@/libs/store';
+import debounce from 'lodash/debounce';
+import MugenScroll from 'vue-mugen-scroll';
 import Avatar from '../avatar';
+import userLink from '../userLink';
+import { mapState } from '@/libs/store';
+
+import warriorIcon from '@/assets/svg/warrior.svg';
+import rogueIcon from '@/assets/svg/rogue.svg';
+import healerIcon from '@/assets/svg/healer.svg';
+import wizardIcon from '@/assets/svg/wizard.svg';
 
 export default {
   components: {
     Avatar,
+    MugenScroll,
+    userLink,
   },
   data () {
     return {
+      canLoadMore: true,
+      loading: true,
       page: 0,
       party: {},
       seekers: [],
+      icons: Object.freeze({
+        warrior: warriorIcon,
+        rogue: rogueIcon,
+        healer: healerIcon,
+        wizard: wizardIcon,
+      }),
     };
   },
   computed: {
     ...mapState({
+      availableLanguages: 'i18n.availableLanguages',
       user: 'user.data',
     }),
   },
@@ -124,9 +192,25 @@ export default {
         section: 'Party Seekers',
       });
       this.seekers = await this.$store.dispatch('guilds:getPartySeekers');
+      this.canLoadMore = this.seekers.length === 30;
+      this.loading = false;
     }
   },
   methods: {
+    displayLanguage (languageCode) {
+      const language = this.availableLanguages.find(lang => lang.code === languageCode);
+      if (language) {
+        return language.name;
+      }
+      return languageCode;
+    },
+    infiniteScrollTrigger () {
+      if (this.canLoadMore) {
+        this.loading = true;
+      }
+
+      this.loadMore();
+    },
     async inviteUser (userId, index) {
       await this.$store.dispatch('guilds:invite', {
         invitationDetails: {
@@ -137,11 +221,13 @@ export default {
       });
       this.seekers[index].invited = true;
     },
-    async loadMore () {
+    loadMore: debounce(async function loadMoreDebounce () {
       this.page += 1;
       const addlSeekers = await this.$store.dispatch('guilds:getPartySeekers', { page: this.page });
       this.seekers = this.seekers.concat(addlSeekers);
-    },
+      this.canLoadMore = this.seekers.length % 30 === 0;
+      this.loading = false;
+    }, 1000),
     async rescindInvite (userId, index) {
       await this.$store.dispatch('members:removeMember', {
         memberId: userId,

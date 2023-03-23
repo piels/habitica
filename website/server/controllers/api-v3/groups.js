@@ -1407,10 +1407,10 @@ api.getLookingForParty = {
         },
       })
       // eslint-disable-next-line no-multi-str
-      .select('_id auth.blocked auth.local.username auth.timestamps contributor.level \
-        inbox.blocks invitations.party items.gear.costume items.gear.equipped loginIncentives \
-        party._id preferences.background preferences.chair preferences.costume preferences.hair \
-        preferences.shirt preferences.size preferences.skin preferences.language \
+      .select('_id auth.blocked auth.local.username auth.timestamps backer contributor.level \
+        flags.classSelected inbox.blocks invitations.party items.gear.costume items.gear.equipped \
+        loginIncentives party._id preferences.background preferences.chair preferences.costume \
+        preferences.hair preferences.shirt preferences.size preferences.skin preferences.language \
         profile.name stats.buffs stats.class stats.lvl')
       .sort('-auth.timestamps.loggedin')
       .exec();
@@ -1432,7 +1432,9 @@ api.getLookingForParty = {
         },
         timestamps: seeker.auth.timestamps,
       },
+      backer: seeker.backer,
       contributor: seeker.contributor,
+      flags: seeker.flags,
       invited: false,
       items: seeker.items,
       loginIncentives: seeker.loginIncentives,
