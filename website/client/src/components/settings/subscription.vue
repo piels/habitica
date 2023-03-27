@@ -799,11 +799,17 @@ export default {
       return moment(this.user.purchased.plan.dateTerminated).format('MM/DD/YYYY');
     },
     nextHourGlassDate () {
+      if (this.user.purchased.plan.dateTerminated && !this.user.purchased.plan.consecutive.offset) {
+        return this.$t('notApplicableAbbreviation');
+      }
       const currentPlanContext = getPlanContext(this.user, new Date());
 
       return currentPlanContext.nextHourglassDate;
     },
     nextHourGlass () {
+      if (!moment.isMoment(this.nextHourGlassDate)) {
+        return this.nextHourGlassDate;
+      }
       const nextHourglassMonth = this.nextHourGlassDate.format('MMM YYYY');
 
       return nextHourglassMonth;

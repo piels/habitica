@@ -151,6 +151,10 @@ export default {
   },
   computed: {
     nextHourglassDate () {
+      if (this.hero.purchased.plan.dateTerminated && !this.hero.purchased.plan.consecutive.offset) {
+        return this.$t('notApplicableAbbreviation');
+      }
+
       const currentPlanContext = getPlanContext(this.hero, new Date());
 
       return currentPlanContext.nextHourglassDate.format('MMMM YYYY');
