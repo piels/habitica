@@ -60,14 +60,14 @@
             :show-popover="false"
           />
         </slot>
-        <span
+        <div
           v-if="!showAvatar && user.items[item.purchaseType]"
           class="owned"
           :class="totalOwned"
         >
-          <!-- need to calculate totalOwned()  -->
-          {{ $t('owned') }}: {{ totalOwned }}
-        </span>
+          <!-- eslint-disable-next-line max-len -->
+          <span class="owned-text">{{ $t('owned') }}: <span class="user-amount">{{ totalOwned }}</span></span>
+        </div>
         <h4 class="title">
           {{ itemText }}
         </h4>
@@ -119,17 +119,21 @@
             :hidden="attemptingToPurchaseMoreGemsThanAreLeft"
           >
             <number-increment
+              class="number-increment"
               @updateQuantity="selectedAmountToBuy = $event"
             />
-            <div :class="{'notEnough': notEnoughCurrency}">
+            <div
+              :class="{'notEnough': notEnoughCurrency}"
+              class="total"
+            >
               <span class="total-text">{{ $t('sendTotal') }}</span>
               <span
-                class="svg-icon inline icon-20 total"
+                class="svg-icon inline icon-24"
                 aria-hidden="true"
                 v-html="icons[getPriceClass()]"
               ></span>
               <span
-                class="total"
+                class="total-text"
                 :class="getPriceClass()"
               >{{ item.value * selectedAmountToBuy }}</span>
             </div>
@@ -223,9 +227,9 @@
       slot="modal-footer"
       class="clearfix"
     >
-      <span class="balance float-left">{{ $t('yourBalance') }}</span>
+      <span class="user-balance float-left">{{ $t('yourBalance') }}</span>
       <balanceInfo
-        class="float-right"
+        class="currency-totals"
         :currency-needed="getPriceClass()"
         :amount-needed="item.value"
       />
@@ -241,9 +245,9 @@
     @include centeredModal();
 
     .modal-body {
-      // padding-bottom: 0px;
       padding-left: 0px;
       padding-right: 0px;
+      padding-bottom: 0px;
     }
 
     .modal-footer {
@@ -256,7 +260,7 @@
       padding: 16px 24px;
       align-content: center;
 
-      .balance {
+      .user-balance {
         width: 150px;
         height: 16px;
         font-size: 0.75rem;
@@ -265,6 +269,12 @@
         color: $gray-100;
         margin-bottom: 16px;
         margin-top: -4px;
+        margin-left: -4px;
+      }
+
+      .currency-totals {
+        margin-right: -8px;
+        float: right;
       }
     }
 
@@ -273,25 +283,39 @@
       box-sizing: border-box;
     }
 
+    .badge-dialog {
+      left: -8px;
+      top: -8px;
+    }
+
     .avatar {
       cursor: default;
       margin: 0 auto;
     }
 
    .owned {
-      font-size: 0.75rem;
-      font-weight: bold;
-      line-height: 1.33;
+      height: 32px;
+      width: 141px;
+      margin-top: -36px;
+      margin-left: 153px;
+      padding-top: 6px;
       background-color: $gray-600;
-      padding: 8px 41px;
       border-bottom-right-radius: 4px;
       border-bottom-left-radius: 4px;
       display: block;
-      width: 141px;
-      margin-left: 154px;
-      margin-top: -36px;
+      text-align: center;
       position: relative;
       z-index: 1;
+
+      .owned-text {
+        font-size: 0.75rem;
+        font-weight: bold;
+        line-height: 1.71;
+      }
+
+      .user-amount {
+        font-weight: normal !important;
+      }
     }
 
     .item {
@@ -304,24 +328,26 @@
       cursor: default;
     }
 
-    .title {
-      color: $gray-10;
-      font-size: 1.25rem;
-    }
-
     .item-content {
       transform: scale(1.45, 1.45);
-      top: -16px;
+      top: -25.67px;
+      left: 1px;
+    }
+
+    .title {
+      height: 28px;
+      color: $gray-10;
+      font-size: 1.25rem;
+      margin-top: 25px;
     }
 
     .item-notes {
+       height: 48px;
+       margin-top: 8px;
        padding-left: 48.5px;
        padding-right: 48.5px;
-    }
-
-    .attributes-group {
-      margin: 24px;
-      border-radius: 4px;
+       line-height: 1.71;
+       font-size: 0.875;
     }
 
     .content {
@@ -334,7 +360,7 @@
     }
 
     .inner-content {
-      margin: 33px auto auto;
+      margin: 32px auto auto;
     }
 
     .btn-primary {
@@ -342,10 +368,15 @@
     }
 
     .purchase-amount {
-      margin-top: 24px;
+      margin-top: 0px;
 
       .how-many-to-buy {
-        margin-bottom: 16px;
+        margin-top: 24px;
+        height: 24px;
+      }
+
+      .number-increment {
+        margin-top: 16px;
       }
 
       .box {
@@ -407,48 +438,53 @@
     }
 
     .item-cost {
-       padding-bottom: 16px;
+       position: relative;
+       margin-top: 20px;
+    }
+
+    .attributes-group {
+      margin: 24px;
+      border-radius: 4px;
+      line-height: 1.71;
+      font-size: 0.875;
     }
 
     .cost {
       height: 40px;
       font-size: 1.25rem;
       font-weight: bold;
-      line-height: 1.4;
       vertical-align: middle;
+      padding: 8px 20px 8px 20px;
 
       &.gems {
         color: $green-10;
-        border-radius: 20px;
-        padding: 8px 20px 8px 20px;
-        margin-top: 16px;
-        margin-bottom: 16px;
         background-color: rgba(36, 204, 143, 0.15);
+        line-height: 1.4;
+        margin: 0 0 0 -4px;
+        border-radius: 20px;
       }
 
       &.gold {
         color: $yellow-5;
-        border-radius: 20px;
-        padding: 8px 20px 8px 20px;
-        margin-top: 16px;
-        margin-bottom: 16px;
         background-color: rgba(255, 190, 93, 0.15);
+        line-height: 1.4;
+        margin: 0 0 0 -4px;
+        border-radius: 20px;
       }
 
       &.hourglasses {
         color: $hourglass-color;
-        border-radius: 20px;
-        padding: 8px 20px 8px 20px;
-        margin-top: 16px;
-        margin-bottom: 16px;
         background-color: rgba(41, 149, 205, 0.15);
+        line-height: 1.4;
+        margin: 0 0 0 -4px;
+        border-radius: 20px;
       }
     }
 
     .total {
-      font-size: 0.825rem;
-      line-height: 1.71;
       font-weight: bold;
+      font-size: 0.875rem;
+      margin-top:16px;
 
       &.gems {
         color: $green-10;
@@ -463,23 +499,36 @@
       }
     }
 
-    .total-text {
-      font-size: 0.825rem;
-      line-height: 1.71;
+  .total-text {
+      color: $gray-50;
       font-weight: bold;
+      font-size: 0.875rem;
       height: 24px;
-      width: 37px;
+      line-height: 1.71;
       padding-right: 4px;
 
+      &.gems {
+        color: $green-10;
+      }
+
+      &.gold {
+        color: $yellow-5;
+      }
+
+      &.hourglasses {
+        color: $hourglass-color;
+      }
+  }
+
     button.btn.btn-primary {
-      margin-top: 24px;
-      margin-bottom: 24px;
-      min-width: 6rem;
+      margin-top: 14px;
+      padding: 4px 16px;
+      height: 32px;
 
       &:focus {
         border: 2px solid black;
       }
-    }
+
 
     .notEnough {
       pointer-events: none;
@@ -505,9 +554,9 @@
       margin: auto -1rem -1rem;
     }
 
-    .pt-015 {
-      padding-top: 0.15rem;
-    }
+    // .pt-015 {
+    //   padding-top: 0.15rem;
+    // }
   }
 
   .gems-left {
