@@ -4,10 +4,12 @@ export default {
   data () {
     return {
       trustedDomains: [
-        'https://habitica.com',
         'http://localhost',
+        'https://habitica.com',
         'https://tools.habitica.com',
         'https://translate.habitica.com',
+        'https://habitrpg-delta.herokuapp.com',
+        'https://habitrpg-staging.herokuapp.com',
       ],
     };
   },
