@@ -56,11 +56,13 @@
           >
             {{ $t('currentlyLookingForParty') }}
           </div>
-          <div
-            class="red-link"
-            @click="seekParty()"
-          >
-            {{ $t('leavePartyFinder') }}
+          <div class="d-flex justify-content-center">
+            <div
+              class="red-link"
+              @click="seekParty()"
+            >
+              {{ $t('leavePartyFinder') }}
+            </div>
           </div>
         </div>
         <button
@@ -95,6 +97,10 @@
     .modal-dialog {
       width: 566px;
       margin: auto;
+
+      @media (max-height: 826px) {
+        margin-top: 56px;
+      }
     }
 
     .modal-header {
