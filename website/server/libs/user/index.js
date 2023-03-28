@@ -177,9 +177,7 @@ export async function update (req, res, { isV3 = false }) {
     }
 
     if (key === 'party.seeking' && val === null) {
-      addlPromises.push(
-        User.updateOne({ '_id': user._id }, { $unset: { 'party.seeking': true }}).exec()
-      );
+      user.party.seeking = undefined;
     } else if (key === 'tags') {
       if (!Array.isArray(val)) throw new BadRequest('Tag list must be an array.');
 

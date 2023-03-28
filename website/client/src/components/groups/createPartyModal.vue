@@ -32,6 +32,9 @@
           </button>
         </div>
       </div>
+      <close-x
+        @close="close()"
+      />
     </div>
     <div class="row grey-row">
       <div class="col-12 text-center px-0">
@@ -236,11 +239,15 @@
 import { mapState } from '@/libs/store';
 import * as Analytics from '@/libs/analytics';
 import notifications from '@/mixins/notifications';
+import closeX from '../ui/closeX';
 
 import copyIcon from '@/assets/svg/copy.svg';
 import copyToClipboard from '@/mixins/copyToClipboard';
 
 export default {
+  components: {
+    closeX,
+  },
   mixins: [notifications, copyToClipboard],
   data () {
     return {
@@ -273,6 +280,9 @@ export default {
 
       this.$root.$emit('bv::hide::modal', 'create-party-modal');
       this.$router.push('/party');
+    },
+    close () {
+      this.$root.$emit('bv::hide::modal', 'create-party-modal');
     },
     copyUsername () {
       this.mixinCopyToClipboard(
