@@ -412,6 +412,6 @@
   "checkinsLabel": "Check-ins:",
   "classLabel": "Class:",
   "languageLabel": "Language:",
-  "invitedToYourParty": "Invited to Your Party!",
+  "invitedToYourParty": "<strong>Invited to Your Party!</strong>&nbsp;&nbsp;Click to Undo",
   "lookingForPartyTitle": "Looking for Party"
 }

@@ -55,13 +55,13 @@
         >
           {{ $t('inviteToParty') }}
         </strong>
-        <strong
+        <div
           v-else
           @click="rescindInvite(seeker._id, index)"
           class="btn btn-success w-100"
+          v-html="$t('invitedToYourParty')"
         >
-          {{ $t('invitedToYourParty') }}
-        </strong>
+        </div>
       </div>
       <mugen-scroll
         v-show="loading"
@@ -97,6 +97,7 @@
   .btn-success {
     box-shadow: none;
     color: $green-1;
+    font-weight: normal;
   }
 
   .card-data {
