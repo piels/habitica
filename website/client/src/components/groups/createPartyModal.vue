@@ -227,6 +227,9 @@
     line-height: 1.71;
     text-align: center;
     color: $maroon-50;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .small {

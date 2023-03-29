@@ -98,6 +98,10 @@
     box-shadow: none;
     color: $green-1;
     font-weight: normal;
+
+    &:active {
+      color: $green-1;
+    }
   }
 
   .card-data {
