@@ -2,7 +2,7 @@
   <div class="sidebar px-4">
     <div>
       <div class="buttons-wrapper">
-        <div class="button-container button-with-menu-row">
+        <div class="button-container d-flex">
           <button
             v-if="!isMember"
             class="btn btn-success btn-success"
@@ -16,13 +16,6 @@
             @click="$emit('showInviteModal')"
           >
             <span v-once>{{ $t(isParty ? 'inviteToParty' : 'inviteToGuild') }}</span>
-          </button>
-          <button
-            v-if="isParty && isLeader"
-            class="btn btn-primary inline"
-            @click="seekParty"
-          >
-            Find Party Seekers
           </button>
           <b-dropdown
             right="right"
@@ -184,11 +177,6 @@ export default {
       return Boolean(this.group.purchased?.plan?.customerId);
     },
   },
-  methods: {
-    seekParty () {
-      this.$router.push('/looking-for-party');
-    },
-  },
 };
 </script>
 
@@ -213,10 +201,6 @@ export default {
     button {
       width: 100%;
     }
-  }
-
-  .button-with-menu-row {
-    display: flex;
   }
 
   .menuIcon {
