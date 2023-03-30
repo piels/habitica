@@ -121,7 +121,7 @@ async function checkNewInputForProfanity (user, res, newValue) {
 export async function update (req, res, { isV3 = false }) {
   const { user } = res.locals;
 
-  let addlPromises = [];
+  let promisesForTagsRemoval = [];
 
   if (req.body['party.seeking'] !== undefined && req.body['party.seeking'] !== null) {
     user.invitations.party = {};
@@ -208,13 +208,13 @@ export async function update (req, res, { isV3 = false }) {
       // Remove from all the tasks
       // NOTE each tag to remove requires a query
 
-      addlPromises.push(removedTagsIds.map(tagId => Tasks.Task.update({
+      promisesForTagsRemoval = removedTagsIds.map(tagId => Tasks.Task.updateMany({
         userId: user._id,
       }, {
         $pull: {
           tags: tagId,
         },
-      }, { multi: true }).exec()));
+      }).exec());
     } else if (key === 'flags.newStuff' && val === false) {
       // flags.newStuff was removed from the user schema and is only returned for compatibility
       // reasons but we're keeping the ability to set it in API v3
@@ -233,7 +233,7 @@ export async function update (req, res, { isV3 = false }) {
     }
   });
 
-  await Promise.all([user.save()].concat(addlPromises));
+  await Promise.all([user.save()].concat(promisesForTagsRemoval));
 
   let userToJSON = user;
 
