@@ -413,5 +413,7 @@
   "classLabel": "Class:",
   "languageLabel": "Language:",
   "invitedToYourParty": "<strong>Invited to Your Party!</strong>&nbsp;&nbsp;Click to Undo",
-  "lookingForPartyTitle": "Looking for Party"
+  "lookingForPartyTitle": "Looking for Party",
+  "findMorePartyMembers": "Find More Party Members",
+  "noOneLooking": "There’s no one looking for a Party right now.<br>You can check back later!"
 }

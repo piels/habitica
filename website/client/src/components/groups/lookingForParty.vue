@@ -1,81 +1,102 @@
 <template>
-  <div>
-    <h1 class="mt-4 mb-0"> {{ $t('lookingForPartyTitle') }}</h1>
-    <div class="d-flex flex-wrap">
-      <div
-        v-for="(seeker, index) in seekers"
-        :key="seeker._id"
-        class="seeker"
-      >
-        <div class="d-flex">
-          <avatar
-            :member="seeker"
-            :hideClassBadge="true"
-            @click.native="showMemberModal(seeker._id)"
-            class="mr-3 mb-2"
-          />
-          <div class="card-data">
-            <user-link
-              :user-id="seeker._id"
-              :name="seeker.profile.name"
-              :backer="seeker.backer"
-              :contributor="seeker.contributor"
+  <div class="d-flex justify-content-center">
+    <div
+      v-if="seekers.length > 0"
+      class="fit-content mx-auto"
+    >
+      <h1 v-once class="mt-4 mb-0"> {{ $t('lookingForPartyTitle') }}</h1>
+      <div class="d-flex flex-wrap seeker-list">
+        <div
+          v-for="(seeker, index) in seekers"
+          :key="seeker._id"
+          class="seeker"
+        >
+          <div class="d-flex">
+            <avatar
+              :member="seeker"
+              :hideClassBadge="true"
+              @click.native="showMemberModal(seeker._id)"
+              class="mr-3 mb-2"
             />
-            <div class="small-with-border pb-2 mb-2">
-              @{{ seeker.auth.local.username }} • {{ $t('level') }} {{ seeker.stats.lvl }}
-            </div>
-            <div
-              class="d-flex"
-            >
-              <strong> {{ $t('classLabel') }} </strong>
-              <span
-                class="svg-icon d-inline-block icon-16 my-auto mx-2"
-                v-html="icons[seeker.stats.class]"
+            <div class="card-data">
+              <user-link
+                :user-id="seeker._id"
+                :name="seeker.profile.name"
+                :backer="seeker.backer"
+                :contributor="seeker.contributor"
+              />
+              <div class="small-with-border pb-2 mb-2">
+                @{{ seeker.auth.local.username }} • {{ $t('level') }} {{ seeker.stats.lvl }}
+              </div>
+              <div
+                class="d-flex"
               >
-              </span>
-              <strong
-                :class="`${seeker.stats.class}-color`"
-              >
-                {{ $t(seeker.stats.class) }}
-              </strong>
-            </div>
-            <div>
-              <strong class="mr-2"> {{ $t('checkinsLabel') }} </strong> {{ seeker.loginIncentives }}
-            </div>
-            <div>
-              <strong class="mr-2"> {{ $t('languageLabel') }} </strong>
-              {{ displayLanguage(seeker.preferences.language) }}
+                <strong v-once> {{ $t('classLabel') }} </strong>
+                <span
+                  class="svg-icon d-inline-block icon-16 my-auto mx-2"
+                  v-html="icons[seeker.stats.class]"
+                >
+                </span>
+                <strong
+                  :class="`${seeker.stats.class}-color`"
+                >
+                  {{ $t(seeker.stats.class) }}
+                </strong>
+              </div>
+              <div>
+                <strong v-once class="mr-2"> {{ $t('checkinsLabel') }} </strong>
+                {{ seeker.loginIncentives }}
+              </div>
+              <div>
+                <strong v-once class="mr-2"> {{ $t('languageLabel') }} </strong>
+                {{ displayLanguage(seeker.preferences.language) }}
+              </div>
             </div>
           </div>
+          <strong
+            v-if="!seeker.invited"
+            @click="inviteUser(seeker._id, index)"
+            class="btn btn-primary w-100"
+          >
+            {{ $t('inviteToParty') }}
+          </strong>
+          <div
+            v-else
+            @click="rescindInvite(seeker._id, index)"
+            class="btn btn-success w-100"
+            v-html="$t('invitedToYourParty')"
+          >
+          </div>
         </div>
-        <strong
-          v-if="!seeker.invited"
-          @click="inviteUser(seeker._id, index)"
-          class="btn btn-primary w-100"
+        <mugen-scroll
+          v-show="loading"
+          :handler="infiniteScrollTrigger"
+          :should-handle="!loading && canLoadMore"
+          :threshold="1"
         >
-          {{ $t('inviteToParty') }}
-        </strong>
+          <h2
+            v-once
+            class="col-12 loading"
+          >
+            {{ $t('loading') }}
+          </h2>
+        </mugen-scroll>
+      </div>
+    </div>
+    <div
+      v-else
+      class="d-flex flex-column empty-state text-center my-5"
+    >
+      <div class="gray-circle mb-3 mx-auto d-flex">
         <div
-          v-else
-          @click="rescindInvite(seeker._id, index)"
-          class="btn btn-success w-100"
-          v-html="$t('invitedToYourParty')"
+          class="svg-icon icon-32 color m-auto"
+          v-html="icons.users"
         >
+
         </div>
       </div>
-      <mugen-scroll
-        v-show="loading"
-        :handler="infiniteScrollTrigger"
-        :should-handle="!loading && canLoadMore"
-        :threshold="1"
-      >
-        <h2
-          v-once
-          class="col-12 loading"
-        >
-          {{ $t('loading') }}
-        </h2>
-      </mugen-scroll>
+      <strong class="mb-1"> {{ $t('findMorePartyMembers') }} </strong>
+      <div v-html="$t('noOneLooking')"></div>
     </div>
   </div>
 </template>
@@ -99,7 +120,7 @@
     color: $green-1;
     font-weight: normal;
 
-    &:active {
+    &:not(:disabled):not(.disabled):active {
       color: $green-1;
     }
   }
@@ -108,18 +129,59 @@
     width: 267px;
   }
 
+  .empty-state {
+    color: $gray-100;
+    line-height: 1.71;
+  }
+
+  .fit-content {
+    width: fit-content;
+  }
+
+  .gray-circle {
+    width: 64px;
+    height: 64px;
+    color: $gray-600;
+    background-color: $gray-200;
+    border-radius: 100px;
+
+    .icon-32 {
+      height: auto;
+    }
+  }
+
   .loading {
     text-align: center;
     color: $purple-300;
   }
 
-  .seeker {
-    width: 448px;
-    margin: 24px 24px 24px 0;
-    padding: 8px;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px 0 rgba(26, 24, 29, 0.12), 0 1px 2px 0 rgba(26, 24, 29, 0.24);
+  .seeker-list {
+    max-width: 920px;
+
+    @media (max-width: 962px) {
+      max-width: 464px;
+    };
+
+    .seeker {
+      width: 448px;
+      margin-bottom: 24px;
+      padding: 8px;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px 0 rgba(26, 24, 29, 0.12), 0 1px 2px 0 rgba(26, 24, 29, 0.24);
+
+      &:first-of-type {
+        margin-top: 24px;
+      }
+
+      @media (min-width: 963px) {
+        &:nth-of-type(2) {
+          margin-left: 24px;
+          margin-top: 24px;
+        }
+      }
+    }
   }
+
   .small-with-border {
     border-bottom: 1px solid $gray-500;
     color: $gray-100;
@@ -152,6 +214,7 @@ import Avatar from '../avatar';
 import userLink from '../userLink';
 import { mapState } from '@/libs/store';
 
+import usersIcon from '@/assets/svg/users.svg';
 import warriorIcon from '@/assets/svg/warrior.svg';
 import rogueIcon from '@/assets/svg/rogue.svg';
 import healerIcon from '@/assets/svg/healer.svg';
@@ -174,6 +237,7 @@ export default {
         warrior: warriorIcon,
         rogue: rogueIcon,
         healer: healerIcon,
+        users: usersIcon,
         wizard: wizardIcon,
       }),
     };
@@ -194,9 +258,9 @@ export default {
       this.$router.push('/');
     } else {
       this.$store.dispatch('common:setTitle', {
-        section: 'Party Seekers',
+        section: this.$t('lookingForPartyTitle'),
       });
-      this.seekers = await this.$store.dispatch('guilds:getPartySeekers');
+      this.seekers = await this.$store.dispatch('guilds:lookingForParty');
       this.canLoadMore = this.seekers.length === 30;
       this.loading = false;
     }
