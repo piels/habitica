@@ -38,17 +38,6 @@ export async function getMyGuilds (store) {
   return response.data.data;
 }
 
-export async function lookingForParty (store, payload) {
-  let response;
-  if (payload && payload.page) {
-    response = await axios.get(`api/v4/looking-for-party?page=${payload.page}`);
-  } else {
-    response = await axios.get('api/v4/looking-for-party');
-  }
-
-  return response.data.data;
-}
-
 export async function getGroup (store, payload) {
   const response = await axios.get(`/api/v4/groups/${payload.groupId}`);
   // @TODO: should we store the active group for modifying?

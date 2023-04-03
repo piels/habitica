@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-content-center">
     <div
-      v-if="seekers.length > 0"
+      v-if="seekers.length > 0 && !loading"
       class="fit-content mx-auto"
     >
       <h1 v-once class="mt-4 mb-0"> {{ $t('lookingForPartyTitle') }}</h1>
@@ -260,7 +260,7 @@ export default {
       this.$store.dispatch('common:setTitle', {
         section: this.$t('lookingForPartyTitle'),
       });
-      this.seekers = await this.$store.dispatch('guilds:lookingForParty');
+      this.seekers = await this.$store.dispatch('party:lookingForParty');
       this.canLoadMore = this.seekers.length === 30;
       this.loading = false;
     }
@@ -292,7 +292,7 @@ export default {
     },
     loadMore: debounce(async function loadMoreDebounce () {
       this.page += 1;
-      const addlSeekers = await this.$store.dispatch('guilds:getPartySeekers', { page: this.page });
+      const addlSeekers = await this.$store.dispatch('party:lookingForParty', { page: this.page });
       this.seekers = this.seekers.concat(addlSeekers);
       this.canLoadMore = this.seekers.length % 30 === 0;
       this.loading = false;
