@@ -126,6 +126,11 @@ export async function update (req, res, { isV3 = false }) {
   if (req.body['party.seeking'] !== undefined && req.body['party.seeking'] !== null) {
     user.invitations.party = {};
     user.invitations.parties = [];
+    res.analytics.track('Party Finder Start', {
+      uuid: user._id,
+      hitType: 'event',
+      category: 'behavior',
+    });
   }
 
   if (req.body['profile.name'] !== undefined) {
@@ -178,6 +183,11 @@ export async function update (req, res, { isV3 = false }) {
 
     if (key === 'party.seeking' && val === null) {
       user.party.seeking = undefined;
+      res.analytics.track('Party Finder Leave', {
+        uuid: user._id,
+        hitType: 'event',
+        category: 'behavior',
+      });
     } else if (key === 'tags') {
       if (!Array.isArray(val)) throw new BadRequest('Tag list must be an array.');
 

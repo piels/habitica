@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-content-center">
     <div
-      v-if="seekers.length > 0 && !loading"
+      v-if="seekers.length > 0"
       class="fit-content mx-auto"
     >
       <h1 v-once class="mt-4 mb-0"> {{ $t('lookingForPartyTitle') }}</h1>
@@ -84,7 +84,7 @@
       </div>
     </div>
     <div
-      v-else
+      v-if="seekers.length === 0 && !loading"
       class="d-flex flex-column empty-state text-center my-5"
     >
       <div class="gray-circle mb-3 mx-auto d-flex">
