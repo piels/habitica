@@ -215,7 +215,7 @@ async function inviteByEmail (invite, group, inviter, req, res) {
       groupType: group.type,
       headers: req.headers,
     };
-  
+
     res.analytics.track('group invite', analyticsObject);
   }
 
