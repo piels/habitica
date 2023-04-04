@@ -142,6 +142,22 @@ async function inviteByUUID (uuid, group, inviter, req, res) {
     ));
   }
 
+  const analyticsObject = {
+    hitType: 'event',
+    category: 'behavior',
+    uuid: inviter._id,
+    invitee: uuid,
+    groupId: group._id,
+    groupType: group.type,
+    headers: req.headers,
+  };
+
+  if (group.type === 'party') {
+    analyticsObject.partyFinder = Boolean(userToInvite.party.seeking);
+  }
+
+  res.analytics.track('group invite', analyticsObject);
+
   return addInvitationToUser(userToInvite, group, inviter, res);
 }
 
@@ -189,6 +205,18 @@ async function inviteByEmail (invite, group, inviter, req, res) {
     const userIsUnsubscribed = await EmailUnsubscription.findOne({ email: invite.email }).exec();
     const groupLabel = group.type === 'guild' ? '-guild' : '';
     if (!userIsUnsubscribed) sendTxnEmail(invite, `invite-friend${groupLabel}`, variables);
+
+    const analyticsObject = {
+      hitType: 'event',
+      category: 'behavior',
+      uuid: inviter._id,
+      invitee: 'email',
+      groupId: group._id,
+      groupType: group.type,
+      headers: req.headers,
+    };
+  
+    res.analytics.track('group invite', analyticsObject);
   }
 
   return userReturnInfo;
@@ -214,6 +242,23 @@ async function inviteByUserName (username, group, inviter, req, res) {
       { userId: userToInvite._id, username: userToInvite.profile.name },
     ));
   }
+
+  const analyticsObject = {
+    hitType: 'event',
+    category: 'behavior',
+    uuid: inviter._id,
+    invitee: userToInvite._id,
+    groupId: group._id,
+    groupType: group.type,
+    headers: req.headers,
+  };
+
+  if (group.type === 'party') {
+    analyticsObject.partyFinder = Boolean(userToInvite.party.seeking);
+  }
+
+  res.analytics.track('group invite', analyticsObject);
+
   return addInvitationToUser(userToInvite, group, inviter, res);
 }
 

@@ -121,11 +121,16 @@ async function checkNewInputForProfanity (user, res, newValue) {
 export async function update (req, res, { isV3 = false }) {
   const { user } = res.locals;
 
-  let addlPromises = [];
+  let promisesForTagsRemoval = [];
 
   if (req.body['party.seeking'] !== undefined && req.body['party.seeking'] !== null) {
     user.invitations.party = {};
     user.invitations.parties = [];
+    res.analytics.track('Party Finder Start', {
+      uuid: user._id,
+      hitType: 'event',
+      category: 'behavior',
+    });
   }
 
   if (req.body['profile.name'] !== undefined) {
@@ -178,6 +183,11 @@ export async function update (req, res, { isV3 = false }) {
 
     if (key === 'party.seeking' && val === null) {
       user.party.seeking = undefined;
+      res.analytics.track('Party Finder Leave', {
+        uuid: user._id,
+        hitType: 'event',
+        category: 'behavior',
+      });
     } else if (key === 'tags') {
       if (!Array.isArray(val)) throw new BadRequest('Tag list must be an array.');
 
@@ -208,7 +218,7 @@ export async function update (req, res, { isV3 = false }) {
       // Remove from all the tasks
       // NOTE each tag to remove requires a query
 
-      addlPromises.push(removedTagsIds.map(tagId => Tasks.Task.update({
+      promisesForTagsRemoval.push(removedTagsIds.map(tagId => Tasks.Task.update({
         userId: user._id,
       }, {
         $pull: {
@@ -233,7 +243,7 @@ export async function update (req, res, { isV3 = false }) {
     }
   });
 
-  await Promise.all([user.save()].concat(addlPromises));
+  await Promise.all([user.save()].concat(promisesForTagsRemoval));
 
   let userToJSON = user;
 

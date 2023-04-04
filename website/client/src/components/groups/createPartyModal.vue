@@ -264,6 +264,12 @@ export default {
   },
   mounted () {
     this.seeking = Boolean(this.user.party.seeking);
+    Analytics.track({
+      eventName: 'Start a Party button',
+      eventAction: 'Start a Party button',
+      eventCategory: 'behavior',
+      hitType: 'event',
+    }, { trackOnClient: true });
   },
   methods: {
     async createParty () {

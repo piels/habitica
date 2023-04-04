@@ -746,6 +746,9 @@ api.joinGroup = {
       headers: req.headers,
       invited: isUserInvited,
     };
+    if (group.type === 'party') {
+      analyticsObject.partyFinder = Boolean(user.party.seeking);
+    }
 
     if (group.privacy === 'public') {
       analyticsObject.groupName = group.name;
@@ -1205,17 +1208,6 @@ api.inviteToGroup = {
       const usernameResults = await Promise.all(usernameInvites);
       results.push(...usernameResults);
     }
-
-    const analyticsObject = {
-      uuid: user._id,
-      hitType: 'event',
-      category: 'behavior',
-      groupId: group._id,
-      groupType: group.type,
-      headers: req.headers,
-    };
-
-    res.analytics.track('group invite', analyticsObject);
 
     res.respond(200, results);
   },
