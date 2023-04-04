@@ -570,7 +570,7 @@ const wacky = {
       previousDate: t('aprilYYYY', { year: 2022 }),
     }),
     canBuy () {
-      return moment().isBetween('2023-04-06T08:00-05:00', EVENTS.spring2023.end);
+      return moment().isBetween('2023-04-05T08:00-05:00', EVENTS.spring2023.end);
     },
   },
   Dessert: {
@@ -593,7 +593,7 @@ const wacky = {
       availableDate: t('dateEndApril'),
     }),
     canBuy () {
-      return moment().isBetween('2023-04-06T08:00-05:00', EVENTS.spring2023.end);
+      return moment().isBetween('2023-04-05T08:00-05:00', EVENTS.spring2023.end);
     },
   },
 };
