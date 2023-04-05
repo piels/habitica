@@ -570,7 +570,7 @@ const wacky = {
       previousDate: t('aprilYYYY', { year: 2022 }),
     }),
     canBuy () {
-      return moment().isBetween('2023-04-05T08:00-05:00', EVENTS.spring2023.end);
+      return moment().isBetween('2023-04-05T08:00-04:00', EVENTS.spring2023.end);
     },
   },
   Dessert: {
@@ -589,11 +589,11 @@ const wacky = {
     text: t('hatchingPotionTeaShop'),
     limited: true,
     event: EVENTS.spring2023,
-    _addlNotes: t('eventAvailabilityReturning', {
-      availableDate: t('dateEndApril'),
+    _addlNotes: t('premiumPotionAddlNotes', {
+      date: t('dateEndApril'),
     }),
     canBuy () {
-      return moment().isBetween('2023-04-05T08:00-05:00', EVENTS.spring2023.end);
+      return moment().isBetween('2023-04-05T08:00-04:00', EVENTS.spring2023.end);
     },
   },
 };
