@@ -90,6 +90,7 @@
           class="purchase-amount"
           :hidden="attemptingToPurchaseMoreGemsThanAreLeft"
         >
+          <!-- this is where the pretty item cost element lives -->
           <div class="item-cost">
             <span
               class="cost"
@@ -112,7 +113,7 @@
             class="how-many-to-buy"
             :hidden="attemptingToPurchaseMoreGemsThanAreLeft"
           >
-            <strong>{{ $t('howManyToBuy') }}</strong>
+            {{ $t('howManyToBuy') }}
           </div>
           <div
             v-if="showAmountToBuy(item)"
@@ -128,7 +129,7 @@
             >
               <span class="total-text">{{ $t('sendTotal') }}</span>
               <span
-                class="svg-icon inline icon-24"
+                class="svg-icon total icon-24"
                 aria-hidden="true"
                 v-html="icons[getPriceClass()]"
               ></span>
@@ -376,8 +377,7 @@
       margin-top: 0px;
 
       .how-many-to-buy {
-        margin-top: 24px;
-        height: 24px;
+        font-weight: bold !important;
       }
 
       .number-increment {
@@ -414,18 +414,22 @@
       margin: 16px 48px 0 48px;
     }
 
+// for cost icon of a single item
     span.svg-icon.inline.icon-24 {
+      display: inline-block;
       height: 24px;
       width: 24px;
-      margin-right: 8px;
-      vertical-align: middle;
-    }
-
-    span.svg-icon.inline.icon-20 {
-      height: 20px;
-      width: 20px;
       margin-right: 4px;
-      vertical-align: middle;
+      padding-top: 4px;
+    }
+// for the total user cost
+    span.svg-icon.total.icon-24 {
+      display: inline-block;
+      height: 24px;
+      width: 24px;
+      margin-left: 6px;
+      margin-right: 8px;
+      padding-top: 6px;
     }
 
     span.svg-icon.icon-16 {
@@ -442,11 +446,6 @@
       }
     }
 
-    .item-cost {
-       position: relative;
-       margin-top: 20px;
-    }
-
     .attributes-group {
       margin: 32px;
       border-radius: 4px;
@@ -458,45 +457,48 @@
       margin-top: 28px;
       border-radius: 2px;
       background-color: $gray-500;
-      // margin: 10px 0 24px;
+    }
+
+    .item-cost {
+      display: inline-flex;
+      margin: 16px 0;
+      align-items: center;
+      height: 40px;
     }
 
     .cost {
-      height: 40px;
+      display: inline-block;
+      font-family: sans-serif;
       font-size: 1.25rem;
       font-weight: bold;
-      vertical-align: middle;
-      padding: 8px 20px 8px 20px;
+      padding: 6px 20px;
+      line-height: 1.4;
+      border-radius: 20px;
 
       &.gems {
         color: $green-10;
         background-color: rgba(36, 204, 143, 0.15);
-        line-height: 1.4;
-        margin: 0 0 0 -4px;
-        border-radius: 20px;
+        align-items: center;
       }
 
       &.gold {
         color: $yellow-5;
         background-color: rgba(255, 190, 93, 0.15);
-        line-height: 1.4;
-        margin: 0 0 0 -4px;
-        border-radius: 20px;
+        align-items: center;
       }
 
       &.hourglasses {
         color: $hourglass-color;
         background-color: rgba(41, 149, 205, 0.15);
-        line-height: 1.4;
-        margin: 0 0 0 -4px;
-        border-radius: 20px;
+        align-items: center;
       }
     }
 
     .total {
       font-weight: bold;
       font-size: 0.875rem;
-      margin-top: 16px;
+      padding-top: 2px;
+      margin-top: 4px;
 
       &.gems {
         color: $green-10;
@@ -515,9 +517,7 @@
       color: $gray-50;
       font-weight: bold;
       font-size: 0.875rem;
-      height: 24px;
       line-height: 1.71;
-      padding-right: 4px;
 
       &.gems {
         color: $green-10;
@@ -533,7 +533,7 @@
   }
 
     button.btn.btn-primary {
-      margin-top: 14px;
+      margin-top: 16px;
       padding: 4px 16px;
       height: 32px;
 
@@ -545,11 +545,6 @@
       .notEnough {
         pointer-events: none;
         opacity: 0.55;
-      }
-
-
-      .gems-left {
-        margin-top: .5em;
       }
 
       .free-rebirth {
@@ -572,6 +567,7 @@
       margin-top: 24px;
       color: $green-1;
       width: 100%;
+      margin-bottom: -24px;
     }
 
     .out-of-gems-banner {
@@ -581,6 +577,7 @@
       background-color: $yellow-100;
       color: $yellow-1;
       width: 100%;
+      margin-bottom: -24px;
     }
 
     .limitedTime {
@@ -590,6 +587,7 @@
       margin: 24px 0 0 0;
       background-color: $purple-300;
       color: $white;
+      margin-bottom: -24px;
     }
   }
 
