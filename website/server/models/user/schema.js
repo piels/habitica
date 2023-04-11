@@ -533,12 +533,15 @@ export const UserSchema = new Schema({
     stickyHeader: { $type: Boolean, default: true },
     disableClasses: { $type: Boolean, default: false },
     newTaskEdit: { $type: Boolean, default: false },
+    // deprecated, unused
     dailyDueDefaultView: { $type: Boolean, default: false },
+    // deprecated, unused
     advancedCollapsed: { $type: Boolean, default: false },
     toolbarCollapsed: { $type: Boolean, default: false },
     reverseChatOrder: { $type: Boolean, default: false },
     developerMode: { $type: Boolean, default: false },
     background: String,
+    // deprecated, unused
     displayInviteToPartyWhenPartyIs1: { $type: Boolean, default: true },
     webhooks: {
       $type: Schema.Types.Mixed,

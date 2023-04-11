@@ -66,40 +66,6 @@
           </td>
         </tr>
       </table>
-
-      <h2 v-once>
-        {{ $t('taskSettings') }}
-      </h2>
-
-      <table class="table">
-        <task-settings />
-        <tr>
-          <td colspan="3">
-          </td>
-        </tr>
-      </table>
-
-      <br>
-      <br>
-      <div>
-        TODO: this was only visible when party.memberCount is 1
-        <div
-          class="checkbox"
-        >
-          <label>
-            <input
-              v-model="user.preferences.displayInviteToPartyWhenPartyIs1"
-              type="checkbox"
-              class="mr-2"
-              @change="setUserPreference('displayInviteToPartyWhenPartyIs1')"
-            >
-            <span
-              v-b-popover.hover.right="$t('displayInviteToPartyWhenPartyIs1')"
-              class="hint"
-            >{{ $t('displayInviteToPartyWhenPartyIs1') }}</span>
-          </label>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -133,7 +99,6 @@ import AudioThemeSetting from '@/pages/settings/settingRows/audioThemeSetting.vu
 import ClassSetting from '@/pages/settings/settingRows/classSetting.vue';
 import FixValuesSetting from '@/pages/settings/settingRows/fixValuesSetting.vue';
 import LoginMethods from '@/pages/settings/settingRows/loginMethods.vue';
-import TaskSettings from '@/pages/settings/settingRows/taskSettings.vue';
 import { GenericUserPreferencesMixin } from '@/pages/settings/components/genericUserPreferencesMixin';
 import { mapState } from '@/libs/store';
 import SleepMode from '@/pages/settings/settingRows/sleepMode.vue';
@@ -141,7 +106,6 @@ import SleepMode from '@/pages/settings/settingRows/sleepMode.vue';
 export default {
   components: {
     SleepMode,
-    TaskSettings,
     LoginMethods,
     FixValuesSetting,
     ClassSetting,
