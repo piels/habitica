@@ -212,5 +212,6 @@
   "contactForm": "Contact the Moderation Team",
   "loadEarlierMessages": "Load Earlier Messages",
   "askQuestion": "Ask a Question",
-  "emptyReportBugMessage": "Report Bug Message missing"
+  "emptyReportBugMessage": "Report Bug Message missing",
+  "refreshList": "Refresh List"
 }

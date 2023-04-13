@@ -2,9 +2,18 @@
   <div class="d-flex justify-content-center">
     <div
       v-if="seekers.length > 0"
-      class="fit-content mx-auto"
+      class="fit-content mx-auto mt-4"
     >
-      <h1 v-once class="mt-4 mb-0"> {{ $t('lookingForPartyTitle') }}</h1>
+      <div class="d-flex align-items-center">
+        <h1 v-once class="my-auto mr-auto"> {{ $t('lookingForPartyTitle') }}</h1>
+        <div
+          class="btn btn-secondary btn-sync ml-auto my-auto pl-2 pr-3 d-flex"
+          @click="refreshList()"
+        >
+          <div class="svg-icon icon-16 color my-auto mr-2" v-html="icons.sync"></div>
+          <div class="ml-auto"> {{ $t('refreshList') }} </div>
+        </div>
+      </div>
       <div class="d-flex flex-wrap seeker-list">
         <div
           v-for="(seeker, index) in seekers"
@@ -125,6 +134,15 @@
     }
   }
 
+  .btn-sync {
+    min-width: 128px;
+    max-height: 32px;
+
+    .svg-icon {
+      color: $gray-200;
+    }
+  }
+
   .card-data {
     width: 267px;
   }
@@ -214,6 +232,7 @@ import Avatar from '../avatar';
 import userLink from '../userLink';
 import { mapState } from '@/libs/store';
 
+import syncIcon from '@/assets/svg/sync-2.svg';
 import usersIcon from '@/assets/svg/users.svg';
 import warriorIcon from '@/assets/svg/warrior.svg';
 import rogueIcon from '@/assets/svg/rogue.svg';
@@ -237,6 +256,7 @@ export default {
         warrior: warriorIcon,
         rogue: rogueIcon,
         healer: healerIcon,
+        sync: syncIcon,
         users: usersIcon,
         wizard: wizardIcon,
       }),
@@ -297,6 +317,13 @@ export default {
       this.canLoadMore = this.seekers.length % 30 === 0;
       this.loading = false;
     }, 1000),
+    async refreshList () {
+      this.loading = true;
+      this.page = 0;
+      this.seekers = await this.$store.dispatch('party:lookingForParty');
+      this.canLoadMore = this.seekers.length === 30;
+      this.loading = false;
+    },
     async rescindInvite (userId, index) {
       await this.$store.dispatch('members:removeMember', {
         memberId: userId,
