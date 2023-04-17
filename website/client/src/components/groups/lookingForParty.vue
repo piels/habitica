@@ -79,6 +79,7 @@
         </div>
         <mugen-scroll
           v-show="loading"
+          class="w-100"
           :handler="infiniteScrollTrigger"
           :should-handle="!loading && canLoadMore"
           :threshold="1"
@@ -192,9 +193,11 @@
       }
 
       @media (min-width: 963px) {
-        &:nth-of-type(2) {
-          margin-left: 24px;
+        &:nth-child(2) {
           margin-top: 24px;
+        }
+        &:nth-child(even) {
+          margin-left: 24px;
         }
       }
     }

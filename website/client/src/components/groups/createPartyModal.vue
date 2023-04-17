@@ -287,7 +287,8 @@ export default {
       });
 
       this.$root.$emit('bv::hide::modal', 'create-party-modal');
-      this.$router.push('/party');
+      await this.$router.push('/party');
+      window.location.reload(true);
     },
     close () {
       this.$root.$emit('bv::hide::modal', 'create-party-modal');
