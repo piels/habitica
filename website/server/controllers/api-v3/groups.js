@@ -593,7 +593,6 @@ api.joinGroup = {
         // Clear all invitations of new user
         user.invitations.parties = [];
         user.invitations.party = {};
-        user.party.seeking = null;
 
         // invite new user to pending quest
         if (group.quest.key && !group.quest.active) {
@@ -721,20 +720,6 @@ api.joinGroup = {
       }
     }
 
-    if (inviter) promises.push(inviter.save());
-    promises = await Promise.all(promises);
-
-    if (group.hasNotCancelled()) {
-      await payments.addSubToGroupUser(user, group);
-      await group.updateGroupPlan();
-    }
-
-    const response = await Group.toJSONCleanChat(promises[0], user);
-    const leader = await User.findById(response.leader).select(nameFields).exec();
-    if (leader) {
-      response.leader = leader.toJSON({ minimize: true });
-    }
-
     const analyticsObject = {
       uuid: user._id,
       hitType: 'event',
@@ -747,11 +732,25 @@ api.joinGroup = {
       invited: isUserInvited,
     };
     if (group.type === 'party') {
-      analyticsObject.partyFinder = Boolean(user.party.seeking);
+      analyticsObject.seekingParty = Boolean(user.party.seeking);
     }
-
     if (group.privacy === 'public') {
       analyticsObject.groupName = group.name;
+    }
+    user.party.seeking = undefined;
+
+    if (inviter) promises.push(inviter.save());
+    promises = await Promise.all(promises);
+
+    if (group.hasNotCancelled()) {
+      await payments.addSubToGroupUser(user, group);
+      await group.updateGroupPlan();
+    }
+
+    const response = await Group.toJSONCleanChat(promises[0], user);
+    const leader = await User.findById(response.leader).select(nameFields).exec();
+    if (leader) {
+      response.leader = leader.toJSON({ minimize: true });
     }
 
     res.analytics.track('join group', analyticsObject);

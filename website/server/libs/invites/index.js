@@ -87,10 +87,9 @@ async function inviteUserToParty (userToInvite, group, inviter, res) {
   }
 
   if (userToInvite.party._id) {
-    const userParty = await Group.getGroup({ user: userToInvite, groupId: 'party', fields: 'memberCount' });
+    const userParty = await Group.getGroup({ user: userToInvite, groupId: 'party', fields: '_id' });
 
-    // Allow user to be invited to a new party when they're partying solo
-    if (userParty && userParty.memberCount !== 1) throw new NotAuthorized(res.t('userAlreadyInAParty', { userId: uuid, username: userToInvite.profile.name }));
+    if (userParty) throw new NotAuthorized(res.t('userAlreadyInAParty', { userId: uuid, username: userToInvite.profile.name }));
   }
 
   const partyInvite = { id: group._id, name: group.name, inviter: inviter._id };
@@ -153,7 +152,7 @@ async function inviteByUUID (uuid, group, inviter, req, res) {
   };
 
   if (group.type === 'party') {
-    analyticsObject.partyFinder = Boolean(userToInvite.party.seeking);
+    analyticsObject.seekingParty = Boolean(userToInvite.party.seeking);
   }
 
   res.analytics.track('group invite', analyticsObject);
@@ -254,7 +253,7 @@ async function inviteByUserName (username, group, inviter, req, res) {
   };
 
   if (group.type === 'party') {
-    analyticsObject.partyFinder = Boolean(userToInvite.party.seeking);
+    analyticsObject.seekingParty = Boolean(userToInvite.party.seeking);
   }
 
   res.analytics.track('group invite', analyticsObject);
