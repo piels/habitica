@@ -126,7 +126,7 @@ export async function update (req, res, { isV3 = false }) {
   if (req.body['party.seeking'] !== undefined && req.body['party.seeking'] !== null) {
     user.invitations.party = {};
     user.invitations.parties = [];
-    res.analytics.track('Party Finder Start', {
+    res.analytics.track('Starts Looking for Party', {
       uuid: user._id,
       hitType: 'event',
       category: 'behavior',
@@ -183,7 +183,7 @@ export async function update (req, res, { isV3 = false }) {
 
     if (key === 'party.seeking' && val === null) {
       user.party.seeking = undefined;
-      res.analytics.track('Party Finder Leave', {
+      res.analytics.track('Leaves Looking for Party', {
         uuid: user._id,
         hitType: 'event',
         category: 'behavior',

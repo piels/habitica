@@ -5,7 +5,7 @@
       class="fit-content mx-auto mt-4"
     >
       <div class="d-flex align-items-center">
-        <h1 v-once class="my-auto mr-auto"> {{ $t('lookingForPartyTitle') }}</h1>
+        <h1 v-once class="my-auto mr-auto"> {{ $t('findPartyMembers') }}</h1>
         <div
           class="btn btn-secondary btn-sync ml-auto my-auto pl-2 pr-3 d-flex"
           @click="refreshList()"
@@ -242,6 +242,8 @@ import rogueIcon from '@/assets/svg/rogue.svg';
 import healerIcon from '@/assets/svg/healer.svg';
 import wizardIcon from '@/assets/svg/wizard.svg';
 
+import * as Analytics from '@/libs/analytics';
+
 export default {
   components: {
     Avatar,
@@ -286,6 +288,12 @@ export default {
       this.seekers = await this.$store.dispatch('party:lookingForParty');
       this.canLoadMore = this.seekers.length === 30;
       this.loading = false;
+      Analytics.track({
+        eventName: 'View Find Members',
+        eventAction: 'View Find Members',
+        eventCategory: 'behavior',
+        hitType: 'event',
+      }, { trackOnClient: true });
     }
   },
   methods: {

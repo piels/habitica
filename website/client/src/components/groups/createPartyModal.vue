@@ -64,7 +64,7 @@
               class="red-link"
               @click="seekParty()"
             >
-              {{ $t('leavePartyFinder') }}
+              {{ $t('leave') }}
             </div>
           </div>
         </div>

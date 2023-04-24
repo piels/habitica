@@ -16,6 +16,13 @@
           :key="index"
           class="faq-question"
         >
+          <h1
+            v-once
+            v-if="index === 13"
+            id="parties"
+          >
+            {{ $t('parties') }}
+          </h1>
           <h2
             v-once
             v-b-toggle="entry.heading"
