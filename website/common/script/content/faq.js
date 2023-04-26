@@ -22,10 +22,6 @@ const questionList = [
     translationIndex: 4,
   },
   {
-    heading: 'party-with-friends',
-    translationIndex: 5,
-  },
-  {
     heading: 'pets-mounts',
     translationIndex: 6,
   },
@@ -52,6 +48,10 @@ const questionList = [
   {
     heading: 'group-plans',
     translationIndex: 13,
+  },
+  {
+    heading: 'party-with-friends',
+    translationIndex: 5,
   },
   {
     heading: 'party-detail-1',
