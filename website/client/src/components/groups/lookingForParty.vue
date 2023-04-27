@@ -1,113 +1,114 @@
 <template>
-  <div class="d-flex justify-content-center">
-    <div
-      v-if="seekers.length > 0"
-      class="fit-content mx-auto mt-4"
-    >
-      <div class="d-flex align-items-center">
-        <h1 v-once class="my-auto mr-auto"> {{ $t('findPartyMembers') }}</h1>
-        <div
-          class="btn btn-secondary btn-sync ml-auto my-auto pl-2 pr-3 d-flex"
-          @click="refreshList()"
-        >
-          <div class="svg-icon icon-16 color my-auto mr-2" v-html="icons.sync"></div>
-          <div class="ml-auto"> {{ $t('refreshList') }} </div>
+  <div>
+    <div class="d-flex justify-content-center">
+      <div
+        v-if="seekers.length > 0"
+        class="fit-content mx-auto mt-4"
+      >
+        <div class="d-flex align-items-center">
+          <h1 v-once class="my-auto mr-auto"> {{ $t('findPartyMembers') }}</h1>
+          <div
+            class="btn btn-secondary btn-sync ml-auto my-auto pl-2 pr-3 d-flex"
+            @click="refreshList()"
+          >
+            <div class="svg-icon icon-16 color my-auto mr-2" v-html="icons.sync"></div>
+            <div class="ml-auto"> {{ $t('refreshList') }} </div>
+          </div>
         </div>
-      </div>
-      <div class="d-flex flex-wrap seeker-list">
-        <div
-          v-for="(seeker, index) in seekers"
-          :key="seeker._id"
-          class="seeker"
-        >
-          <div class="d-flex">
-            <avatar
-              :member="seeker"
-              :hideClassBadge="true"
-              @click.native="showMemberModal(seeker._id)"
-              class="mr-3 mb-2"
-            />
-            <div class="card-data">
-              <user-link
-                :user-id="seeker._id"
-                :name="seeker.profile.name"
-                :backer="seeker.backer"
-                :contributor="seeker.contributor"
+        <div class="d-flex flex-wrap seeker-list">
+          <div
+            v-for="(seeker, index) in seekers"
+            :key="seeker._id"
+            class="seeker"
+          >
+            <div class="d-flex">
+              <avatar
+                :member="seeker"
+                :hideClassBadge="true"
+                @click.native="showMemberModal(seeker._id)"
+                class="mr-3 mb-2"
               />
-              <div class="small-with-border pb-2 mb-2">
-                @{{ seeker.auth.local.username }} • {{ $t('level') }} {{ seeker.stats.lvl }}
-              </div>
-              <div
-                class="d-flex"
-              >
-                <strong v-once> {{ $t('classLabel') }} </strong>
-                <span
-                  class="svg-icon d-inline-block icon-16 my-auto mx-2"
-                  v-html="icons[seeker.stats.class]"
+              <div class="card-data">
+                <user-link
+                  :user-id="seeker._id"
+                  :name="seeker.profile.name"
+                  :backer="seeker.backer"
+                  :contributor="seeker.contributor"
+                />
+                <div class="small-with-border pb-2 mb-2">
+                  @{{ seeker.auth.local.username }} • {{ $t('level') }} {{ seeker.stats.lvl }}
+                </div>
+                <div
+                  class="d-flex"
                 >
-                </span>
-                <strong
-                  :class="`${seeker.stats.class}-color`"
-                >
-                  {{ $t(seeker.stats.class) }}
-                </strong>
-              </div>
-              <div>
-                <strong v-once class="mr-2"> {{ $t('checkinsLabel') }} </strong>
-                {{ seeker.loginIncentives }}
-              </div>
-              <div>
-                <strong v-once class="mr-2"> {{ $t('languageLabel') }} </strong>
-                {{ displayLanguage(seeker.preferences.language) }}
+                  <strong v-once> {{ $t('classLabel') }} </strong>
+                  <span
+                    class="svg-icon d-inline-block icon-16 my-auto mx-2"
+                    v-html="icons[seeker.stats.class]"
+                  >
+                  </span>
+                  <strong
+                    :class="`${seeker.stats.class}-color`"
+                  >
+                    {{ $t(seeker.stats.class) }}
+                  </strong>
+                </div>
+                <div>
+                  <strong v-once class="mr-2"> {{ $t('checkinsLabel') }} </strong>
+                  {{ seeker.loginIncentives }}
+                </div>
+                <div>
+                  <strong v-once class="mr-2"> {{ $t('languageLabel') }} </strong>
+                  {{ displayLanguage(seeker.preferences.language) }}
+                </div>
               </div>
             </div>
+            <strong
+              v-if="!seeker.invited"
+              @click="inviteUser(seeker._id, index)"
+              class="btn btn-primary w-100"
+            >
+              {{ $t('inviteToParty') }}
+            </strong>
+            <div
+              v-else
+              @click="rescindInvite(seeker._id, index)"
+              class="btn btn-success w-100"
+              v-html="$t('invitedToYourParty')"
+            >
+            </div>
           </div>
-          <strong
-            v-if="!seeker.invited"
-            @click="inviteUser(seeker._id, index)"
-            class="btn btn-primary w-100"
-          >
-            {{ $t('inviteToParty') }}
-          </strong>
+          <mugen-scroll
+            v-show="loading"
+            :handler="infiniteScrollTrigger"
+            :should-handle="!loading && canLoadMore"
+            :threshold="1"
+          />
+        </div>
+      </div>
+      <div
+        v-if="seekers.length === 0 && !loading"
+        class="d-flex flex-column empty-state text-center my-5"
+      >
+        <div class="gray-circle mb-3 mx-auto d-flex">
           <div
-            v-else
-            @click="rescindInvite(seeker._id, index)"
-            class="btn btn-success w-100"
-            v-html="$t('invitedToYourParty')"
+            class="svg-icon icon-32 color m-auto"
+            v-html="icons.users"
           >
+
           </div>
         </div>
-        <mugen-scroll
-          v-show="loading"
-          class="w-100"
-          :handler="infiniteScrollTrigger"
-          :should-handle="!loading && canLoadMore"
-          :threshold="1"
-        >
-          <h2
-            v-once
-            class="col-12 loading"
-          >
-            {{ $t('loading') }}
-          </h2>
-        </mugen-scroll>
+        <strong class="mb-1"> {{ $t('findMorePartyMembers') }} </strong>
+        <div v-html="$t('noOneLooking')"></div>
       </div>
     </div>
-    <div
-      v-if="seekers.length === 0 && !loading"
-      class="d-flex flex-column empty-state text-center my-5"
+    <h2
+      v-show="loading"
+      class="loading"
+      :class="seekers.length === 0 ? 'mt-3' : 'mt-0'"
     >
-      <div class="gray-circle mb-3 mx-auto d-flex">
-        <div
-          class="svg-icon icon-32 color m-auto"
-          v-html="icons.users"
-        >
-
-        </div>
-      </div>
-      <strong class="mb-1"> {{ $t('findMorePartyMembers') }} </strong>
-      <div v-html="$t('noOneLooking')"></div>
-    </div>
+      {{ $t('loading') }}
+    </h2>
   </div>
 </template>
 
@@ -289,11 +290,11 @@ export default {
       this.canLoadMore = this.seekers.length === 30;
       this.loading = false;
       Analytics.track({
+        hitType: 'event',
         eventName: 'View Find Members',
         eventAction: 'View Find Members',
         eventCategory: 'behavior',
-        hitType: 'event',
-      }, { trackOnClient: true });
+      });
     }
   },
   methods: {
