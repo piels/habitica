@@ -287,14 +287,14 @@ export default {
         section: this.$t('lookingForPartyTitle'),
       });
       this.seekers = await this.$store.dispatch('party:lookingForParty');
-      this.canLoadMore = this.seekers.length === 30;
-      this.loading = false;
-      Analytics.track({
+      await Analytics.track({
         hitType: 'event',
         eventName: 'View Find Members',
         eventAction: 'View Find Members',
         eventCategory: 'behavior',
-      });
+      }, { trackOnClient: true });
+      this.canLoadMore = this.seekers.length === 30;
+      this.loading = false;
     }
   },
   methods: {

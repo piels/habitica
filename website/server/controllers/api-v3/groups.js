@@ -1399,16 +1399,17 @@ api.getLookingForParty = {
       })
       // eslint-disable-next-line no-multi-str
       .select('_id auth.blocked auth.local.username auth.timestamps backer contributor.level \
-        flags.classSelected inbox.blocks invitations.party items.gear.costume items.gear.equipped \
-        loginIncentives party._id preferences.background preferences.chair preferences.costume \
-        preferences.hair preferences.shirt preferences.size preferences.skin preferences.language \
-        profile.name stats.buffs stats.class stats.lvl')
+        flags.chatRevoked flags.classSelected inbox.blocks invitations.party items.gear.costume \
+        items.gear.equipped loginIncentives party._id preferences.background preferences.chair \
+        preferences.costume preferences.hair preferences.shirt preferences.size preferences.skin \
+        preferences.language profile.name stats.buffs stats.class stats.lvl')
       .sort('-auth.timestamps.loggedin')
       .exec();
 
     const filteredSeekers = seekers.filter(seeker => {
       if (seeker.party._id) return false;
       if (seeker.invitations.party.id) return false;
+      if (seeker.flags.chatRevoked) return false;
       if (seeker.auth.blocked) return false;
       if (seeker.inbox.blocks.indexOf(user._id) !== -1) return false;
       if (user.inbox.blocks.indexOf(seeker._id) !== -1) return false;

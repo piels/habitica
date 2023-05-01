@@ -293,6 +293,10 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
+  if (to.name === 'party') {
+    router.app.$root.$emit('update-party');
+  }
+
   // Redirect old guild urls
   if (to.hash.indexOf('#/options/groups/guilds/') !== -1) {
     const splits = to.hash.split('/');

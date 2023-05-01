@@ -837,6 +837,9 @@ export default {
       link.addEventListener('mouseenter', this.dropdownDesktop);
       link.addEventListener('mouseleave', this.dropdownDesktop);
     });
+    this.$root.$on('update-party', () => {
+      this.getUserParty();
+    });
   },
   methods: {
     modForm () {
