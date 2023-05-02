@@ -299,12 +299,6 @@ export default {
       });
       this.seeking = !this.seeking;
     },
-    seekParty () {
-      this.$store.dispatch('user:set', {
-        'party.seeking': !this.user.party.seeking ? new Date() : null,
-      });
-      this.seeking = !this.seeking;
-    },
   },
 };
 </script>
