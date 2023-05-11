@@ -17,9 +17,21 @@
           Payment schedule ("basic-earned" is monthly):
           <strong>{{ hero.purchased.plan.planId }}</strong>
         </div>
+        <div v-if="hero.purchased.plan.planId">
+          Payment schedule ("basic-earned" is monthly):
+          <strong>{{ hero.purchased.plan.planId }}</strong>
+        </div>
+        <div v-if="hero.purchased.plan.planId == 'group_plan_auto'">
+          Group plan ID:
+          <strong>{{ hero.purchased.plan.owner }}</strong>
+        </div>
         <div v-if="hero.purchased.plan.dateCreated">
           Creation date:
           <strong>{{ dateFormat(hero.purchased.plan.dateCreated) }}</strong>
+        </div>
+        <div v-if="hero.purchased.plan.dateCurrentTypeCreated">
+          Start date for current subscription type:
+          <strong>{{ dateFormat(hero.purchased.plan.dateCurrentTypeCreated) }}</strong>
         </div>
         <div>
           Termination date:
@@ -48,7 +60,14 @@
         </div>
         <div>
           Perk month count:
-          <strong>{{ hero.purchased.plan.perkMonthCount }}</strong>
+          <input
+              v-model="hero.purchased.plan.perkMonthCount"
+              class="form-control"
+              type="number"
+              min="0"
+              max="2"
+              step="1"
+            >
         </div>
         <div>
           Next Mystic Hourglass:
