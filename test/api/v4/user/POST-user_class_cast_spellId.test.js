@@ -236,7 +236,7 @@ describe('POST /user/class/cast/:spellId', () => {
   ];
 
   spellList.forEach(async habitClass => {
-    describe.only(`For a ${habitClass.className}`, async () => {
+    describe(`For a ${habitClass.className}`, async () => {
       habitClass.spells.forEach(async spell => {
         describe(`Using ${spell[0]}`, async () => {
           it('Deducts MP from spell caster', async () => {
