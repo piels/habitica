@@ -77,6 +77,7 @@
             </div>
             <button
               class="btn btn-primary"
+              :disabled="selectedAmountToSell > itemContextToSell.itemCount"
               @click="sellItems()"
             >
               {{ $t('sellItems') }}
@@ -374,6 +375,10 @@ export default {
       if (Number(value) < 0) {
         this.selectedAmountToSell = 0;
       }
+    },
+    maxOwned () {
+      const maxOwned = this.itemContextToSell.itemCount;
+      return maxOwned;
     },
     sellItems () {
       if (!Number.isInteger(Number(this.selectedAmountToSell))) {
