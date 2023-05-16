@@ -244,7 +244,7 @@
                 class="svg-icon calendar"
                 v-html="icons.calendar"
               ></div>
-              <span>{{ formatDueDate() }}</span>
+              <span>{{ $t('due') }} {{ formatDueDate() }}</span>
             </div>
             <div class="icons-right d-flex justify-content-end">
               <div
@@ -1129,10 +1129,7 @@ export default {
       return this.calculateTimeTillDue().asDays() <= 0;
     },
     formatDueDate () {
-      const timeTillDue = this.calculateTimeTillDue();
-      const dueIn = timeTillDue.asDays() === 0 ? this.$t('today') : timeTillDue.humanize(true);
-
-      return this.task.date && this.$t('dueIn', { dueIn });
+      return moment(this.task.date).format(this.user.preferences.dateFormat.toUpperCase());
     },
     edit (e, task) {
       if (this.isRunningYesterdailies) return;
