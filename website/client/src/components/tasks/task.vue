@@ -701,7 +701,7 @@
 
   .icons {
     margin-top: 4px;
-    color: $gray-300;
+    color: $gray-100;
     font-style: normal;
 
     &-right {
@@ -760,7 +760,7 @@
   }
 
   .due-overdue {
-    color: $red-50;
+    color: $maroon-10;
   }
 
   .calendar.svg-icon {
@@ -899,6 +899,7 @@
   }
 </style>
 <!-- eslint-enable max-len -->
+
 
 <script>
 import moment from 'moment';
@@ -1126,7 +1127,7 @@ export default {
       return moment.duration(endOfDueDate.diff(endOfToday));
     },
     checkIfOverdue () {
-      return this.calculateTimeTillDue().asDays() <= 0;
+      return this.calculateTimeTillDue().asDays() < 0;
     },
     formatDueDate () {
       return moment(this.task.date).format(this.user.preferences.dateFormat.toUpperCase());
