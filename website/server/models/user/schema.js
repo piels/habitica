@@ -154,6 +154,7 @@ export const UserSchema = new Schema({
     boneToPick: Boolean,
     polarPro: Boolean,
     plantParent: Boolean,
+    dinosaurDynasty: Boolean,
     // Onboarding Guide
     createdTask: Boolean,
     completedTask: Boolean,
