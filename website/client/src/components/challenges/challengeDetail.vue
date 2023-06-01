@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+    <report-challenge-modal />
     <challenge-modal @updatedChallenge="updatedChallenge" />
     <leave-challenge-modal
       :challenge-id="challenge._id"
@@ -9,11 +10,39 @@
       :members="members"
       :challenge-id="challenge._id"
       :prize="challenge.prize"
+      :flag-count="challenge.flagCount"
     />
     <challenge-member-progress-modal :challenge-id="challenge._id" />
+    <b-modal
+      id="cannot-clone-modal"
+      size="md"
+      :hide-header="true"
+      :hide-footer="true"
+    >
+      <div class="row text-center">
+        <div class="col-12">
+          {{ $t('cannotClone') }}
+        </div>
+      </div>
+    </b-modal>
     <div class="col-12 col-md-8 standard-page">
       <div class="row">
         <div class="col-12 col-md-6">
+          <span
+            class="flagged"
+            v-if="canViewFlags"
+          >
+            <span
+              v-if="flaggedNotHidden"
+            >
+              {{ $t("flaggedNotHidden") }}
+            </span>
+            <span
+              v-else-if="flaggedAndHidden"
+            >
+              {{ $t("flaggedAndHidden") }}
+            </span>
+          </span>
           <h1 v-markdown="challenge.name"></h1>
           <div>
             <span class="mr-1 ml-0 d-block">
@@ -169,13 +198,24 @@
         v-if="isLeader || isAdmin"
         class="button-container"
       >
-        <button
-          v-once
-          class="btn btn-primary"
-          @click="cloneChallenge()"
-        >
-          {{ $t('clone') }}
-        </button>
+        <div v-if="isFlagged">
+          <button
+            v-once
+            class="btn btn-primary"
+            @click="showCannotCloneModal()"
+          >
+            {{ $t('clone') }}
+          </button>
+        </div>
+        <div v-else>
+          <button
+            v-once
+            class="btn btn-primary"
+            @click="cloneChallenge()"
+          >
+            {{ $t('clone') }}
+          </button>
+        </div>
       </div>
       <div
         v-if="isLeader || isAdmin"
@@ -199,6 +239,17 @@
           @click="closeChallenge()"
         >
           {{ $t('endChallenge') }}
+        </button>
+      </div>
+      <div
+        class="button-container"
+      >
+        <button
+          v-once
+          class="btn btn-danger"
+          @click="reportChallenge()"
+        >
+          {{ $t('report') }}
         </button>
       </div>
       <div>
@@ -312,6 +363,15 @@
       margin-right: .5em;
     }
   }
+
+  .flagged {
+    margin-left: 0em;
+    color: $red-10;
+
+    span {
+      margin-left: 0em;
+    }
+  }
 </style>
 
 <script>
@@ -332,6 +392,7 @@ import challengeModal from './challengeModal';
 import challengeMemberProgressModal from './challengeMemberProgressModal';
 import challengeMemberSearchMixin from '@/mixins/challengeMemberSearch';
 import leaveChallengeModal from './leaveChallengeModal';
+import reportChallengeModal from './reportChallengeModal';
 import sidebarSection from '../sidebarSection';
 import userLink from '../userLink';
 import groupLink from '../groupLink';
@@ -350,6 +411,7 @@ export default {
   components: {
     closeChallengeModal,
     leaveChallengeModal,
+    reportChallengeModal,
     challengeModal,
     challengeMemberProgressModal,
     memberSearchDropdown,
@@ -400,6 +462,20 @@ export default {
     },
     canJoin () {
       return !this.isMember;
+    },
+    canViewFlags () {
+      const isAdmin = Boolean(this.user.contributor.admin);
+      if (isAdmin && this.challenge.flagCount > 0) return true;
+      return false;
+    },
+    flaggedNotHidden () {
+      return this.challenge.flagCount === 1;
+    },
+    flaggedAndHidden () {
+      return this.challenge.flagCount > 1;
+    },
+    isFlagged () {
+      return this.challenge.flagCount > 0;
     },
   },
   watch: {
@@ -588,6 +664,14 @@ export default {
       this.$root.$emit('habitica:clone-challenge', {
         challenge: this.challenge,
       });
+    },
+    reportChallenge () {
+      this.$root.$emit('habitica::report-challenge', {
+        challenge: this.challenge,
+      });
+    },
+    async showCannotCloneModal () {
+      this.$root.$emit('bv::show::modal', 'cannot-clone-modal');
     },
   },
 };
