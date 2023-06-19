@@ -36,13 +36,13 @@ export default {
     }
     : {},
 
-  availableSpells: CURRENT_EVENT && moment().isBetween('2023-06-15T15:45-04:00', CURRENT_EVENT.end)
+  availableSpells: CURRENT_EVENT && moment().isBetween('2023-07-11T08:00-04:00', CURRENT_EVENT.end)
     ? [
       'seafoam',
     ]
     : [],
 
-  availableQuests: CURRENT_EVENT && moment().isBetween('2023-06-15T15:45-04:00', CURRENT_EVENT.end)
+  availableQuests: CURRENT_EVENT && moment().isBetween('2023-07-11T08:00-04:00', CURRENT_EVENT.end)
     ? []
     : [],
 
