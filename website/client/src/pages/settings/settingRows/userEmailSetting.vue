@@ -47,13 +47,13 @@
 
           <current-password-input
             :show-forget-password="true"
-            :is-valid="mixinData.passwordIssues.length === 0"
-            :invalid-issues="mixinData.passwordIssues"
+            :is-valid="mixinData.currentPasswordIssues.length === 0"
+            :invalid-issues="mixinData.currentPasswordIssues"
             @passwordValue="updates.password = $event"
           />
 
           <save-cancel-buttons
-            :disable-save="allowedToSave"
+            :disable-save="disallowedToSave"
             @saveClicked="changeEmail()"
             @cancelClicked="requestCloseModal()"
           />
@@ -87,18 +87,24 @@ export default {
         newEmail: '',
         password: '',
       },
-      emailChanged: false,
+
+      previousEmail: '',
     };
   },
   computed: {
     ...mapState({
       user: 'user.data',
     }),
+    emailChanged () {
+      return this.previousEmail !== this.updates.newEmail;
+    },
     validEmail () {
       return validator.isEmail(this.updates.newEmail);
     },
-    allowedToSave () {
-      return !this.validEmail || this.updates.password.length === 0;
+    disallowedToSave () {
+      return !this.emailChanged
+        || !this.validEmail
+        || this.updates.password.length === 0;
     },
   },
   mounted () {
@@ -115,6 +121,7 @@ export default {
     },
     restoreEmail () {
       this.updates.newEmail = this.user.auth.local.email;
+      this.previousEmail = this.user.auth.local.email;
     },
     async changeEmail () {
       await this.passwordInputCheckMixinTryCall(async () => {
