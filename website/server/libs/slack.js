@@ -211,6 +211,39 @@ function sendChallengeFlagNotification ({
   });
 }
 
+function sendProfileFlagNotification ({
+  reporter,
+  flaggedUser,
+  userComment,
+}) {
+  const title = 'User Profile Report';
+  const titleLink = `${BASE_URL}/static/front/#?memberId=${flaggedUser._id}`;
+  const text = `@${reporter.auth.local.username} (${reporter._id}; language: ${reporter.preferences.language}) flagged @${flaggedUser.auth.local.username}'s profile`;
+  if (userComment) {
+    text += ` and commented: ${userComment}`;
+  }
+  const profileData = `Bio: ${flaggedUser.profile.blurb}`;
+  if (flaggedUser.profile.imageUrl) {
+    profileData += `\n\nImage URL: ${flaggedUser.profile.imageUrl}`;
+  }
+
+  flagSlack
+    .send({
+      text,
+      attachments: [{
+        fallback: 'Flag Profile',
+        color: 'danger',
+        title,
+        title_link: titleLink,
+        text: profileData,
+        mrkdwn_in: [
+          'text',
+        ],
+      }],
+    })
+    .catch(err => logger.error(err, 'Error while sending flag data to Slack.'));
+}
+
 function sendSubscriptionNotification ({
   buyer,
   recipient,
@@ -338,6 +371,7 @@ export {
   sendFlagNotification,
   sendInboxFlagNotification,
   sendChallengeFlagNotification,
+  sendProfileFlagNotification,
   sendSubscriptionNotification,
   sendShadowMutedPostNotification,
   sendSlurNotification,
