@@ -624,9 +624,7 @@ export const UserSchema = new Schema({
       required: true,
       trim: true,
     },
-    flags: [
-      { $type: String, validate: [v => validator.isUUID(v), 'Invalid user UUID.'], ref: 'User' },
-    ],
+    flags: { $type: Schema.Types.Mixed },
   },
   stats: {
     hp: {
