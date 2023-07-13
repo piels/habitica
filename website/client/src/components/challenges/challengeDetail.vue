@@ -16,21 +16,21 @@
     <div class="col-12 col-md-8 standard-page">
       <div class="row">
         <div class="col-12 col-md-6">
-          <span
-            class="flagged"
+          <div
             v-if="canViewFlags"
+            class="flagged"
           >
-            <span
+            <div
               v-if="flaggedNotHidden"
             >
               {{ $t("flaggedNotHidden") }}
-            </span>
-            <span
+            </div>
+            <div
               v-else-if="flaggedAndHidden"
             >
               {{ $t("flaggedAndHidden") }}
-            </span>
-          </span>
+            </div>
+          </div>
           <h1 v-markdown="challenge.name"></h1>
           <div>
             <span class="mr-1 ml-0 d-block">
@@ -461,13 +461,13 @@ export default {
     canJoin () {
       return !this.isMember;
     },
-    // canViewFlags should allow only moderators/aadmins to see flags
+    // canViewFlags should allow only moderators/admins to see flags
     canViewFlags () {
       const isAdmin = Boolean(this.user.contributor.admin);
       if (isAdmin && this.challenge.flagCount > 0) return true;
       return false;
     },
-    // flaggedNotHidden should allow moder/admins & challenge owner to see flags
+    // flaggedNotHidden should allow mods/admins & challenge owner to see flags
     flaggedNotHidden () {
       return this.challenge.flagCount === 1;
     },
@@ -664,6 +664,7 @@ export default {
     },
     cloneChallenge () {
       this.$root.$emit('habitica:clone-challenge', {
+        flags: this.challenge.flags = [],
         challenge: this.challenge,
       });
     },
