@@ -1,100 +1,207 @@
 <template>
   <b-modal
     id="report-challenge"
-    :title="$t('abuseFlagModalHeading')"
     size="md"
     :hide-footer="true"
+    :hide-header="true"
   >
     <div class="modal-body">
-      <strong v-html="$t('abuseFlagModalHeading')"></strong>
+      <div class="heading">
+        <h5
+          v-html="$t('abuseFlagModalHeading')"
+        >
+        </h5>
+      </div>
+      <div>
+        <span
+          class="svg-icon close-icon icon-16 color"
+          aria-hidden="true"
+          tabindex="0"
+          @click="close()"
+          @keypress.enter="close()"
+          v-html="icons.close"
+        ></span>
+      </div>
       <blockquote>
-        <div v-html="abuseObject.name"></div>
+        <div
+          v-html="abuseObject.name"
+        >
+        </div>
       </blockquote>
       <div>
-        <strong>{{ $t('whyReportingChallenge') }}</strong>
-        <span class="optional">{{ $t('optional') }}</span>
+        <span class="why-report">{{ $t('whyReportingChallenge') }}</span>
         <textarea
           v-model="reportComment"
           class="form-control"
           :placeholder="$t('whyReportingChallengePlaceholder')"
         ></textarea>
       </div>
-      <small v-html="$t('abuseFlagModalBodyChallenge', abuseFlagModalBody)"></small>
+      <p
+        class="report-guidelines"
+        v-html="$t('abuseFlagModalBodyChallenge', abuseFlagModalBody)"
+      >
+      </p>
     </div>
-    <div class="footer text-center">
-      <button
-        v-if="user.contributor.admin"
-        class="reset-flag-count pull-left btn btn-danger"
+    <div class="buttons text-center">
+      <div class="button-spacing">
+        <button
+          class="btn btn-danger"
+          :class="{disabled: !reportComment}"
+          @click="reportAbuse()"
+        >
+          {{ $t('report') }}
+        </button>
+      </div>
+      <div class="button-spacing">
+        <a
+          class="cancel-link"
+          @click.prevent="close()"
+        >
+          {{ $t('cancel') }}
+        </a>
+      </div>
+    </div>
+    <div
+      v-if="user.contributor.admin"
+      class="reset-flag-count d-flex"
+      @click="clearFlagCount()"
+    >
+      <span
+        class="my-auto"
         @click="clearFlagCount()"
       >
-        Reset Flag Count
-      </button>
-      <a
-        class="cancel-link"
-        @click.prevent="close()"
-      >{{ $t('cancel') }}</a>
-      <button
-        class="btn btn-danger"
-        @click="reportAbuse()"
-      >
-        {{ $t('report') }}
-      </button>
+        {{ $t('resetFlags') }}
+      </span>
     </div>
   </b-modal>
 </template>
 
 <style>
   #report-challenge h5 {
-    color: #f23035;
+    color: #F23035;
   }
+
+  .modal-header {
+    border: none;
+    padding-bottom: 0px;
+    padding-top: 12px;
+    height: 16px;
+    align-content: center;
+  }
+
+  .modal-content {
+    padding: 0px;
+  }
+
 </style>
 
 <style lang="scss" scoped>
   @import '~@/assets/scss/colors.scss';
 
    .modal-body {
-     margin-top: 1em;
+     padding: 0px 8px 0px 8px;
    }
 
+  span.svg-icon.icon-16 {
+    height: 16px;
+    width: 16px;
+    margin-top: -32px;
+    margin-right: -16px;
+  }
+
+    .close-icon {
+      color: $gray-300;
+      stroke-width: 0px;
+
+      &:hover {
+          color: $gray-200;
+      }
+    }
+
+  .heading h5 {
+    margin-bottom: 24px;
+    margin-top: 16px;
+    color: $red-10;
+    line-height: 1.4;
+  }
+
+  .why-report {
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 1.71;
+    color: $gray-50;
+  }
+
+  .report-guidelines {
+    line-height: 1.71;
+    padding-bottom: 8px;
+  }
+
    blockquote {
-     border-radius: 2px;
-     background-color: #f4f4f4;
-     padding: 1em;
-     margin-top: 1em;
+     border-radius: 4px;
+     background-color: $gray-700;
+     padding: 8px 0px 8px 16px;
+     margin-top: 24px;
+     font-weight: bold;
+     color: $gray-10;
+     height: 40px;
    }
 
    textarea {
-     margin-top: 1em;
-     margin-bottom: 1em;
-     border-radius: 2px;
+     margin-top: 8px;
+     margin-bottom: 16px;
+     border-radius: 4px;
      border: solid 1px $gray-400;
-     min-height: 106px;
+     height: 64px;
+     font-size: 1em;
    }
 
-   .footer {
-     padding: 1em;
-     padding-bottom: 2em;
+   .btn {
+    width: 75px
+   }
+
+   .buttons {
+     padding: 0 16px 0 16px;
+     margin-bottom: 16px;
+   }
+
+   .button-spacing {
+      margin-bottom: 16px;
+   }
+
+   .btn-danger.disabled {
+      background-color: $white;
+      color: $gray-50;
+      line-height: 1.71;
+      font-size: 1em;
    }
 
    a.cancel-link {
-     color: $blue-10;
-     margin-right: .5em;
-   }
-
-   .optional {
-     color: $gray-200;
-     float: right;
+     color: $purple-300;
    }
 
    .reset-flag-count {
-     margin-right: .5em;
+     margin: 16px -16px -16px -16px;
+     height: 48px;
+     color: $maroon-50;
+     background-color: rgba(255, 182, 184, 0.25);
+     border-bottom-left-radius: 8px;
+     border-bottom-right-radius: 8px;
+     justify-content: center;
+     cursor: pointer;
+
+     &:hover {
+      text-decoration: underline;
+     }
    }
+
 </style>
 
 <script>
 import { mapState } from '@/libs/store';
 import notifications from '@/mixins/notifications';
 import markdownDirective from '@/directives/markdown';
+import svgClose from '@/assets/svg/close.svg';
 
 export default {
   directives: {
@@ -113,6 +220,9 @@ export default {
       abuseObject: '',
       groupId: '',
       reportComment: '',
+      icons: Object.freeze({
+        close: svgClose,
+      }),
     };
   },
   computed: {
@@ -129,6 +239,7 @@ export default {
       this.$root.$emit('bv::hide::modal', 'report-challenge');
     },
     async reportAbuse () {
+      if (!this.reportComment) return;
       this.$store.dispatch('challenges:flag', {
         challengeId: this.abuseObject.id,
         comment: this.reportComment,
