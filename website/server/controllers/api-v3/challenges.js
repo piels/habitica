@@ -267,9 +267,10 @@ api.joinChallenge = {
     if (!challenge) throw new NotFound(res.t('challengeNotFound'));
 
     const group = await Group.getGroup({
-      user, groupId: challenge.group, fields: basicGroupFields, optionalMembership: true,
+      user, groupId: challenge.group, fields: `${basicGroupFields} purchased`, optionalMembership: true,
     });
     if (!group || !challenge.canJoin(user, group)) throw new NotFound(res.t('challengeNotFound'));
+    group.purchased = undefined;
 
     const addedSuccessfully = await challenge.addToUser(user);
     if (!addedSuccessfully) {
@@ -396,49 +397,56 @@ api.getUserChallenges = {
     if (validationErrors) throw validationErrors;
 
     const CHALLENGES_PER_PAGE = 10;
-    const { categories, member, owned, page, search } = req.query;
+    const { page } = req.query;
 
     const { user } = res.locals;
+
+    // Challenges the user owns
+    const orOptions = [{ leader: user._id }];
+
+    // Challenges where the user is participating
+    if (user.challenges.length > 0) {
+      orOptions.push({ _id: { $in: user.challenges } });
+    }
+
+    // Challenges in groups user is a member of, plus public challenges
+    if (!req.query.member) {
+      const userGroups = await Group.getGroups({
+        user,
+        types: ['party', 'guilds', 'tavern'],
+      });
+      const userGroupIds = userGroups.map(userGroup => userGroup._id);
+      orOptions.push({
+        group: { $in: userGroupIds },
+      });
+    }
+
     const query = {
-      $and: [],
+      $and: [{ $or: orOptions }],
     };
-    if (!user.hasPermission('moderator')) {
-      query.$and.push({ $or: [
-        { flagCount: { $not: { $gt: 1 } } },
-        { leader: user._id },
-      ]});
-    }
-    const orOptions = [
-      { _id: { $in: user.challenges } }, // Challenges where the user is participating
-    ];
-    if (!member) {
-      orOptions.push(
-        { group: { $in: user.getGroups() } }, // Public Challenges + Challenges in user's groups
-      );
-    }
-    if (owned === 'not_owned') {
-      query.leader = { $ne: user._id }; // Show only Challenges user does not own
-    } else if (owned === 'owned') {
-      query.leader = user._id; // Show only Challenges user owns
-    } else {
-      orOptions.push(
-        { leader: user._id }, // Additionally show Challenges user owns
-      );
+
+    const { owned } = req.query;
+    if (owned) {
+      if (owned === 'not_owned') {
+        query.$and.push({ leader: { $ne: user._id } });
+      }
+
+      if (owned === 'owned') {
+        query.$and.push({ leader: user._id });
+      }
     }
 
-    query.$and.push({ $or: orOptions });
-
-    if (search) {
+    if (req.query.search) {
       const searchOr = { $or: [] };
-      const searchWords = _.escapeRegExp(search).split(' ').join('|');
+      const searchWords = _.escapeRegExp(req.query.search).split(' ').join('|');
       const searchQuery = { $regex: new RegExp(`${searchWords}`, 'i') };
       searchOr.$or.push({ name: searchQuery });
       searchOr.$or.push({ description: searchQuery });
       query.$and.push(searchOr);
     }
 
-    if (categories) {
-      const categorySlugs = categories.split(',');
+    if (req.query.categories) {
+      const categorySlugs = req.query.categories.split(',');
       query.categories = { $elemMatch: { slug: { $in: categorySlugs } } };
     }
 
@@ -590,9 +598,10 @@ api.getChallenge = {
 
     // Fetching basic group data
     const group = await Group.getGroup({
-      user, groupId: challenge.group, fields: basicGroupFields, optionalMembership: true,
+      user, groupId: challenge.group, fields: `${basicGroupFields} purchased`, optionalMembership: true,
     });
     if (!group || !challenge.canView(user, group)) throw new NotFound(res.t('challengeNotFound'));
+    group.purchased = undefined;
 
     const chalRes = challenge.toJSON();
     chalRes.group = group.toJSON({ minimize: true });
@@ -749,11 +758,11 @@ api.updateChallenge = {
     if (!challenge) throw new NotFound(res.t('challengeNotFound'));
 
     const group = await Group.getGroup({
-      user, groupId: challenge.group, fields: basicGroupFields, optionalMembership: true,
+      user, groupId: challenge.group, fields: `${basicGroupFields} purchased`, optionalMembership: true,
     });
     if (!group || !challenge.canView(user, group)) throw new NotFound(res.t('challengeNotFound'));
     if (!challenge.canModify(user)) throw new NotAuthorized(res.t('onlyLeaderUpdateChal'));
-
+    group.purchased = undefined;
     _.merge(challenge, Challenge.sanitizeUpdate(req.body));
 
     const savedChal = await challenge.save();
