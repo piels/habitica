@@ -68,7 +68,8 @@ export function authWithHeaders (options = {}) {
     const userQuery = { _id: userId };
 
     let fields = getUserFields(options, req);
-    if (fields && fields.indexOf('apiToken') === -1) {
+    // If the request didn't include the API Token, retrieve it for validation
+    if (fields && fields.indexOf('apiToken') === -1 && fields.indexOf('-') === -1) {
       fields = `${fields} apiToken`;
     }
 
