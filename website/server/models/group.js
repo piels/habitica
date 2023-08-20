@@ -425,6 +425,10 @@ function getInviteCount (uuids, emails) {
     totalInvites += emails.length;
   }
 
+  if (usernames) {
+    totalInvites += usernames.length;
+  }
+
   return totalInvites;
 }
 
@@ -445,7 +449,7 @@ schema.statics.validateInvitations = async function getInvitationErr (invites, r
   const errorString = getInviteError(uuids, emails, usernames);
   if (errorString) throw new BadRequest(res.t(errorString));
 
-  const totalInvites = getInviteCount(uuids, emails);
+  const totalInvites = getInviteCount(uuids, emails, usernames);
   if (totalInvites > INVITES_LIMIT) {
     throw new BadRequest(res.t('canOnlyInviteMaxInvites', { maxInvites: INVITES_LIMIT }));
   }
