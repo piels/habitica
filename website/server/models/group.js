@@ -414,7 +414,7 @@ function getInviteError (uuids, emails, usernames) {
   return errorString;
 }
 
-function getInviteCount (uuids, emails) {
+function getInviteCount (uuids, emails, usernames) {
   let totalInvites = 0;
 
   if (uuids) {
