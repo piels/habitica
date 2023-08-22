@@ -44,7 +44,7 @@ async function updateUser (user) {
       && pets['Cuttlefish-Skeleton']
       && pets['Cuttlefish-White']
       && pets['Cuttlefish-Zombie']
-      && pets['NudibranchTRex-Base']
+      && pets['Nudibranch-Base']
       && pets['Nudibranch-CottonCandyBlue']
       && pets['Nudibranch-CottonCandyPink']
       && pets['Nudibranch-Desert']
