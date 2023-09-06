@@ -2,13 +2,15 @@
   <b-modal
     id="profile"
     :hide-footer="true"
-    :hide-header="true"
     @hide="beforeHide"
     @shown="onShown()"
   >
-    <close-x
-      @click="close()"
-    />
+    <div slot="modal-header">
+      <close-x
+        @close="close()"
+      />
+    </div>
+
     <profile
       :user-id="userId"
       :starting-page="startingPage"
@@ -21,6 +23,11 @@
   @import '~@/assets/scss/colors.scss';
 
   #profile {
+    .modal-header {
+      background-color: $white;
+      border-bottom: none;
+      padding: 0px;
+    }
     .modal-dialog {
       max-width: 684px;
     }
@@ -39,8 +46,8 @@
 <style lang="scss" scoped>
   @import '~@/assets/scss/colors.scss';
 
-  .header {
-    width: 100%;
+  .modal-close {
+    z-index: 1;
   }
 
 </style>
@@ -81,9 +88,9 @@ export default {
         this.$router.back();
       }
     },
-  },
-  close () {
-    this.$root.$emit('bv::hide::modal', 'profile');
+    close () {
+      this.$root.$emit('bv::hide::modal', 'profile');
+    },
   },
 };
 

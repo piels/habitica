@@ -22,8 +22,14 @@
           </div>
         </div>
       </div>
-      <!-- STATE CHANGES -->
+      <!-- PAGE STATE CHANGES -->
       <div class="row state-pages">
+        <div
+          v-if="userBlocked"
+          class="blocked-user d-flex mx-auto"
+          v-html="$t('blockedUser')"
+        >
+        </div>
         <div class="text-center nav">
           <div
             class="nav-item"
@@ -61,7 +67,7 @@
           class="flex-container"
         >
           <div class="flex-left">
-            <div class="about profile-header">
+            <div class="about mb-0">
               <h2>{{ $t('about') }}</h2>
             </div>
             <div class="flex-left>">
@@ -111,7 +117,7 @@
                 </button>
               </router-link>
 
-              <!-- Kebab menu dropdown -->
+              <!-- KEBAB MENU DROPDOWN -->
               <b-dropdown
                 right="right"
                 toggle-class="with-icon"
@@ -127,7 +133,7 @@
                   </span>
                 </template>
 
-                <!-- send gems -->
+                <!-- SEND GEMS -->
                 <b-dropdown-item
                   class="selectListItem"
                   @click="openSendGemsModal()"
@@ -147,9 +153,11 @@
                   </span>
                 </b-dropdown-item>
 
-                <!-- report player -->
+                <!-- REPORT PLAYER -->
                 <b-dropdown-item
                   class="selectListItem"
+                  :class="{ disabled: !canReport }"
+                  :disabled="!canReport"
                   @click="reportPlayer()"
                 >
                   <span class="with-icon">
@@ -164,8 +172,9 @@
                   </span>
                 </b-dropdown-item>
 
-                <!-- report player -->
+                <!-- BLOCK PLAYER -->
                 <b-dropdown-item
+                  v-if="!userBlocked"
                   class="selectListItem block-ban"
                   @click="blockUser()"
                 >
@@ -180,39 +189,63 @@
                     </span>
                   </span>
                 </b-dropdown-item>
-                <!-- Rest is visible only if user is Admin -->
+                <b-dropdown-item
+                  v-else
+                  class="selectListItem block-ban"
+                  @click="unblockUser()"
+                >
+                  <span class="with-icon">
+                    <span
+                      v-once
+                      class="svg-icon icon-16 color"
+                      v-html="icons.block"
+                    ></span>
+                    <span v-once>
+                      {{ $t('unblock') }}
+                    </span>
+                  </span>
+                </b-dropdown-item>
+
+                <!-- REST OF DROPDOWN ONLY VISIBLE IF ADMIN -->
                 <div
                   v-if="hasPermission(userLoggedIn, 'moderator')"
                 >
-                  <!-- Admin Tools header -->
+                  <!-- ADMIN TOOLS HEADER -->
                   <b-dropdown-item
-                    class="selectListItem admin-tools"
+                    class="admin-tools"
                   >
                     <span v-once>
                       <strong>{{ $t('adminTools') }}</strong>
                     </span>
                   </b-dropdown-item>
 
-                  <!-- Admin Panel -->
+                  <!-- ADMIN PANEL -->
                   <b-dropdown-item
-                    class="selectListItem"
-                    @click="openAdminPanel()"
+                    v-if="hasPermission(userLoggedIn, 'userSupport')"
+                    class="selectListItem view-admin-panel"
                   >
-                    <span class="with-icon">
-                      <span
-                        v-once
-                        class="svg-icon icon-16 color"
-                        v-html="icons.crown"
-                      ></span>
-                      <span v-once>
-                        {{ $t('viewAdminPanel') }}
+                    <router-link
+                      :to="{ name: 'adminPanelUser',
+                             params: { userIdentifier: user._id } }"
+                    >
+                      <span class="with-icon">
+                        <span
+                          v-once
+                          class="svg-icon icon-16 color"
+                          v-html="icons.crown"
+                        ></span>
+                        <span v-once>
+                          {{ $t('viewAdminPanel') }}
+                        </span>
                       </span>
-                    </span>
+                    </router-link>
                   </b-dropdown-item>
 
-                  <!-- Ban user -->
+                  <!-- BAN USER -->
                   <b-dropdown-item
+                    v-if="!hero.auth.blocked"
                     class="selectListItem block-ban"
+                    @click.native.capture.stop="adminBlockUser()"
                   >
                     <span class="with-icon">
                       <span
@@ -225,10 +258,29 @@
                       </span>
                     </span>
                   </b-dropdown-item>
+                  <b-dropdown-item
+                    v-else
+                    class="selectListItem block-ban"
+                    @click.native.capture.stop="adminUnblockUser()"
+                  >
+                    <span class="with-icon">
+                      <span
+                        v-once
+                        class="svg-icon icon-16 color"
+                        v-html="icons.block"
+                      ></span>
+                      <span v-once>
+                        {{ $t('unbanPlayer') }}
+                      </span>
+                    </span>
+                  </b-dropdown-item>
 
-                  <!-- shadowmute player with toggle -->
+                  <!-- SHADOW MUTE PLAYER WITH TOGGLE -->
                   <b-dropdown-item
                     class="selectListItem"
+                    @click.native.capture.stop="!hero.flags.chatShadowMuted
+                      ? adminTurnOnShadowMuting()
+                      : adminTurnOffShadowMuting()"
                   >
                     <span class="with-icon">
                       <span
@@ -238,20 +290,23 @@
                       ></span>
                       <span
                         v-once
-                        v-b-tooltip.hover.bottom="'Turn on Shadow Muting'"
                         class="admin-action"
                       >
                         {{ $t('shadowMute') }}
                       </span>
-                      <toggle
+                      <toggle-switch
+                        v-model="hero.flags.chatShadowMuted"
                         class="toggle-switch-outer ml-auto"
                       />
                     </span>
                   </b-dropdown-item>
 
-                  <!-- mute player with toggle -->
+                  <!-- MUTE PLAYER WITH TOGGLE -->
                   <b-dropdown-item
                     class="selectListItem"
+                    @click.native.capture.stop="!hero.flags.chatRevoked
+                      ? adminRevokeChat()
+                      : adminReinstateChat()"
                   >
                     <span class="with-icon">
                       <span
@@ -262,7 +317,8 @@
                       <span v-once>
                         {{ $t('mutePlayer') }}
                       </span>
-                      <toggle
+                      <toggle-switch
+                        v-model="hero.flags.chatRevoked"
                         class="toggle-switch-outer ml-auto"
                       />
                     </span>
@@ -514,9 +570,20 @@
       margin-left: -48px;
       width: 210px;
     }
-    .dropdown-item:hover svg {
+
+    .dropdown-item.disabled {
+      color: $gray-50 !important;
+      opacity: 0.75;
+      svg {
+        color: $gray-50;
+        opacity: 0.75;
+      }
+    }
+
+    .dropdown-item:not(.disabled):hover svg {
       color: $purple-300;
     }
+
     .drawer-toggle-icon {
       position: absolute;
       right: 16px;
@@ -526,11 +593,13 @@
         top: 10px;
       }
     }
+
     .toggle-switch-outer {
       margin-bottom: 2px;
     }
+
     .selectListItem {
-      &:hover svg {
+      &:not(.disabled):hover svg {
         color: $purple-300;
       }
       &.block-ban {
@@ -542,8 +611,8 @@
           }
         }
       }
-     }
-   }
+    }
+  }
 
   .profile {
     .member-details {
@@ -602,7 +671,6 @@
       margin-left: 4px !important;
     }
   }
-
 </style>
 
 <style lang="scss" scoped>
@@ -643,7 +711,16 @@
     .admin-action {
       color: $red-500;
       cursor: pointer;
-      // padding: 0 16px;
+    }
+  }
+
+  .view-admin-panel
+   a, a:not([href]):not([tabindex]) {
+    cursor: pointer;
+    color: $gray-50;
+    text-decoration: none;
+    &:hover {
+      color:$purple-300;
     }
   }
 
@@ -661,34 +738,30 @@
     color: $gray-50 !important;
     display: block;
     margin: 0 auto;
-    }
-
-    .message-icon svg {
-      height: 11px;
-      margin-top: 1px;
   }
 
-    .gift-icon svg {
-      height: 16px;
-      margin: auto;
-      width: 14px;
+  .message-icon svg {
+    height: 11px;
+    margin-top: 1px;
   }
 
-   .dots-icon {
-      height: 16px;
-      width: 4px;
+  .gift-icon svg {
+    height: 16px;
+    margin: auto;
+    width: 14px;
   }
 
-   .block-icon {
-      width: 16px;
+  .dots-icon {
+    height: 16px;
+    width: 4px;
   }
 
-    .positive-icon {
-      width: 14px;
+  .block-icon, .report-icon {
+    width: 16px;
   }
 
-   .report-icon {
-      width: 16px;
+  .positive-icon {
+    width: 14px;
   }
 
   .toggle-switch-outer {
@@ -697,7 +770,7 @@
 
   .photo {
     img {
-    max-width: 100%;
+      max-width: 100%;
     }
   }
 
@@ -710,6 +783,15 @@
     h4 {
       color: $gray-100;
     }
+  }
+
+  .blocked-user {
+    background-color: $maroon-100;
+    border-radius: 4px;
+    color: $white;
+    height: 40px;
+    margin-top: 16px;
+    padding: 8px 16px;
   }
 
   .state-pages {
@@ -759,17 +841,12 @@
   }
 
   .profile-section {
-
     h2 {
       color: $gray-50;
       margin-bottom: 20px !important;
       overflow: hidden;
       size: 1.125em;
     }
-  }
-
-  .profile-header {
-      margin-bottom: 0px;
   }
 
   .about {
@@ -788,6 +865,7 @@
     line-height: 1.71;
     margin-left: 24px;
     margin-right: 8px;
+    margin-top: 0px;
     width: 148px;
   }
 
@@ -804,7 +882,6 @@
   .admin-tools {
     background-color: $gray-700;
   }
-
 
   .info {
     margin-top: 16px;
@@ -848,6 +925,7 @@
     height: 92px;
     width: 94px;
   }
+
   #achievements {
     .category-row {
       margin-bottom: 34px;
@@ -947,7 +1025,7 @@ import moment from 'moment';
 import axios from 'axios';
 import each from 'lodash/each';
 import cloneDeep from 'lodash/cloneDeep';
-import toggle from '../ui/toggleSwitch';
+import toggleSwitch from '../ui/toggleSwitch';
 import { mapState } from '@/libs/store';
 
 import MemberDetails from '../memberDetails';
@@ -984,7 +1062,7 @@ export default {
     MemberDetails,
     profileStats,
     error404,
-    toggle,
+    toggleSwitch,
   },
   mixins: [externalLinks, userCustomStateMixin('userLoggedIn')],
   props: ['userId', 'startingPage'],
@@ -1006,7 +1084,6 @@ export default {
         mute,
         shadowMute,
       }),
-      adminToolsLoaded: false,
       userIdToMessage: '',
       editing: false,
       editingProfile: {
@@ -1052,7 +1129,6 @@ export default {
     nextIncentive () {
       return this.getNextIncentive();
     },
-
     classText () {
       const classTexts = {
         warrior: this.$t('warrior'),
@@ -1074,6 +1150,19 @@ export default {
       if (this.openStatus !== undefined) return this.openStatus === 1;
       return this.isOpened;
     },
+    userBlocked () {
+      return this.userLoggedIn.inbox.blocks.indexOf(this.user._id) !== -1;
+    },
+    // userBanned () {
+    //   return valueOf(this.user._id.auth.blocked);
+    // },
+    canReport () {
+      if (!this.user || !this.user.profile || !this.user.profile.flags) {
+        return true;
+      }
+      return Boolean(this.hasPermission(this.userLoggedIn, 'moderator')
+        || !this.user.profile.flags[this.userLoggedIn._id]);
+    },
   },
   watch: {
     startingPage () {
@@ -1091,6 +1180,9 @@ export default {
     this.oldTitle = this.$store.state.title;
     this.handleExternalLinks();
     this.selectPage(this.startingPage);
+    this.$root.$on('habitica:report-profile-result', () => {
+      this.loadUser();
+    });
   },
   updated () {
     this.handleExternalLinks();
@@ -1101,6 +1193,7 @@ export default {
         fullTitle: this.oldTitle,
       });
     }
+    this.$root.$off('habitica:report-profile-result');
   },
   methods: {
     async loadUser () {
@@ -1110,7 +1203,6 @@ export default {
       this.editing = false;
       this.hero = {};
       this.userLoaded = false;
-      this.adminToolsLoaded = false;
 
       const profileUserId = this.userId;
 
@@ -1160,6 +1252,10 @@ export default {
         this.user = user;
       }
 
+      if (this.hasPermission(this.userLoggedIn, 'moderator')) {
+        this.hero = await this.$store.dispatch('hall:getHero', { uuid: this.user._id });
+      }
+
       this.userLoaded = true;
     },
     selectPage (page) {
@@ -1170,6 +1266,7 @@ export default {
         subSection: this.$t(this.startingPage),
       });
     },
+
     getProgressDisplay () {
       // let currentLoginDay = Content.loginIncentives[this.user.loginIncentives];
       // if (!currentLoginDay) return this.$t('checkinReceivedAllRewardsMessage');
@@ -1183,6 +1280,7 @@ export default {
       // let end = nextRewardAt - currentLoginDay.prevRewardKey;
       // return `${this.$t('checkinProgressTitle')} ${start}/${end}`;
     },
+
     getIncentivesProgress () {
       const currentLoginDay = Content.loginIncentives[this.user.loginIncentives];
       if (!currentLoginDay) return 0;
@@ -1200,13 +1298,11 @@ export default {
     },
     save () {
       const values = {};
-
       const edits = cloneDeep(this.editingProfile);
 
       each(edits, (value, key) => {
         // Using toString because we need to compare two arrays (websites)
         const curVal = this.user.profile[key];
-
         if (!curVal || value.toString() !== curVal.toString()) {
           values[`profile.${key}`] = value;
           this.$set(this.user.profile, key, value);
@@ -1214,108 +1310,99 @@ export default {
       });
 
       this.$store.dispatch('user:set', values);
-
       this.editing = false;
     },
+
     blockUser () {
       this.userLoggedIn.inbox.blocks.push(this.user._id);
       axios.post(`/api/v4/user/block/${this.user._id}`);
     },
+
     unblockUser () {
       const index = this.userLoggedIn.inbox.blocks.indexOf(this.user._id);
       this.userLoggedIn.inbox.blocks.splice(index, 1);
       axios.post(`/api/v4/user/block/${this.user._id}`);
     },
+
     openSendGemsModal () {
       this.$store.state.giftModalOptions.startingPage = 'buyGems';
       this.$root.$emit('habitica::send-gift', this.user);
     },
+
     adminTurnOnShadowMuting () {
       if (!this.hero.flags) {
         this.hero.flags = {};
       }
       this.hero.flags.chatShadowMuted = true;
-
       this.$store.dispatch('hall:updateHero', { heroDetails: this.hero });
     },
+
     adminTurnOffShadowMuting () {
       if (!this.hero.flags) {
         this.hero.flags = {};
       }
       this.hero.flags.chatShadowMuted = false;
-
       this.$store.dispatch('hall:updateHero', { heroDetails: this.hero });
     },
+
     adminRevokeChat () {
       if (!this.hero.flags) {
         this.hero.flags = {};
       }
       this.hero.flags.chatRevoked = true;
-
       this.$store.dispatch('hall:updateHero', { heroDetails: this.hero });
     },
+
     adminReinstateChat () {
       if (!this.hero.flags) {
         this.hero.flags = {};
       }
       this.hero.flags.chatRevoked = false;
-
       this.$store.dispatch('hall:updateHero', { heroDetails: this.hero });
     },
+
     adminBlockUser () {
       this.hero.auth.blocked = true;
-
       this.$store.dispatch('hall:updateHero', { heroDetails: this.hero });
     },
+
     adminUnblockUser () {
       this.hero.auth.blocked = false;
-
       this.$store.dispatch('hall:updateHero', { heroDetails: this.hero });
     },
-    adminOpenAdminPanel () {
-      this.hero = this.user.permissions.fullAccess || this.user.permissions.userSupport;
-      this.$store.dispatch('adminPanel', { uuid: this.user_id });
-    },
-    async toggleAdminTools () {
-      if (this.adminToolsLoaded) {
-        this.adminToolsLoaded = false;
-      } else {
-        this.hero = await this.$store.dispatch('hall:getHero', { uuid: this.user._id });
-        this.adminToolsLoaded = true;
-      }
-    },
+
     showAllocation () {
       return this.user._id === this.userLoggedIn._id && this.hasClass;
     },
+
     achievementsCategory (categoryKey, category) {
       const achievementsKeys = Object.keys(category.achievements);
-
       if (this.achievementsCategories[categoryKey].open === true) {
         return category.achievements;
       }
-
       const fiveAchievements = achievementsKeys.slice(0, 5);
-
       const categoryAchievements = {};
-
       fiveAchievements.forEach(key => {
         categoryAchievements[key] = category.achievements[key];
       });
-
       return categoryAchievements;
     },
+
     toggleAchievementsCategory (categoryKey) {
       const status = this.achievementsCategories[categoryKey].open;
       this.achievementsCategories[categoryKey].open = !status;
     },
+
     toggle () {
       this.isOpened = !this.isOpen;
       this.$emit('toggled', this.isOpened);
     },
+
     open () {
       this.isOpened = true;
       this.$emit('toggled', this.isOpened);
     },
+
     reportPlayer () {
       this.$root.$emit('habitica::report-profile', {
         memberId: this.user._id,
