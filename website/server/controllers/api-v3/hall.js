@@ -200,6 +200,7 @@ api.getHero = {
     if (!heroRes.contributor) heroRes.contributor = {};
 
     heroRes.secret = hero.getSecretData();
+    heroRes.profile.flags = hero.getFlagData();
 
     res.respond(200, heroRes);
   },
