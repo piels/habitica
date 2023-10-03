@@ -10,10 +10,15 @@ const gemsPromo = {
 
 export const EVENTS = {
   noEvent: {
-    start: '2023-11-01T23:59-04:00',
+    start: '2023-11-01T00:00-04:00',
     end: '2023-12-21T08:00-04:00',
     season: 'normal',
     npcImageSuffix: '',
+  },
+  spooky_extra_gems: {
+    start: '2022-10-24T08:00-04:00',
+    end: '2022-10-31T23:59-04:00',
+    gemsPromo,
   },
   bundle202310: {
     start: '2023-10-17T08:00-04:00',
@@ -131,6 +136,11 @@ export const EVENTS = {
     npcImageSuffix: '_fall',
     season: 'fall',
     gear: true,
+  },
+  fall_extra_gems: {
+    start: '2022-10-06T08:00-04:00',
+    end: '2022-10-13T20:00-04:00',
+    gemsPromo,
   },
   bundle202210: {
     start: '2022-10-13T08:00-04:00',
