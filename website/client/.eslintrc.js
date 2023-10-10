@@ -19,6 +19,7 @@ module.exports = {
       order: ['template', 'style', 'script'],
     }],
     'vue/no-v-html': 'off',
+    'vue/no-mutating-props': 'warn',
     'vue/html-self-closing': ['error', {
       html: {
         void: 'never',
