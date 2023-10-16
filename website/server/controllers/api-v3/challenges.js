@@ -397,9 +397,29 @@ api.getUserChallenges = {
     if (validationErrors) throw validationErrors;
 
     const CHALLENGES_PER_PAGE = 10;
-    const { page } = req.query;
-
+    const {
+      categories,
+      member,
+      owned,
+      page,
+      search,
+    } = req.query;
     const { user } = res.locals;
+
+    const query = {
+      $and: [],
+    };
+
+    if (!user.hasPermission('moderator')) {
+      query.$and.push(
+        {
+          $or: [
+            { flagCount: { $not: { $gt: 1 } } },
+            { leader: user._id },
+          ],
+        },
+      );
+    }
 
     // Challenges the user owns
     const orOptions = [{ leader: user._id }];
@@ -410,7 +430,7 @@ api.getUserChallenges = {
     }
 
     // Challenges in groups user is a member of, plus public challenges
-    if (!req.query.member) {
+    if (!member) {
       const userGroups = await Group.getGroups({
         user,
         types: ['party', 'guilds', 'tavern'],
@@ -420,23 +440,19 @@ api.getUserChallenges = {
         group: { $in: userGroupIds },
       });
     }
-
-    const query = {
-      $and: [{ $or: orOptions }],
-    };
-
-    const { owned } = req.query;
-    if (owned) {
-      if (owned === 'not_owned') {
-        query.$and.push({ leader: { $ne: user._id } });
-      }
-
-      if (owned === 'owned') {
-        query.$and.push({ leader: user._id });
-      }
+    if (owned === 'not_owned') {
+      query.leader = { $ne: user._id }; // Show only Challenges user does not own
+    } else if (owned === 'owned') {
+      query.leader = user._id; // Show only Challenges user owns
+    } else {
+      orOptions.push(
+        { leader: user._id }, // Additionally show Challenges user owns
+      );
     }
 
-    if (req.query.search) {
+    query.$and.push({ $or: orOptions });
+
+    if (search) {
       const searchOr = { $or: [] };
       const searchWords = _.escapeRegExp(req.query.search).split(' ').join('|');
       const searchQuery = { $regex: new RegExp(`${searchWords}`, 'i') };
@@ -445,7 +461,7 @@ api.getUserChallenges = {
       query.$and.push(searchOr);
     }
 
-    if (req.query.categories) {
+    if (categories) {
       const categorySlugs = req.query.categories.split(',');
       query.categories = { $elemMatch: { slug: { $in: categorySlugs } } };
     }
