@@ -156,6 +156,7 @@ export const UserSchema = new Schema({
     plantParent: Boolean,
     dinosaurDynasty: Boolean,
     bonelessBoss: Boolean,
+    duneBuddy: Boolean,
     // Onboarding Guide
     createdTask: Boolean,
     completedTask: Boolean,
@@ -631,28 +632,10 @@ export const UserSchema = new Schema({
     flags: { $type: Schema.Types.Mixed },
   },
   stats: {
-    hp: {
-      $type: Number,
-      default: shared.maxHealth,
-      max: shared.constants.MAX_FIELD_HARD_CAP,
-    },
-    mp: {
-      $type: Number,
-      default: 10,
-      min: 0,
-      max: shared.constants.MAX_FIELD_HARD_CAP,
-    },
-    exp: {
-      $type: Number,
-      default: 0,
-      max: shared.constants.MAX_FIELD_HARD_CAP,
-    },
-    gp: {
-      $type: Number,
-      default: 0,
-      min: 0,
-      max: shared.constants.MAX_FIELD_HARD_CAP,
-    },
+    hp: { $type: Number, default: shared.maxHealth },
+    mp: { $type: Number, default: 10, min: 0 },
+    exp: { $type: Number, default: 0 },
+    gp: { $type: Number, default: 0, min: 0 },
     lvl: {
       $type: Number,
       default: 1,

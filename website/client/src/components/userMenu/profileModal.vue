@@ -2,13 +2,15 @@
   <b-modal
     id="profile"
     :hide-footer="true"
-    :hide-header="true"
     @hide="beforeHide"
     @shown="onShown()"
   >
-    <close-x
-      @click="close()"
-    />
+    <div slot="modal-header">
+      <close-x
+        @close="close()"
+      />
+    </div>
+
     <profile
       :user-id="userId"
       :starting-page="startingPage"
@@ -21,6 +23,11 @@
   @import '~@/assets/scss/colors.scss';
 
   #profile {
+    .modal-header {
+      background-color: $white;
+      border-bottom: none;
+      padding: 0px;
+    }
     .modal-dialog {
       max-width: 684px;
     }
@@ -39,8 +46,8 @@
 <style lang="scss" scoped>
   @import '~@/assets/scss/colors.scss';
 
-  .header {
-    width: 100%;
+  .modal-close {
+    z-index: 1;
   }
 
 </style>
@@ -58,14 +65,16 @@ export default {
     return {
       userId: undefined,
       startingPage: undefined,
-      path: undefined,
+      fromPath: undefined,
+      toPath: undefined,
     };
   },
   mounted () {
     this.$root.$on('habitica:show-profile', data => {
       this.userId = data.userId;
       this.startingPage = data.startingPage || 'profile';
-      this.path = data.path;
+      this.fromPath = data.fromPath;
+      this.toPath = data.toPath;
       this.$root.$emit('bv::show::modal', 'profile');
     });
   },
@@ -74,16 +83,16 @@ export default {
   },
   methods: {
     onShown () {
-      window.history.pushState('', null, this.path);
+      window.history.pushState('', null, this.toPath);
     },
     beforeHide () {
       if (this.$route.path !== window.location.pathname) {
-        this.$router.back();
+        window.history.pushState('', null, this.fromPath);
       }
     },
-  },
-  close () {
-    this.$root.$emit('bv::hide::modal', 'profile');
+    close () {
+      this.$root.$emit('bv::hide::modal', 'profile');
+    },
   },
 };
 

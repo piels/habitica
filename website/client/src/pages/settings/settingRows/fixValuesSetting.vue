@@ -1,7 +1,7 @@
 <template>
   <fragment>
     <tr
-      v-if="!modalVisible"
+      v-if="!mixinData.inlineSettingMixin.modalVisible"
     >
       <td class="settings-label">
         {{ $t("fixValues") }}
@@ -18,7 +18,7 @@
       </td>
     </tr>
     <tr
-      v-if="modalVisible"
+      v-if="mixinData.inlineSettingMixin.modalVisible"
       class="expanded"
     >
       <td
@@ -76,7 +76,7 @@
         </div>
 
         <save-cancel-buttons
-          :disable-save="!sharedState.inlineSettingUnsavedValues"
+          :disable-save="!mixinData.inlineSettingMixin.sharedState.inlineSettingUnsavedValues"
           class="mt-4"
           @saveClicked="save()"
           @cancelClicked="requestCloseModal()"
@@ -148,7 +148,7 @@ import svgGold from '@/assets/svg/gold.svg';
 import level from '@/assets/svg/level.svg';
 import streakIcon from '@/assets/svg/streak.svg';
 import { mapState } from '@/libs/store';
-import { MAX_LEVEL_HARD_CAP } from '../../../../../common/script/constants';
+import { MAX_LEVEL_HARD_CAP, MAX_FIELD_HARD_CAP } from '../../../../../common/script/constants';
 
 export default {
   components: { SaveCancelButtons },
@@ -231,19 +231,11 @@ export default {
         return;
       }
 
-      if (this.restoreValues.lvl > MAX_LEVEL_HARD_CAP) {
-        this.restoreValues.lvl = MAX_LEVEL_HARD_CAP;
-      }
-
       const userChangedLevel = this.restoreValues.lvl !== this.user.stats.lvl;
       const userDidNotChangeExp = this.restoreValues.exp === this.user.stats.exp;
       if (userChangedLevel && userDidNotChangeExp) {
         this.restoreValues.exp = 0;
       }
-
-      // todo
-      // this.user.stats = clone(this.restoreValues.stats);
-      // this.user.achievements.streak = clone(this.restoreValues.achievements.streak);
 
       const settings = {
         'stats.hp': Number(this.restoreValues.hp),
@@ -269,6 +261,9 @@ export default {
         ) {
           this.restoreValues[stat] = this.user.stats[stat];
           valid = false;
+        } else if (this.restoreValues[stat] > MAX_FIELD_HARD_CAP) {
+          this.restoreValues[stat] = MAX_FIELD_HARD_CAP;
+          valid = false;
         }
       }
 
@@ -277,6 +272,9 @@ export default {
           || !Number.isInteger(inputLevel)
           || inputLevel < 1) {
         this.restoreValues.lvl = this.user.stats.lvl;
+        valid = false;
+      } else if (inputLevel > MAX_LEVEL_HARD_CAP) {
+        this.restoreValues.lvl = MAX_LEVEL_HARD_CAP;
         valid = false;
       }
 

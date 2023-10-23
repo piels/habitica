@@ -13,8 +13,8 @@ describe('POST /challenges/:challengeId/clearflags', () => {
   beforeEach(async () => {
     const { group, groupLeader, members } = await createAndPopulateGroup({
       groupDetails: {
-        name: 'TestPrivateGuild',
-        type: 'guild',
+        name: 'TestParty',
+        type: 'party',
         privacy: 'private',
       },
       members: 1,
@@ -23,7 +23,7 @@ describe('POST /challenges/:challengeId/clearflags', () => {
     admin = groupLeader;
     [nonAdmin] = members;
 
-    await admin.update({ 'contributor.admin': true });
+    await admin.update({ 'permissions.moderator': true });
 
     challenge = await generateChallenge(admin, group);
     await admin.post(`/challenges/${challenge._id}/flag`);
