@@ -420,6 +420,11 @@ export default {
     groupLink,
   },
   mixins: [challengeMemberSearchMixin, externalLinks, userStateMixin],
+  async beforeRouteUpdate (to, from, next) {
+    this.searchId = to.params.challengeId;
+    await this.loadChallenge();
+    next();
+  },
   props: ['challengeId'],
   data () {
     return {
@@ -497,11 +502,6 @@ export default {
   },
   updated () {
     this.handleExternalLinks();
-  },
-  async beforeRouteUpdate (to, from, next) {
-    this.searchId = to.params.challengeId;
-    await this.loadChallenge();
-    next();
   },
   methods: {
     cleanUpTask (task) {
