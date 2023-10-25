@@ -454,7 +454,7 @@ api.getUserChallenges = {
 
     if (search) {
       const searchOr = { $or: [] };
-      const searchWords = _.escapeRegExp(req.query.search).split(' ').join('|');
+      const searchWords = _.escapeRegExp(search).split(' ').join('|');
       const searchQuery = { $regex: new RegExp(`${searchWords}`, 'i') };
       searchOr.$or.push({ name: searchQuery });
       searchOr.$or.push({ description: searchQuery });
@@ -462,7 +462,7 @@ api.getUserChallenges = {
     }
 
     if (categories) {
-      const categorySlugs = req.query.categories.split(',');
+      const categorySlugs = categories.split(',');
       query.categories = { $elemMatch: { slug: { $in: categorySlugs } } };
     }
 
