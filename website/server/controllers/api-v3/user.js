@@ -1780,7 +1780,7 @@ api.movePinnedItem = {
  * Request a refresh of user stats, including processing of pending level-ups
  * @apiName StatSync
  * @apiGroup User
- * 
+ *
  * @apiSuccess {Object} data The user object
  */
 
@@ -1794,7 +1794,7 @@ api.statSync = {
     await user.save();
 
     res.respond(200, user);
-  }
-}
+  },
+};
 
 export default api;
