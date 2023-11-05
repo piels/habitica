@@ -1,6 +1,6 @@
 <template>
   <div
-    class="d-flex like-button"
+    class="d-inline-flex like-button"
     @click="like()"
   >
     <div
@@ -9,11 +9,11 @@
     >
       <div
         v-if="likeCount > 0"
-        class="action d-flex align-items-center mr-2"
+        class="action d-flex align-items-center mr-0"
         :class="{isLiked: true, currentUserLiked: likedByCurrentUser}"
       >
         <div
-          class="svg-icon"
+          class="svg-icon mr-1"
           :title="$t('liked')"
           v-html="icons.liked"
         ></div>
@@ -41,11 +41,9 @@
 .action {
   display: inline-block;
   margin-right: 1em;
-  font-size: 12px;
 
   .svg-icon {
     color: $gray-100;
-    margin-right: .2em;
     width: 16px;
   }
 
@@ -61,6 +59,7 @@
 
 .like-button {
   color: $gray-100;
+  font-size: 12px;
 
   &:hover {
     cursor: pointer;

@@ -195,7 +195,7 @@
 
 .message-card {
   border-radius: 7px;
-  padding: 0.75rem 1rem 1rem 1rem;
+  padding: 1rem 0.75rem 0.5rem 1rem;
   margin: 0;
 
   .card-body {
@@ -204,7 +204,7 @@
 
     .time {
       font-size: 12px;
-      color: $gray-200;
+      color: $gray-100;
       margin-bottom: 0.5rem;
     }
 
@@ -245,7 +245,7 @@ hr {
 
 .custom-hover--red {
   --hover-color: #{$maroon-50};
-  --hover-background: #{$red-500};
+  --hover-background: #{rgba($red-500, 0.25)};
 }
 
 .user-sent-message {
@@ -257,7 +257,10 @@ hr {
 }
 
 .card-menu {
+  // icon-color is the menu icon itsem
   --icon-color: #{$gray-100};
+
+  --dropdown-item-hover-icon-color: #{$gray-100};
 
   &:hover {
     --icon-color: #{$purple-300};
@@ -291,8 +294,6 @@ import reportIcon from '@/assets/svg/report.svg';
 import menuIcon from '@/assets/svg/menu.svg';
 import { userStateMixin } from '@/mixins/userState';
 import copyIcon from '@/assets/svg/copy.svg';
-import likeIcon from '@/assets/svg/like.svg';
-import likedIcon from '@/assets/svg/liked.svg';
 import LikeButton from '@/components/messages/likeButton.vue';
 import { CHAT_FLAG_FROM_SHADOW_MUTE, CHAT_FLAG_LIMIT_FOR_HIDING } from '../../../../common/script/constants';
 
@@ -366,8 +367,6 @@ export default {
         delete: deleteIcon,
         report: reportIcon,
         copy: copyIcon,
-        like: likeIcon,
-        liked: likedIcon,
         menuIcon,
       }),
       reported: false,
