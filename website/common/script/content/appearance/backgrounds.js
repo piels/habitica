@@ -636,13 +636,10 @@ const plannedBackgrounds = {
 
 const releaseDates = {
   backgrounds102023: '2023-10-10T08:00-04:00',
-  backgrounds112023: '2023-10-27T13:00-04:00',
+  backgrounds112023: '2023-11-07T08:00-05:00',
 };
 
 const flat = {};
-
-const backgrounds = omitBy(plannedBackgrounds, (bgSet, key) => releaseDates[key]
-  && moment().isBefore(releaseDates[key]));
 
 forOwn(backgrounds, (backgroundsInSet, set) => {
   forOwn(backgroundsInSet, (background, bgKey) => {
