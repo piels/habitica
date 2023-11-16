@@ -30,8 +30,8 @@ export function nameContainsNewline (username) {
 }
 
 function usernameIsForbidden (username) {
-  const forbiddenWordsMatched = getMatchesByWordArray(username, forbiddenUsernames);
-  return forbiddenWordsMatched.length > 0;
+  const forbidddenWordsMatched = getMatchesByWordArray(username, forbiddenUsernames);
+  return forbidddenWordsMatched.length > 0;
 }
 
 const invalidCharsRegex = new RegExp('[^a-z0-9_-]', 'i');
