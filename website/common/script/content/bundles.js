@@ -12,7 +12,7 @@ const bundles = {
   featheredFriends: {
     key: 'featheredFriends',
     text: t('featheredFriendsText'),
-    notes: t('featheredFriendsNotes', { date: moment('2023-09-30').format('LL') }),
+    notes: t('featheredFriendsNotes'),
     bundleKeys: [
       'falcon',
       'harpy',
@@ -29,7 +29,7 @@ const bundles = {
   splashyPals: {
     key: 'splashyPals',
     text: t('splashyPalsText'),
-    notes: t('splashyPalsNotes', { date: moment('2023-06-30').format('LL') }),
+    notes: t('splashyPalsNotes'),
     bundleKeys: [
       'dilatory_derby',
       'turtle',
@@ -46,7 +46,7 @@ const bundles = {
   farmFriends: {
     key: 'farmFriends',
     text: t('farmFriendsText'),
-    notes: t('farmFriendsNotes', { date: moment('2022-09-30').format('LL') }),
+    notes: t('farmFriendsNotes'),
     bundleKeys: [
       'cow',
       'horse',
@@ -62,7 +62,7 @@ const bundles = {
   witchyFamiliars: {
     key: 'witchyFamiliars',
     text: t('witchyFamiliarsText'),
-    notes: t('witchyFamiliarsNotes', { date: moment('2023-10-31').format('LL') }),
+    notes: t('witchyFamiliarsNotes'),
     bundleKeys: [
       'rat',
       'spider',
@@ -78,7 +78,7 @@ const bundles = {
   winterQuests: {
     key: 'winterQuests',
     text: t('winterQuestsText'),
-    notes: t('winterQuestsNotes', { date: moment('2023-01-31').format('LL') }),
+    notes: t('winterQuestsNotes'),
     addlNotes: t('evilSantaAddlNotes'),
     bundleKeys: [
       'evilsanta',
@@ -95,7 +95,7 @@ const bundles = {
   hugabug: {
     key: 'hugabug',
     text: t('hugabugText'),
-    notes: t('hugabugNotes', { date: moment('2023-08-31').format('LL') }),
+    notes: t('hugabugNotes'),
     bundleKeys: [
       'snail',
       'beetle',
@@ -110,7 +110,7 @@ const bundles = {
   cuddleBuddies: {
     key: 'cuddleBuddies',
     text: t('cuddleBuddiesText'),
-    notes: t('cuddleBuddiesNotes', { date: moment('2022-03-31').format('LL') }),
+    notes: t('cuddleBuddiesNotes'),
     bundleKeys: [
       'bunny',
       'ferret',
@@ -125,7 +125,7 @@ const bundles = {
   aquaticAmigos: {
     key: 'aquaticAmigos',
     text: t('aquaticAmigosText'),
-    notes: t('aquaticAmigosNotes' { date: moment('2023-06-30').format('LL') }),
+    notes: t('aquaticAmigosNotes'),
     bundleKeys: [
       'axolotl',
       'kraken',
@@ -141,7 +141,7 @@ const bundles = {
   forestFriends: {
     key: 'forestFriends',
     text: t('forestFriendsText'),
-    notes: t('forestFriendsNotes', { date: moment('2022-08-31').format('LL') }),
+    notes: t('forestFriendsNotes'),
     bundleKeys: [
       'ghost_stag',
       'hedgehog',
@@ -157,7 +157,7 @@ const bundles = {
   oddballs: {
     key: 'oddballs',
     text: t('oddballsText'),
-    notes: t('oddballsNotes', { date: moment('2023-11-31').format('LL') }),
+    notes: t('oddballsNotes'),
     bundleKeys: [
       'slime',
       'rock',
@@ -173,7 +173,7 @@ const bundles = {
   birdBuddies: {
     key: 'birdBuddies',
     text: t('birdBuddiesText'),
-    notes: t('birdBuddiesNotes', { date: moment('2023-05-30').format('LL') }),
+    notes: t('birdBuddiesNotes'),
     bundleKeys: [
       'peacock',
       'penguin',
@@ -189,7 +189,7 @@ const bundles = {
   mythicalMarvels: {
     key: 'mythicalMarvels',
     text: t('mythicalMarvelsText'),
-    notes: t('mythicalMarvelsNotes', { date: moment('2023-02-28').format('LL') }),
+    notes: t('mythicalMarvelsNotes'),
     bundleKeys: [
       'unicorn',
       'seaserpent',
@@ -205,7 +205,7 @@ const bundles = {
   rockingReptiles: {
     key: 'rockingReptiles',
     text: t('rockingReptilesText'),
-    notes: t('rockingReptilesNotes', { date: moment('2022-11-30').format('LL') }),
+    notes: t('rockingReptilesNotes'),
     bundleKeys: [
       'alligator',
       'snake',
@@ -221,7 +221,7 @@ const bundles = {
   delightfulDinos: {
     key: 'delightfulDinos',
     text: t('delightfulDinosText'),
-    notes: t('delightfulDinosNotes', { date: moment('2022-05-31').format('LL') }),
+    notes: t('delightfulDinosNotes'),
     bundleKeys: [
       'pterodactyl',
       'triceratops',
