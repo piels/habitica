@@ -218,7 +218,7 @@ const animalSetAchievs = {
     icon: 'achievement-roughRider',
     titleKey: 'achievementRoughRider',
     textKey: 'achievementRoughRiderText',
-    release: '2023-10-30T08:00-04:00',
+    release: '2023-11-14T08:00-05:00',
   },
   woodlandWizard: {
     icon: 'achievement-woodlandWizard',
